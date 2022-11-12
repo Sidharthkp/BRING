@@ -143,7 +143,7 @@ const loginUser =
 
 const home = async (req, res) => {
     const products = await productModel.find()
-    res.render("home", {
+    res.render("dashboard", {
         user: "",
         products
     });
