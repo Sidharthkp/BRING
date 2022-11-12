@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup</title>
+
+    <link rel="stylesheet" href="/public/stylesheets/style.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+
+
+    <section class="user">
+        <% if(locals.msg) { %>
+            <% if(locals.colour == "green") {%>
+                <div class="alert alert-success" role="alert">
+                    <%= msg %>
+                </div>
+                <% } %>
+                <% if(locals.colour == "red") {%>
+                    <div class="alert alert-danger" role="alert">
+                        <%= msg %>
+                    </div>
+                    <% } %>
+            <% } %>
+                <div class="user_options-container">
+                    <img src="https://img.freepik.com/free-vector/my-password-concept-illustration_114360-3864.jpg?w=740&t=st=1667991703~exp=1667992303~hmac=f91f49986b895c138e5362b447fadf3df88da642cedc46210bd482b9e8c26443"
+                        alt="" style="width: 500px;
+                        border-radius: 50px;">
+                    <div class="user_options-forms" id="user_options-forms">
+                        <div class="user_forms-login">
+                            <h2 class="forms_title">OTP</h2>
+                            <form class="forms_form" action="/verify/<%= newUser._id %>" method="post">
+                                <fieldset class="forms_fieldset">
+                                    <div class="forms_field">
+                                        <input type="text" name="otp" placeholder="Enter your otp"
+                                            class="forms_field-input" required autofocus />
+                                    </div>
+                                </fieldset>
+                                <div class="forms_buttons">
+                                    <input type="submit" value="Submit" class="forms_buttons-action">
+                                </div>
+                            </form>
+                            <form class="forms_form" action="/resend" method="post">
+                                <div class="forms_buttons">
+                                    <input type="submit" value="Resend" class="forms_buttons-action">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+    </section>
+
+    <script src="public/js/login.js"></script>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
