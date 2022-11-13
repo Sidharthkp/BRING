@@ -5,22 +5,26 @@
                 <div class="col-md-6">
                     <h2 class="text-center">Edit Product</h2>
                     <form action="/admin/edit-products/<%= Product._id %>" method="post" enctype="multipart/form-data">
-                    </br>
-                        <input type="text" name="name" class="form-control" value="<%= Product.name %>" style="border-color: grey;">
-                    </br>
-                        <input type="text" name="price" class="form-control" value="<%= Product.price %>" style="border-color: grey;">
-                    </br>
-                        <input type="text" name="description" class="form-control" value="<%= Product.description %>" style="border-color: grey;">
-                    </br>
-                        
-                        <select name="category" style="border-color: grey;" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
+                        </br>
+                        <input type="text" name="name" class="form-control" value="<%= Product.name %>"
+                            style="border-color: grey;">
+                        </br>
+                        <input type="text" name="price" class="form-control" value="<%= Product.price %>"
+                            style="border-color: grey;">
+                        </br>
+                        <input type="text" name="description" class="form-control" value="<%= Product.description %>"
+                            style="border-color: grey;">
+                        </br>
+
+                        <select name="category" style="border-color: grey;" class="form-select form-select-sm mb-3"
+                            aria-label=".form-select-sm example">
                             <option value="<%= Product.category %>" selected>Open this select menu</option>
                             <option value="mobile">Mobile</option>
                             <option value="laptop">Laptop</option>
                             <option value="watch">Watch</option>
                         </select>
-                    </br>
-                        <input type="file" multiple name="imgUrl" value="<%= Product.imgUrl %>" class="form-control">
+                        </br>
+                        <input type="file" multiple name="imgUrl" class="form-control">
                         <button type="submit" class="btn btn-success mt-4">Submit</button>
                     </form>
                 </div>
