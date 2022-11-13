@@ -6,7 +6,7 @@ const { loginAdminUser, userManagement, productManagement, orderManagement, prod
 
 const { categoryManagement, categoryDelete, categoryAdd, categoryPost, categoryEditPost, categoryEdit } = require("../controllers/categoryController");
 
-const { protectRoute, allowIf, isActive } = require("../auth/protect");
+const { protectRoute, allowIf, isActive, isVerified } = require("../auth/protect");
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ router.get('/checkout', checkout);
 router.get('/store', store);
 
 //Dashboard
-router.get("/dashboard", protectRoute, isActive, loginAdminUser);
+router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
 
 router.get("/add-products", protectRoute, productAdd);
 

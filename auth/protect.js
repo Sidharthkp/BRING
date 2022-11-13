@@ -16,14 +16,23 @@ const allowIf = (req, res, next) => {
 
 const isActive = async (req, res, next) => {
     const user = await User.find()
-    if (req.user.isActive === true && req.user.verified === true) {
+    if (req.user.isActive === true) {
         return next();
     }
     console.log('Your are blocked by the admin');
 }
 
+const isVerified = async (req, res, next) => {
+    const user = await User.find()
+    if (req.user.verified === true) {
+        return next();
+    }
+    console.log('Please register again and enter the otp to verify your account');
+}
+
 module.exports = {
     protectRoute,
     allowIf,
-    isActive
+    isActive,
+    isVerified,
 };
