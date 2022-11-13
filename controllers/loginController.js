@@ -23,7 +23,7 @@ let transporter = nodemailer.createTransport({
 
     auth: {
         user: 'mernstackdevelopermailer@gmail.com',
-        pass: 'obwtyzrssntswemx',
+        pass: 'iompksjrfnskwujc',
     }
 
 });
