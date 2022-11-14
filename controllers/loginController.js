@@ -2,8 +2,10 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const productModel = require("../models/Product");
+const categoryModel = require("../models/Category");
 const userModel = require("../models/User")
 const nodemailer = require('nodemailer');
+const { name } = require("ejs");
 var otp = Math.random();
 
 var Email;
@@ -143,9 +145,12 @@ const loginUser =
 
 const home = async (req, res) => {
     const products = await productModel.find()
+    const categories = await categoryModel.find()
     res.render("dashboard", {
         user: "",
-        products
+        products,
+        categories,
+        Category: false,
     });
 }
 
@@ -203,10 +208,12 @@ const checkout = (req, res) => {
 }
 
 const store = async (req, res) => {
-    const products = await productModel.find()
+    let catId = req.params.id;
+    const products = await productModel.find({category: catId})
+    console.log(products);
     res.render("store", {
         user: "",
-        products
+        products,
     });
 }
 

@@ -157,45 +157,47 @@
             <!-- row -->
             <div class="row">
                 <!-- shop -->
+                <% categories.forEach(function(Category) {%>
                 <div class="col-md-4 col-xs-6">
                     <div class="shop">
                         <div class="shop-img">
-                            <img src="public/img/laptop.jpg" alt="">
+                            <img src="/public/img/product_img/<%= Category.imgUrl[0] %>" alt="image">
                         </div>
                         <div class="shop-body">
-                            <h3>Laptop<br>Collection</h3>
-                            <a href="/store" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                            <h3><%= Category.name %><br>Collection</h3>
+                            <a href="/store/<%= Category.name %>" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
                 <!-- /shop -->
+                <%})%>
 
                 <!-- shop -->
-                <div class="col-md-4 col-xs-6">
+                <!-- <div class="col-md-4 col-xs-6">
                     <div class="shop">
                         <div class="shop-img">
                             <img src="public/img/phone1.jpg" alt="">
                         </div>
                         <div class="shop-body">
                             <h3>Mobile<br>Collection</h3>
-                            <a href="/store" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="/store/<%= Category._id %>" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /shop -->
 
                 <!-- shop -->
-                <div class="col-md-4 col-xs-6">
+                <!-- <div class="col-md-4 col-xs-6">
                     <div class="shop">
                         <div class="shop-img">
                             <img src="public/img/watch.jpg" alt="">
                         </div>
                         <div class="shop-body">
                             <h3>Watch<br>Collection</h3>
-                            <a href="/store" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="/store/<%= Category._id %>" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /shop -->
             </div>
             <!-- /row -->

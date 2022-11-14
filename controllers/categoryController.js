@@ -46,6 +46,13 @@ const categoryEdit = async (req, res) => {
 const categoryEditPost = async (req, res) => {
     const catId = req.params.id;
     const { name } = req.body;
+    if (req.file) {
+        const categoryImages = req.files != null ? req.files.map((img) => img.filename) : null
+        await categoryModel.findByIdAndUpdate(
+            { _id: prodId },
+            { $set: { imgUrl: categoryImages } }
+        );
+    }
     const saveEdits = await categoryModel.findOneAndUpdate(
         { _id: catId },
         {
@@ -63,8 +70,13 @@ const categoryEditPost = async (req, res) => {
 
 const categoryPost = async (req, res) => {
     const { name } = req.body;
+    req.files.forEach(img => { });
+    console.log(req.files);
+    const categoryImages = req.files != null ? req.files.map((img) => img.filename) : null
+    console.log(categoryImages);
     const newCategory = new categoryModel({
         name,
+        imgUrl: categoryImages,
     });
     await newCategory.save()
         .then(() => {

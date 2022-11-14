@@ -34,7 +34,7 @@ router.get('/cart', cart);
 
 router.get('/checkout', checkout);
 
-router.get('/store', store);
+router.get('/store/:id', store);
 
 //Dashboard
 router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
