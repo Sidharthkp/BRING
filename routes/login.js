@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store } = require('../controllers/loginController');
+const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart } = require('../controllers/loginController');
 
 const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser } = require('../controllers/adminController');
 
@@ -47,7 +47,9 @@ router.get("/add-categories", protectRoute, categoryAdd);
 
 router.get("/edit-categories/:id", protectRoute, categoryEdit);
 
-router.get("/profile", protectRoute, profile)
+router.get("/profile", protectRoute, profile);
+
+router.get("/addToCart/:id", protectRoute, addToCart);
 
 router.post('/signup', signupUser);
 

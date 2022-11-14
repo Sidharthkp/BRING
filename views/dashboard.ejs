@@ -99,11 +99,20 @@
                                                             <span class="tooltipp">quick view</span></a></button>
                                                 </div>
                                             </div>
-                                            <a href="/login" class="add-to-cart">
-                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
-                                                    add
-                                                    to cart</button>
-                                            </a>
+                                            <% if(user){ %>
+                                                <a href="/addToCart/<%= Product._id %>" class="add-to-cart">
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
+                                                        add
+                                                        to cart</button>
+                                                </a>
+                                                <%}else{%>
+                                                    <a href="/login" class="add-to-cart">
+                                                        <button class="add-to-cart-btn"><i
+                                                                class="fa fa-shopping-cart"></i>
+                                                            add
+                                                            to cart</button>
+                                                    </a>
+                                                    <%}%>
                                         </div>
                                         <!-- /product -->
 
@@ -218,5 +227,5 @@
 
     <!-- /SECTION -->
 
-    
+
     <%- include('footer-layout.ejs') %>

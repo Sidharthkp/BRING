@@ -3,7 +3,8 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const productModel = require("../models/Product");
 const categoryModel = require("../models/Category");
-const userModel = require("../models/User")
+const userModel = require("../models/User");
+const cartModel = require("../models/Cart");
 const nodemailer = require('nodemailer');
 const { name } = require("ejs");
 var otp = Math.random();
@@ -200,16 +201,40 @@ const productLarge = async (req, res) => {
 }
 
 const cart = (req, res) => {
-    res.render("cart");
+    res.render("cart", {
+        user: ""
+    });
+}
+
+const addToCart = async (req, res) => {
+    console.log("reached here");
+    const user = req.user.id;
+    console.log(">>>>>>>>>>>>>"+user);
+    const productId = req.params.id;
+    console.log(">>>>>>>>>>>>>"+productId);
+    const newCart = new cartModel({
+        user,
+        products: productId,
+    });
+    await newCart.save()
+        .then(() => {
+            res.redirect("back");
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+
 }
 
 const checkout = (req, res) => {
-    res.render("checkout");
+    res.render("checkout", {
+        user: ""
+    });
 }
 
 const store = async (req, res) => {
     let catId = req.params.id;
-    const products = await productModel.find({category: catId})
+    const products = await productModel.find({ category: catId })
     console.log(products);
     res.render("store", {
         user: "",
@@ -218,6 +243,7 @@ const store = async (req, res) => {
 }
 
 module.exports = {
+    addToCart,
     store,
     checkout,
     cart,
