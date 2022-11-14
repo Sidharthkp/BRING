@@ -5,12 +5,13 @@ const categoryModel = require("../models/Category")
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id
     const products = await productModel.find()
+    const categories = await categoryModel.find()
     const user = await userModel.findById(userId)
     if (req.user.isAdmin === true) {
         res.render("admin/index", { user: user })
     }
     else {
-        res.render("dashboard", { products, user: user });
+        res.render("dashboard", { products, categories, user: user });
     }
 }
 
