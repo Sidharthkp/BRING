@@ -12,7 +12,7 @@
                 <ul class="header-links pull-right">
                     <li><i class="fa fa-user-o"></i><a href="/profile">My Profile</a></li>
                     <% if(user){ %>
-                    <li><i class="fa-solid fa-right-from-bracket"></i><a href="/logout">Logout</a></li>
+                        <li><i class="fa-solid fa-right-from-bracket"></i><a href="/logout">Logout</a></li>
                         <%} %>
                 </ul>
             </div>
@@ -157,48 +157,28 @@
             <!-- row -->
             <div class="row">
                 <!-- shop -->
-                <% categories.forEach(function(Category) {%>
-                <div class="col-md-4 col-xs-6">
-                    <div class="shop">
-                        <div class="shop-img">
-                            <img src="/public/img/product_img/<%= Category.imgUrl[0] %>" alt="image">
-                        </div>
-                        <div class="shop-body">
-                            <h3><%= Category.name %><br>Collection</h3>
-                            <a href="/store/<%= Category.name %>" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
+                <div id="tab1" class="tab-pane active">
+                    <div class="products-slick" data-nav="#slick-nav-1">
+                        <% categories.forEach(function(Category) {%>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="shop">
+                                    <div class="shop-img" style="height: 300px; width: auto;">
+                                        <img src="/public/img/product_img/<%= Category.imgUrl[0] %>" alt="image">
+                                    </div>
+                                    <div class="shop-body">
+                                        <h3>
+                                            <%= Category.name %><br>Collection
+                                        </h3>
+                                        <a href="/store/<%= Category.name %>" class="cta-btn">Shop now <i
+                                                class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /shop -->
+                            <%})%>
                     </div>
+                    <div id="slick-nav-2" class="products-slick-nav"></div>
                 </div>
-                <!-- /shop -->
-                <%})%>
-
-                <!-- shop -->
-                <!-- <div class="col-md-4 col-xs-6">
-                    <div class="shop">
-                        <div class="shop-img">
-                            <img src="public/img/phone1.jpg" alt="">
-                        </div>
-                        <div class="shop-body">
-                            <h3>Mobile<br>Collection</h3>
-                            <a href="/store/<%= Category._id %>" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- /shop -->
-
-                <!-- shop -->
-                <!-- <div class="col-md-4 col-xs-6">
-                    <div class="shop">
-                        <div class="shop-img">
-                            <img src="public/img/watch.jpg" alt="">
-                        </div>
-                        <div class="shop-body">
-                            <h3>Watch<br>Collection</h3>
-                            <a href="/store/<%= Category._id %>" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- /shop -->
             </div>
             <!-- /row -->
         </div>
@@ -263,8 +243,8 @@
                                                     <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->
-                                                    <button class="quick-view" type=""><a href="/product/<%= Product._id %>"><i
-                                                                class="fa fa-eye"></i>
+                                                    <button class="quick-view" type=""><a
+                                                            href="/product/<%= Product._id %>"><i class="fa fa-eye"></i>
                                                             <span class="tooltipp">quick view</span></a></button>
                                                 </div>
                                             </div>
@@ -352,13 +332,14 @@
                                                     <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->
-                                                    <button class="quick-view" type=""><a href="/product/<%= Product._id %>"><i
-                                                                class="fa fa-eye"></i>
+                                                    <button class="quick-view" type=""><a
+                                                            href="/product/<%= Product._id %>"><i class="fa fa-eye"></i>
                                                             <span class="tooltipp">quick view</span></a></button>
                                                 </div>
                                             </div>
                                             <a href="/cart" class="add-to-cart">
-                                                <button class="add-to-cart-btn" type="button"><i class="fa fa-shopping-cart"></i>
+                                                <button class="add-to-cart-btn" type="button"><i
+                                                        class="fa fa-shopping-cart"></i>
                                                     add
                                                     to cart</button>
                                             </a>

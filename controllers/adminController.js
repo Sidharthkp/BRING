@@ -1,5 +1,6 @@
 const userModel = require("../models/User")
 const productModel = require("../models/Product")
+const categoryModel = require("../models/Category")
 
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id
@@ -37,10 +38,11 @@ const productManagement = async (req, res) => {
     }
 }
 
-const productAdd = (req, res) => {
+const productAdd = async (req, res) => {
+    const categories = await categoryModel.find()
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/add-products")
+        res.render("admin/add-products", {categories})
     }
     else {
         res.render("/")
@@ -57,12 +59,13 @@ const productDelete = async (req, res) => {
 }
 
 const productEdit = async (req, res) => {
+    const categories = await categoryModel.find()
     let prodId = req.params.id;
     console.log(prodId);
     let Product = await productModel.findOne({ _id: prodId });
     console.log(Product);
     if (req.user.isAdmin === true) {
-        res.render("admin/edit-products", { Product });
+        res.render("admin/edit-products", { Product, categories });
     } else {
         res.redirect("/productManage");
     }

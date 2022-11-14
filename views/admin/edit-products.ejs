@@ -6,25 +6,27 @@
                     <h2 class="text-center">Edit Product</h2>
                     <form action="/admin/edit-products/<%= Product._id %>" method="post" enctype="multipart/form-data">
                         </br>
-                        <input type="text" name="name" class="form-control" value="<%= Product.name %>"
+                        <input type="text" required name="name" class="form-control" value="<%= Product.name %>"
                             style="border-color: grey;">
                         </br>
-                        <input type="text" name="price" class="form-control" value="<%= Product.price %>"
+                        <input type="text" required name="price" class="form-control" value="<%= Product.price %>"
                             style="border-color: grey;">
                         </br>
-                        <input type="text" name="description" class="form-control" value="<%= Product.description %>"
+                        <input type="text" required name="description" class="form-control" value="<%= Product.description %>"
                             style="border-color: grey;">
                         </br>
 
-                        <select name="category" style="border-color: grey;" class="form-select form-select-sm mb-3"
+                        <select name="category" required style="border-color: grey;" class="form-select form-select-sm mb-3"
                             aria-label=".form-select-sm example">
-                            <option value="<%= Product.category %>" selected>Open this select menu</option>
-                            <option value="mobile">Mobile</option>
-                            <option value="laptop">Laptop</option>
-                            <option value="watch">Watch</option>
+                            <option selected>Select the category</option>
+                            <% categories.forEach(function(Category) {%>
+                                <option value="mobile">
+                                    <%= Category.name %>
+                                </option>
+                                <%})%>
                         </select>
                         </br>
-                        <input type="file" multiple name="imgUrl" class="form-control">
+                        <input type="file" required multiple name="imgUrl" class="form-control">
                         <button type="submit" class="btn btn-success mt-4">Submit</button>
                     </form>
                 </div>

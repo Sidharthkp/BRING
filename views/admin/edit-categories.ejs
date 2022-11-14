@@ -6,10 +6,10 @@
                     <h2 class="text-center">Edit Category</h2>
                     <form action="/admin/edit-categories/<%= Category._id %>" method="post" enctype="multipart/form-data">
                         <br>
-                        <input type="text" name="name" class="form-control" value="<%= Category.name %>"
+                        <input type="text" required name="name" class="form-control" value="<%= Category.name %>"
                             style="border-color: grey;">
                         <br>
-                        <input type="file" name="imgUrl" class="form-control">
+                        <input type="file" required name="imgUrl" class="form-control">
                         <button type="submit" class="btn btn-success mt-4">Submit</button>
                     </form>
                 </div>
