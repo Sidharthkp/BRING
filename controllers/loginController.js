@@ -145,10 +145,12 @@ const loginUser =
     })
 
 const home = async (req, res) => {
+    const userId = null;
     const products = await productModel.find()
     const categories = await categoryModel.find()
+    const user = await userModel.findById(userId)
     res.render("dashboard", {
-        user: "",
+        user: user,
         products,
         categories,
         Category: false,

@@ -30,7 +30,7 @@ router.get('/admin/categoryManage/:id', protectRoute, categoryDelete);
 
 router.get('/product/:id', productLarge);
 
-router.get('/cart', cart);
+router.get('/cart', protectRoute, cart);
 
 router.get('/checkout', checkout);
 
