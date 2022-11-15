@@ -256,7 +256,7 @@ const deleteCart = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
     console.log(productId);
-    const removeCart = await cartModel.findOneAndUpdate({ userId }, { $pull: { products: [productId] } });
+    const removeCart = await cartModel.findOneAndUpdate({ userId }, { $pull: { products:  productId  } });
     await removeCart.save()
         .then(() => {
             res.redirect("/cart");
