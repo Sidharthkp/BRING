@@ -15,7 +15,6 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="product-img" style="width: 200px;">
-                                            <% console.log(cart)%>
                                                 <img src="/public/img/product_img/<%= cart.imgUrl[0] %>" alt="">
                                         </div>
                                     </div>
@@ -41,8 +40,9 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
                                                         class="tooltipp">add to
                                                         wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa-solid fa-trash-can"></i></i><span class="tooltipp">add to
-                                                            delete</span></button>
+                                                <button class="add-to-compare"><a
+                                                    href="/deleteCart/<%= cart._id %>"><i class="fa-solid fa-trash-can"></i><span class="tooltipp">add to
+                                                            delete</span></a></button>
                                                 <button class="quick-view" type=""><a
                                                         href="/product/<%= cart._id %>"><i class="fa fa-eye"></i>
                                                         <span class="tooltipp">quick view</span></a></button>

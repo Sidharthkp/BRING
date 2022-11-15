@@ -205,14 +205,13 @@ const productLarge = async (req, res) => {
 const cart = (req, res) => {
     const userId = req.user.id;
     cartModel.findOne({ user: userId }).populate("products").exec((err, data) => {
-        if(err){
+        if (err) {
             return console.log(err);
         }
-        console.log(data);
         res.render("cart", {
             user: "",
             data
-        });  
+        });
     })
 }
 
@@ -221,7 +220,7 @@ const addToCart = async (req, res) => {
     const productId = req.params.id;
     const userId = req.user.id;
     console.log(">>>>>>>>>>>>>" + productId);
-    const cart = await cartModel.findOne({user: userId});
+    const cart = await cartModel.findOne({ user: userId });
     if (!cart) {
         const newCart = new cartModel({
             user: req.user.id
@@ -253,6 +252,20 @@ const addToCart = async (req, res) => {
 
 }
 
+const deleteCart = async (req, res) => {
+    const userId = req.user.id;
+    const productId = req.params.id;
+    console.log(productId);
+    const removeCart = await cartModel.findOneAndUpdate({ userId }, { $pull: { products: [productId] } });
+    await removeCart.save()
+        .then(() => {
+            res.redirect("/cart");
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
+
 const checkout = (req, res) => {
     res.render("checkout", {
         user: ""
@@ -270,6 +283,7 @@ const store = async (req, res) => {
 }
 
 module.exports = {
+    deleteCart,
     addToCart,
     store,
     checkout,
