@@ -3,7 +3,7 @@ const productModel = require("../models/Product")
 const categoryModel = require("../models/Category")
 
 const loginAdminUser = async (req, res) => {
-    const userId = req.user.id
+    const userId = req.user.id;
     const products = await productModel.find()
     const categories = await categoryModel.find()
     const user = await userModel.findById(userId)

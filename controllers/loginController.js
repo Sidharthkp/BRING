@@ -131,7 +131,7 @@ const resendOtp = function (req, res) {
         res.render("otp", { newUser, msg: "Otp has been sent", colour: "green" });
     });
 };
-// For login View 
+// For login View
 const loginView = (req, res) => {
     res.render("login", {
         user: req.user
@@ -201,21 +201,46 @@ const productLarge = async (req, res) => {
 }
 
 const cart = (req, res) => {
-    res.render("cart", {
-        user: ""
-    });
+    const userId = req.user.id;
+    cartModel.findOne({ user: userId }).populate("products").exec((err, data) => {
+        if(err){
+            return console.log(err);
+        }
+        console.log(data);
+        res.render("cart", {
+            user: "",
+            data
+        });  
+    })
 }
 
 const addToCart = async (req, res) => {
     console.log("reached here");
-    const user = req.user.id;
-    console.log(">>>>>>>>>>>>>"+user);
     const productId = req.params.id;
-    console.log(">>>>>>>>>>>>>"+productId);
-    const newCart = new cartModel({
-        user,
-        products: productId,
-    });
+    const userId = req.user.id;
+    console.log(">>>>>>>>>>>>>" + productId);
+    const cart = await cartModel.findOne({user: userId});
+    if (!cart) {
+        const newCart = new cartModel({
+            user: req.user.id
+        });
+        await newCart.save()
+            .then(() => {
+                res.redirect("back");
+            })
+            .catch(() => {
+                console.log("Error");
+            })
+    }
+    const newCart = await cartModel.findOneAndUpdate({
+        user: req.user.id
+    },
+        {
+            $push: {
+                products: productId,
+            }
+        }
+    );
     await newCart.save()
         .then(() => {
             res.redirect("back");
