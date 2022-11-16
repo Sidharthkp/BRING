@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList } = require('../controllers/loginController');
+const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword } = require('../controllers/loginController');
 
 const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser } = require('../controllers/adminController');
 
@@ -38,7 +38,8 @@ router.get('/checkout', checkout);
 
 router.get('/store/:id', store);
 
-//Dashboard
+router.get('/changePassword/:id', changePassword);
+
 router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
 
 router.get("/add-products", protectRoute, productAdd);

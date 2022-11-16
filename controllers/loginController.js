@@ -98,6 +98,22 @@ const signupUser = (req, res) => {
     }
 };
 
+const changePassword = async (req, res) => {
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
+    res.render('changePassword', {user: user, count, counts});
+}
+
 const verifyOtp = async (req, res) => {
     let userId = req.params.id;
     if (req.body.otp == otp) {
@@ -412,5 +428,6 @@ module.exports = {
     verifyOtp,
     resendOtp,
     profile,
-    editProfile
+    editProfile,
+    changePassword
 };
