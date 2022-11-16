@@ -171,9 +171,19 @@ const logout = (req, res) => {
 }
 
 const profile = async (req, res) => {
-    const userId = req.user.id
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
     const user = await userModel.findById(userId)
-    res.render("profile", { user: user });
+    res.render("profile", { user: user, count, counts });
 }
 
 const editProfile = async (req, res) => {
