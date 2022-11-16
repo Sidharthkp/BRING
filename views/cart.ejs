@@ -15,12 +15,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="product-img" style="width: 200px;">
-                                                <img src="/public/img/product_img/<%= cart.imgUrl[0] %>" alt="">
+                                            <img src="/public/img/product_img/<%= cart.imgUrl[0] %>" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="product-body">
-                                            <p class="product-category"><%= cart.category %></p>
+                                            <p class="product-category">
+                                                <%= cart.category %>
+                                            </p>
                                             <h3 class="product-name"><a href="#">
                                                     <%= cart.name %>
                                                 </a></h3>
@@ -40,11 +42,12 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
                                                         class="tooltipp">add to
                                                         wishlist</span></button>
-                                                <button class="add-to-compare"><a
-                                                    href="/deleteCart/<%= cart._id %>"><i class="fa-solid fa-trash-can"></i><span class="tooltipp">add to
+                                                <button class="add-to-compare"><a href="/deleteCart/<%= cart._id %>"><i
+                                                            class="fa-solid fa-trash-can"></i><span class="tooltipp">add
+                                                            to
                                                             delete</span></a></button>
-                                                <button class="quick-view" type=""><a
-                                                        href="/product/<%= cart._id %>"><i class="fa fa-eye"></i>
+                                                <button class="quick-view" type=""><a href="/product/<%= cart._id %>"><i
+                                                            class="fa fa-eye"></i>
                                                         <span class="tooltipp">quick view</span></a></button>
                                             </div>
                                         </div>
@@ -128,7 +131,7 @@
                         </div>
                         <div class="order-col">
                             <div><strong>TOTAL</strong></div>
-                            <div><strong class="order-total"> ₹2940.00</strong></div>
+                            <div><strong class="order-total">₹<%= data.total %></strong></div>
                         </div>
                     </div>
                     <div class="payment-method">

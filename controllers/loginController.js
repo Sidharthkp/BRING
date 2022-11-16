@@ -225,7 +225,7 @@ const cart = async (req, res) => {
             user: userId,
             data,
             count,
-            counts
+            counts,
         });
     })
 }
@@ -236,6 +236,7 @@ const addToCart = async (req, res) => {
     const userId = req.user.id;
     console.log(">>>>>>>>>>>>>" + productId);
     const cart = await cartModel.findOne({ user: userId });
+    const product = await productModel.findById(productId);
     if (!cart) {
         const newCart = new cartModel({
             user: req.user.id
@@ -254,6 +255,9 @@ const addToCart = async (req, res) => {
         {
             $push: {
                 products: productId,
+            },
+            $inc: {
+                total: product.price
             }
         }
     );

@@ -13,6 +13,9 @@ const CartSchema = new mongoose.Schema({
         required: true,
         ref: "Product"
     },
+    total: {
+        type: Number
+    },
     date: {
         type: Date,
         default: Date.now,
