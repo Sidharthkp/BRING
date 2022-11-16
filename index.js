@@ -8,7 +8,7 @@ const passport = require("passport");
 const { loginCheck } = require("./auth/passport");
 loginCheck(passport);
 const cookieParser = require('cookie-parser');
-// const logger = require('morgan');
+const logger = require('morgan');
 const nocache = require('nocache');
 const multer = require("multer");
 
@@ -21,7 +21,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
-// app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(cookieParser());
 app.use(nocache());
 

@@ -6,7 +6,7 @@ const categoryModel = require("../models/Category");
 const userModel = require("../models/User");
 const cartModel = require("../models/Cart");
 const nodemailer = require('nodemailer');
-const { name } = require("ejs");
+const { name, resolveInclude } = require("ejs");
 var otp = Math.random();
 
 var Email;
@@ -146,11 +146,13 @@ const loginUser =
 
 const home = async (req, res) => {
     const userId = null;
+    const count = null;
     const products = await productModel.find()
     const categories = await categoryModel.find()
     const user = await userModel.findById(userId)
     res.render("dashboard", {
         user: user,
+        count: count,
         products,
         categories,
         Category: false,
@@ -256,7 +258,7 @@ const deleteCart = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
     console.log(productId);
-    const removeCart = await cartModel.findOneAndUpdate({ userId }, { $pull: { products:  productId  } });
+    const removeCart = await cartModel.findOneAndUpdate({ userId }, { $pull: { products: productId } });
     await removeCart.save()
         .then(() => {
             res.redirect("/cart");

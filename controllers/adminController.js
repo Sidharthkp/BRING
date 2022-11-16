@@ -1,6 +1,7 @@
 const userModel = require("../models/User")
 const productModel = require("../models/Product")
 const categoryModel = require("../models/Category")
+const cartModel = require("../models/Cart")
 
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
@@ -11,7 +12,13 @@ const loginAdminUser = async (req, res) => {
         res.render("admin/index", { user: user })
     }
     else {
-        res.render("dashboard", { products, categories, user: user });
+        let count = 0;
+        const userId = req.user.id;
+        const cart = await cartModel.findOne({ userId });
+        if (cart) {
+            count = cart.products.length;
+        }
+        res.render("dashboard", { products, categories, count, user: user });
     }
 }
 
@@ -43,7 +50,7 @@ const productAdd = async (req, res) => {
     const categories = await categoryModel.find()
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/add-products", {categories})
+        res.render("admin/add-products", { categories })
     }
     else {
         res.render("/")

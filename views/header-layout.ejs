@@ -110,7 +110,9 @@
 								<a href="/cart" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
-									<!-- <div class="qty">3</div> -->
+									<%if(user){%>
+										<div class="qty"><%= count %></div>
+										<%}%>
 								</a>
 							</div>
 
