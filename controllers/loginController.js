@@ -205,15 +205,27 @@ const productLarge = async (req, res) => {
     });
 }
 
-const cart = (req, res) => {
+const cart = async (req, res) => {
     const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
     cartModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
         }
         res.render("cart", {
-            user: "",
-            data
+            user: userId,
+            data,
+            count,
+            counts
         });
     })
 }
@@ -275,20 +287,32 @@ const checkout = (req, res) => {
     });
 }
 
-const wishList = (req, res) => {
+const wishList = async (req, res) => {
     const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
     wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
         }
         res.render("wishList", {
-            user: "",
-            data
+            user: userId,
+            data,
+            count,
+            counts
         });
     })
 }
 
-const addToWishList= async (req, res) => {
+const addToWishList = async (req, res) => {
     console.log("reached here");
     const productId = req.params.id;
     const userId = req.user.id;
