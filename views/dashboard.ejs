@@ -71,7 +71,9 @@
                                                     </div> -->
                                             </div>
                                             <div class="product-body">
-                                                <p class="product-category"><%= Product.category %></p>
+                                                <p class="product-category">
+                                                    <%= Product.category %>
+                                                </p>
                                                 <h3 class="product-name"><a href="#">
                                                         <%= Product.name %>
                                                     </a></h3>
@@ -88,15 +90,26 @@
                                                         <i class="fa fa-star"></i>
                                                     </div> -->
                                                 <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to
-                                                            wishlist</span></button>
-                                                    <!-- <button class="add-to-compare"><i
+                                                    <% if(user){ %>
+                                                        
+                                                            <button class="quick-view" type=""><a href="/addToWishList/<%= Product._id %>"><i
+                                                                    class="fa fa-heart-o"></i><span class="tooltipp">add
+                                                                    to
+                                                                    wishlist</span></a></button>
+                                                        <%}else{%>
+                                                            <button class="add-to-wishlist"><a href="/login"></a><i
+                                                                class="fa fa-heart-o"></i><span class="tooltipp">add
+                                                                to
+                                                                wishlist</span></a></button>
+                                                            <%}%>
+                                                                <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->
-                                                    <button class="quick-view" type=""><a
-                                                            href="/product/<%= Product._id %>"><i class="fa fa-eye"></i>
-                                                            <span class="tooltipp">quick view</span></a></button>
+                                                                <button class="quick-view" type=""><a
+                                                                        href="/product/<%= Product._id %>"><i
+                                                                            class="fa fa-eye"></i>
+                                                                        <span class="tooltipp">quick
+                                                                            view</span></a></button>
                                                 </div>
                                             </div>
                                             <% if(user){ %>
@@ -185,10 +198,10 @@
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </div> -->
-                                                <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to
-                                                            wishlist</span></button>
+                                                <div class="product-btns"><a href="/wishList">
+                                                        <button class="add-to-wishlist"><i
+                                                                class="fa fa-heart-o"></i><span class="tooltipp">add to
+                                                                wishlist</span></button></a>
                                                     <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->

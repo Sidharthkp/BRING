@@ -2,6 +2,7 @@ const userModel = require("../models/User")
 const productModel = require("../models/Product")
 const categoryModel = require("../models/Category")
 const cartModel = require("../models/Cart")
+const wishListModel = require("../models/WishList")
 
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
@@ -13,12 +14,17 @@ const loginAdminUser = async (req, res) => {
     }
     else {
         let count = 0;
+        let counts = 0;
         const userId = req.user.id;
         const cart = await cartModel.findOne({ userId });
         if (cart) {
             count = cart.products.length;
         }
-        res.render("dashboard", { products, categories, count, user: user });
+        const wishList = await wishListModel.findOne({ userId });
+        if (wishList) {
+            counts = wishList.products.length;
+        }
+        res.render("dashboard", { products, categories, count, counts, user: user });
     }
 }
 

@@ -97,10 +97,12 @@
 						<div class="header-ctn">
 							<!-- Wishlist -->
 							<div>
-								<a href="/wishlist">
+								<a href="/wishList">
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
-									<!-- <div class="qty">2</div> -->
+									<%if(user){%>
+										<div class="qty"><%= counts %></div>
+										<%}%>
 								</a>
 							</div>
 							<!-- /Wishlist -->

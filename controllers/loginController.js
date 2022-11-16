@@ -5,6 +5,7 @@ const productModel = require("../models/Product");
 const categoryModel = require("../models/Category");
 const userModel = require("../models/User");
 const cartModel = require("../models/Cart");
+const wishListModel = require("../models/WishList");
 const nodemailer = require('nodemailer');
 const { name, resolveInclude } = require("ejs");
 var otp = Math.random();
@@ -274,6 +275,70 @@ const checkout = (req, res) => {
     });
 }
 
+const wishList = (req, res) => {
+    const userId = req.user.id;
+    wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.render("wishList", {
+            user: "",
+            data
+        });
+    })
+}
+
+const addToWishList= async (req, res) => {
+    console.log("reached here");
+    const productId = req.params.id;
+    const userId = req.user.id;
+    console.log(">>>>>>>>>>>>>" + productId);
+    const wishList = await wishListModel.findOne({ user: userId });
+    if (!wishList) {
+        const newWishList = new wishListModel({
+            user: req.user.id
+        });
+        await newWishList.save()
+            .then(() => {
+                res.redirect("back");
+            })
+            .catch(() => {
+                console.log("Error");
+            })
+    }
+    const newWishList = await wishListModel.findOneAndUpdate({
+        user: req.user.id
+    },
+        {
+            $push: {
+                products: productId,
+            }
+        }
+    );
+    await newWishList.save()
+        .then(() => {
+            res.redirect("back");
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+
+}
+
+const deleteWishList = async (req, res) => {
+    const userId = req.user.id;
+    const productId = req.params.id;
+    console.log(productId);
+    const removeWishList = await wishListModel.findOneAndUpdate({ userId }, { $pull: { products: productId } });
+    await removeWishList.save()
+        .then(() => {
+            res.redirect("/wishList");
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
+
 const store = async (req, res) => {
     let catId = req.params.id;
     const products = await productModel.find({ category: catId })
@@ -285,6 +350,9 @@ const store = async (req, res) => {
 }
 
 module.exports = {
+    deleteWishList,
+    addToWishList,
+    wishList,
     deleteCart,
     addToCart,
     store,
