@@ -59,48 +59,54 @@
 
                     <!-- Shiping Details -->
                     <div class="shiping-details">
-                            <div class="section-title text-center">
-                                <h3 class="title">Shiping address</h3>
-                            </div>
-                            <div class="container" style="width: 50rem;">
-                                <form>
-                                    <div class="caption">
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="first_name" value="<%= address[0].first_name %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="last_name" value="<%= address[0].last_name %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="email" name="email" value="<%= address[0].email %>">
-                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with
-                                                anyone
-                                                else.</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="address" value="<%= address[0].address %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="city" value="<%= address[0].city %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="district" value="<%= address[0].district %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="state" value="<%= address[0].state %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="country" value="<%= address[0].country %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="text" name="zip" value="<%= address[0].zip %>">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="input" type="tel" name="tel" value="<%= address[0].tel %>">
-                                        </div>
+                        <div class="section-title text-center">
+                            <h3 class="title">Shiping address</h3>
+                        </div>
+                        <div class="container" style="width: 50rem;">
+                            <form>
+                                <div class="caption">
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="first_name"
+                                            value="<%= address[0].first_name %>">
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="last_name"
+                                            value="<%= address[0].last_name %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="email" name="email" value="<%= address[0].email %>">
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email
+                                            with
+                                            anyone
+                                            else.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="address"
+                                            value="<%= address[0].address %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="city" value="<%= address[0].city %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="district"
+                                            value="<%= address[0].district %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="state" value="<%= address[0].state %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="country"
+                                            value="<%= address[0].country %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="text" name="zip" value="<%= address[0].zip %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="input" type="tel" name="tel" value="<%= address[0].tel %>">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="input-checkbox">
                             <input type="checkbox" id="shiping-address">
                             <label for="shiping-address">
@@ -156,12 +162,14 @@
                         </div>
                         <div class="order-products">
                             <%for (let cart of data.products){%>
-                            <div class="order-col">
-                                <div>1x <%= cart.name %></div>
-                                <div>₹<%=cart.price%></div>
-                            </div>
-                            <%}%>
-                            <!-- <div class="order-col">
+                                <div class="order-col">
+                                    <div>1x <%= cart.name %>
+                                    </div>
+                                    <div>₹<%=cart.price%>
+                                    </div>
+                                </div>
+                                <%}%>
+                                    <!-- <div class="order-col">
                                 <div>2x Product Name Goes Here</div>
                                 <div> ₹980.00</div>
                             </div> -->
@@ -183,8 +191,11 @@
                                 Cash on delivery
                             </label>
                             <div class="caption">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.</p>
+                                <p>Please use this payment method only if you are certain that someone will be available
+                                    to receive and pay for your order upon delivery. If you intend to leave the address
+                                    you provided, kindly endorse your payment to another party to ensure your order is
+                                    delivered successfully. The standard, but not guaranteed, timeframe for shipping is
+                                    between 2 and 7 days.</p>
                             </div>
                         </div>
                         <div class="input-radio">
@@ -194,8 +205,11 @@
                                 Razorpay
                             </label>
                             <div class="caption">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.</p>
+                                <p>The price and availability of items at BRING are subject to change. The shopping
+                                    cart is a temporary place to store a list of your items and reflects each item's
+                                    most recent price.
+                                    Do you have a promotional code? We'll ask you to enter your claim code when it's
+                                    time to pay.</p>
                             </div>
                         </div>
                         <!-- <div class="input-radio">
@@ -217,7 +231,7 @@
                             I've read and accept the <a href="#">terms & conditions</a>
                         </label>
                     </div>
-                    <a href="#" class="primary-btn order-submit">Place order</a>
+                    <a href="/checkout" class="primary-btn order-submit">Place order</a>
                 </div>
                 <!-- /Order Details -->
             </div>
