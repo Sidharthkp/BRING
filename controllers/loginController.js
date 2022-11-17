@@ -240,11 +240,22 @@ const addAddress = async (req, res) => {
     });
     console.log(userId);
     await newAddress.save()
-        .then(() => {
+        .then(async () => {
+            console.log(userId);
+            await userModel.findByIdAndUpdate(
+                {
+                    _id: userId
+                },
+                {
+                    $push: {
+                        address: Address.id,
+                    },
+                }
+            );
             res.redirect('/profile');
         })
         .catch(() => {
-            console.log("Error while saving data in address collection");
+            console.log("Error while saving data to the user collection");
         })
 }
 
