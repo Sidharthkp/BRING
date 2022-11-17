@@ -189,6 +189,7 @@ const logout = (req, res) => {
 
 const profile = async (req, res) => {
     const userId = req.user.id;
+    const user = await userModel.findById(userId)
     let count = 0;
     let counts = 0;
     const cart = await cartModel.findOne({ userId });
@@ -199,8 +200,18 @@ const profile = async (req, res) => {
     if (wishList) {
         counts = wishList.products.length;
     }
-    const user = await userModel.findById(userId)
-    res.render("profile", { user: user, count, counts });
+    userModel.findOne({ _id: userId }).populate("address").exec((err, data) => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data);
+        res.render("profile", {
+            user: user,
+            data,
+            count,
+            counts,
+        });
+    })
 }
 
 const editProfile = async (req, res) => {
@@ -297,6 +308,7 @@ const cart = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
+    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
     cartModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
@@ -306,6 +318,7 @@ const cart = async (req, res) => {
             data,
             count,
             counts,
+            userDetails
         });
     })
 }

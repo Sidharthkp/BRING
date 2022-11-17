@@ -62,32 +62,50 @@
                         <div class="section-title">
                             <h3 class="title">Shiping address</h3>
                         </div>
-                        <div class="caption">
-                            <div class="form-group">
-                                <input class="input" type="text" name="first-name" placeholder="First Name">
+                        <%for (let address of userDetails.address){%>
+                            <div class="section-title text-center">
+                                <h3 class="title">Address</h3>
                             </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="last-name" placeholder="Last Name">
+                            <div class="container" style="width: 50rem;">
+                                <form>
+                                    <div class="caption">
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="first_name" value="<%= address.first_name %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="last_name" value="<%= address.last_name %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="email" name="email" value="<%= address.email %>">
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                                anyone
+                                                else.</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="address" value="<%= address.address %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="city" value="<%= address.city %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="district" value="<%= address.district %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="state" value="<%= address.state %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="country" value="<%= address.country %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="zip" value="<%= address.zip %>">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="input" type="tel" name="tel" value="<%= address.tel %>">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <input class="input" type="email" name="email" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="address" placeholder="Address">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="city" placeholder="City">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="country" placeholder="Country">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="tel" name="tel" placeholder="Telephone">
-                            </div>
-                        </div>
+                            <%}%>
                         <div class="input-checkbox">
                             <input type="checkbox" id="shiping-address">
                             <label for="shiping-address">
