@@ -5,7 +5,6 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const AddressSchema = new mongoose.Schema({
     user: {
         type: ObjectId,
-        required: true,
         ref: "User"
     },
     date: {

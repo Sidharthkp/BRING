@@ -223,7 +223,6 @@ const editProfile = async (req, res) => {
 const addAddress = async (req, res) => {
     const userId = req.params.id;
     const { first_name, last_name, email, address, city, district, state, country, zip, tel } = req.body;
-    const Address = await addressModel.findOne({ user: userId });
     const user = await userModel.findById(userId)
     const newAddress = new addressModel({
         user: user,
@@ -241,11 +240,10 @@ const addAddress = async (req, res) => {
     console.log(userId);
     await newAddress.save()
         .then(async () => {
+            const Address = await addressModel.findOne({ user: userId })
             console.log(userId);
-            await userModel.findByIdAndUpdate(
-                {
-                    _id: userId
-                },
+            let data = await userModel.findByIdAndUpdate(userId,
+
                 {
                     $push: {
                         address: Address.id,
@@ -254,7 +252,8 @@ const addAddress = async (req, res) => {
             );
             res.redirect('/profile');
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             console.log("Error while saving data to the user collection");
         })
 }
