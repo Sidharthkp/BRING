@@ -6,6 +6,7 @@ const categoryModel = require("../models/Category");
 const userModel = require("../models/User");
 const cartModel = require("../models/Cart");
 const wishListModel = require("../models/WishList");
+const addressModel = require("../models/Address");
 const nodemailer = require('nodemailer');
 const { name, resolveInclude } = require("ejs");
 var otp = Math.random();
@@ -111,7 +112,7 @@ const changePassword = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    res.render('changePassword', {user: user, count, counts});
+    res.render('changePassword', { user: user, count, counts });
 }
 
 const verifyOtp = async (req, res) => {
@@ -219,15 +220,57 @@ const editProfile = async (req, res) => {
     });
 }
 
+const addAddress = async (req, res) => {
+    const userId = req.params.id;
+    const { first_name, last_name, email, address, city, district, state, country, zip, tel } = req.body;
+    const Address = await addressModel.findOne({ user: userId });
+    const user = await userModel.findById(userId)
+    const newAddress = new addressModel({
+        user: user,
+        first_name,
+        last_name,
+        email,
+        address,
+        city,
+        district,
+        state,
+        country,
+        zip,
+        tel
+    });
+    console.log(userId);
+    await newAddress.save()
+        .then(() => {
+            res.redirect('/profile');
+        })
+        .catch(() => {
+            console.log("Error while saving data in address collection");
+        })
+}
+
 const productLarge = async (req, res) => {
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
     let prodId = req.params.id;
     console.log(prodId);
     const products = await productModel.find()
     const Product = await productModel.findOne({ _id: prodId })
+    const user = await userModel.findById(userId)
     res.render("product", {
-        user: "",
+        user: user,
         Product,
-        products
+        products,
+        count,
+        counts
     });
 }
 
@@ -243,12 +286,13 @@ const cart = async (req, res) => {
     if (wishList) {
         counts = wishList.products.length;
     }
+    const user = await userModel.findById(userId)
     cartModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
         }
         res.render("cart", {
-            user: userId,
+            user: user,
             data,
             count,
             counts,
@@ -317,9 +361,23 @@ const deleteCart = async (req, res) => {
         })
 }
 
-const checkout = (req, res) => {
+const checkout = async (req, res) => {
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
     res.render("checkout", {
-        user: ""
+        user: "user",
+        count,
+        counts
     });
 }
 
@@ -335,12 +393,13 @@ const wishList = async (req, res) => {
     if (wishList) {
         counts = wishList.products.length;
     }
+    const user = await userModel.findById(userId)
     wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
         }
         res.render("wishList", {
-            user: userId,
+            user: user,
             data,
             count,
             counts
@@ -400,12 +459,26 @@ const deleteWishList = async (req, res) => {
 }
 
 const store = async (req, res) => {
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
     let catId = req.params.id;
     const products = await productModel.find({ category: catId })
     console.log(products);
+    const user = await userModel.findById(userId)
     res.render("store", {
-        user: "",
+        user: user,
         products,
+        count,
+        counts
     });
 }
 
@@ -429,5 +502,6 @@ module.exports = {
     resendOtp,
     profile,
     editProfile,
-    changePassword
+    changePassword,
+    addAddress
 };

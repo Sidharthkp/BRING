@@ -15,16 +15,18 @@ const loginAdminUser = async (req, res) => {
     else {
         let count = 0;
         let counts = 0;
-        const userId = req.user.id;
-        const cart = await cartModel.findOne({ userId });
+        const usersId = req.user.id;
+        console.log(usersId);
+        const users = await userModel.findById(usersId)
+        const cart = await cartModel.findOne({ usersId });
         if (cart) {
             count = cart.products.length;
         }
-        const wishList = await wishListModel.findOne({ userId });
+        const wishList = await wishListModel.findOne({ usersId });
         if (wishList) {
             counts = wishList.products.length;
         }
-        res.render("dashboard", { products, categories, count, counts, user: user });
+        res.render("dashboard", { products, categories, count, counts, user: users });
     }
 }
 

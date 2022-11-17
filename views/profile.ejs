@@ -36,13 +36,13 @@
                 <form action="/address/<%= user._id%>" method="post">
                     <div class="caption">
                         <div class="form-group">
-                            <input class="input" type="text" name="first-name" value="<%= user.name %>">
+                            <input class="input" type="text" name="first_name" placeholder="First Name" >
                         </div>
-                        <!-- <div class="form-group">
-                            <input class="input" type="text" name="last-name" placeholder="Last Name">
-                        </div> -->
                         <div class="form-group">
-                            <input class="input" type="email" name="email" value="<%= user.email %>">
+                            <input class="input" type="text" name="last_name" placeholder="Last Name" >
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="email" name="email" placeholder="Email">
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                                 else.</small>
                         </div>
@@ -53,16 +53,16 @@
                             <input class="input" type="text" name="city" placeholder="City">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="city" placeholder="District">
+                            <input class="input" type="text" name="district" placeholder="District">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="city" placeholder="State">
+                            <input class="input" type="text" name="state" placeholder="State">
                         </div>
                         <div class="form-group">
                             <input class="input" type="text" name="country" placeholder="Country">
                         </div>
                         <div class="form-group">
-                            <input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+                            <input class="input" type="text" name="zip" placeholder="ZIP Code">
                         </div>
                         <div class="form-group">
                             <input class="input" type="tel" name="tel" placeholder="Mobile no:">

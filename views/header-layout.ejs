@@ -51,6 +51,9 @@
 					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 				</ul>
 				<ul class="header-links pull-right">
+					<% if(user){ %>
+					<li><i class="fa-solid fa-hand-peace"></i><a>Hi, <%= user.name %></a></li>
+					<%} %>
 					<li><i class="fa fa-user-o"></i><a href="/profile">My Profile</a></li>
 					<% if(user){ %>
 						<li><i class="fa-solid fa-right-from-bracket"></i><a href="/logout">Logout</a></li>

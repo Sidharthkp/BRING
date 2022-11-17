@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema({
   verified: {
     type: Boolean,
     default: false
+  },
+  address: {
+    type: [String],
+    ref: "Address"
   }
 });
 const User = mongoose.model("User", UserSchema);
