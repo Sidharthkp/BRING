@@ -309,6 +309,7 @@ const cart = async (req, res) => {
     }
     const user = await userModel.findById(userId)
     const userDetails = await userModel.findOne({ _id: userId }).populate("address")
+    const address = userDetails.address
     cartModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
@@ -318,7 +319,7 @@ const cart = async (req, res) => {
             data,
             count,
             counts,
-            userDetails
+            address
         });
     })
 }
