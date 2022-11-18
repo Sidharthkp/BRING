@@ -39,7 +39,7 @@
                                 <td><img src="/public/img/product_img/<%= Product.imgUrl[0] %>" style="width: 100px;" alt=""></td>
                                 <td>
                                     <a class="btn m-1 btn-outline-success" href="/edit-products/<%= Product._id %>">Edit</a>
-                                    <a href="../admin/productManage/<%= Product._id %>" class="btn btn-outline-danger m-1"
+                                    <a href="/productManage/<%= Product._id %>" class="btn btn-outline-danger m-1"
                                         onclick="return confirm('Are you sure, you want to delete <%= Product.name %> ?')">Delete</a>
                                 </td>
                             </tr>

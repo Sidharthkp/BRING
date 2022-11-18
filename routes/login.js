@@ -2,7 +2,7 @@ const express = require('express');
 
 const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress } = require('../controllers/loginController');
 
-const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser } = require('../controllers/adminController');
+const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost } = require('../controllers/adminController');
 
 const { categoryManagement, categoryDelete, categoryAdd, categoryPost, categoryEditPost, categoryEdit } = require("../controllers/categoryController");
 
@@ -44,6 +44,10 @@ router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
 
 router.get("/add-products", protectRoute, productAdd);
 
+router.get("/add-banners", protectRoute, bannerAdd);
+
+router.get("/banner", protectRoute, bannerManagement);
+
 router.get("/edit-products/:id", protectRoute, productEdit);
 
 router.get("/add-categories", protectRoute, categoryAdd);
@@ -58,6 +62,12 @@ router.get("/addToWishList/:id", protectRoute, addToWishList);
 
 router.get("/deleteCart/:id", protectRoute, deleteCart);
 
+router.get('/bannerManage/:id', protectRoute, bannerDelete);
+
+router.get('/categoryManage/:id', protectRoute, categoryDelete);
+
+router.get('/productManage/:id', protectRoute, productDelete);
+
 router.get("/deleteWishList/:id", protectRoute, deleteWishList);
 
 router.post("/address/:id", addAddress);
@@ -68,13 +78,11 @@ router.post('/login', loginUser);
 
 router.post("/add-products", protectRoute, productPost);
 
-router.post('/productManage', protectRoute, productDelete);
-
 router.post('/admin/edit-products/:id', protectRoute, productEditPost);
 
 router.post("/add-categories", protectRoute, categoryPost);
 
-router.post('/categoryManage', protectRoute, categoryDelete);
+router.post("/add-banners", protectRoute, bannerPost);
 
 router.post('/admin/edit-categories/:id', protectRoute, categoryEditPost);
 

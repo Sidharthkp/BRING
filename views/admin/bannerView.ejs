@@ -4,33 +4,32 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Recent Categories`</h6>
-                <a href="/add-categories">Add</a>
+                <h6 class="mb-0">Recent Banners</h6>
+                <a href="/add-banners">Add</a>
             </div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-white">
                             <!-- <th scope="col"><input class="form-check-input" type="checkbox"></th> -->
-                            <th scope="col" style="width: 18rem;">Category name</th>
-                            <th scope="col" style="width: 18rem;">Category image</th>
+                            <th scope="col" style="width: 18rem;">Banner name</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% categories.forEach(function(Category) {%>
+                        <% banners.forEach(function(Banner) {%>
                             <tr>
                                 <!-- <td><input class="form-check-input" type="checkbox"></td> -->
                                 <td>
-                                    <%= Category.name %>
+                                    <%= Banner.name %>
                                 </td>
                                 <td>
-                                    <img src="/public/img/product_img/<%= Category.imgUrl %>" style="width: 100px;" alt="">
+                                    <%= Banner.source %>
                                 </td>
-                                
                                 <td>
-                                    <a class="btn m-1 btn-outline-success" href="/edit-categories/<%= Category._id %>">Edit</a>
-                                    <a href="/categoryManage/<%= Category._id %>" class="btn btn-outline-danger m-1"
-                                        onclick="return confirm('Are you sure, you want to delete <%= Category.name %> ?')">Delete</a>
+                                    <a href="/bannerManage/<%= Banner._id %>" class="btn btn-outline-danger m-1"
+                                        onclick="return confirm('Are you sure, you want to delete <%= Banner.name %> ?')">Delete</a>
                                 </td>
                             </tr>
                             <%})%>

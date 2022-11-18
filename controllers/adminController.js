@@ -3,6 +3,7 @@ const productModel = require("../models/Product")
 const categoryModel = require("../models/Category")
 const cartModel = require("../models/Cart")
 const wishListModel = require("../models/WishList")
+const bannerModel = require("../models/Banner")
 
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
@@ -191,7 +192,56 @@ const activeUser = async (req, res) => {
     }
 }
 
+const bannerManagement = async (req, res) => {
+    const sort = { date: -1 }
+    const banners = await bannerModel.find().sort(sort)
+    if (req.user.isAdmin === true) {
+        user = req.user.name;
+        res.render("admin/bannerView", { banners })
+    }
+    else {
+        res.render("/")
+    }
+}
+
+const bannerAdd = (req, res) => {
+    if (req.user.isAdmin === true) {
+        user = req.user.name;
+        res.render("admin/add-banners")
+    }
+    else {
+        res.render("/")
+    }
+}
+
+const bannerDelete = async (req, res) => {
+    let banId = req.params.id;
+    await bannerModel
+        .findOneAndDelete({ _id: banId }, { is_deleted: true })
+        .then((response) => {
+            res.redirect("/banner");
+        });
+}
+
+const bannerPost = async (req, res) => {
+    const { name, source } = req.body;
+    const newBanner = new bannerModel({
+        name,
+        source,
+    });
+    await newBanner.save()
+        .then(() => {
+            res.redirect("/banner")
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
 module.exports = {
+    bannerAdd,
+    bannerDelete,
+    bannerManagement,
+    bannerPost,
     blockUser,
     activeUser,
     loginAdminUser,
