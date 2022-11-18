@@ -9,6 +9,7 @@ const wishListModel = require("../models/WishList");
 const addressModel = require("../models/Address");
 const nodemailer = require('nodemailer');
 const { name, resolveInclude } = require("ejs");
+const bannerModel = require("../models/Banner");
 var otp = Math.random();
 
 var Email;
@@ -167,12 +168,14 @@ const home = async (req, res) => {
     const count = null;
     const products = await productModel.find()
     const categories = await categoryModel.find()
+    const banners = await bannerModel.findOne({name: "Main"})
     const user = await userModel.findById(userId)
     res.render("dashboard", {
         user: user,
         count: count,
         products,
         categories,
+        banners,
         Category: false,
     });
 }

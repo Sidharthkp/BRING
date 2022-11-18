@@ -74,7 +74,8 @@
                                                 <p class="product-category">
                                                     <%= Product.category %>
                                                 </p>
-                                                <h3 class="product-name" style="height: 30px; overflow-y: hidden;"><a href="#">
+                                                <h3 class="product-name" style="height: 30px; overflow-y: hidden;"><a
+                                                        href="#">
                                                         <%= Product.name %>
                                                     </a></h3>
                                                 <h4 class="product-price">
@@ -99,9 +100,10 @@
                                                                     wishlist</span></a></button>
                                                         <%}else{%>
                                                             <button class="add-to-wishlist" type=""><a href="/login"><i
-                                                                    class="fa fa-heart-o"></i><span class="tooltipp">add
-                                                                    to
-                                                                    wishlist</span></a></button>
+                                                                        class="fa fa-heart-o"></i><span
+                                                                        class="tooltipp">add
+                                                                        to
+                                                                        wishlist</span></a></button>
                                                             <%}%>
                                                                 <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
@@ -147,7 +149,7 @@
     <!-- /SECTION -->
 
     <a href="/login" class="col-12 p-0">
-        <img src="https://cdn.tronikx.com.mt/wp-content/uploads/2021/03/Apple-Banner.jpg" style="width: 100%;" alt="">
+        <img src="<%= banners.source %>" style="width: 100%;" alt="">
     </a>
 
     <!-- SECTION -->
@@ -184,9 +186,10 @@
                                             </div>
                                             <div class="product-body">
                                                 <p class="product-category">Category</p>
-                                                <h3 class="product-name" style="height: 30px; overflow-y: hidden;"><a href="#">
-                                                    <%= Product.name %>
-                                                </a></h3>
+                                                <h3 class="product-name" style="height: 30px; overflow-y: hidden;"><a
+                                                        href="#">
+                                                        <%= Product.name %>
+                                                    </a></h3>
                                                 <h4 class="product-price">
                                                     <%- Product.price %>
                                                 </h4>
@@ -207,9 +210,10 @@
                                                                     wishlist</span></a></button>
                                                         <%}else{%>
                                                             <button class="add-to-wishlist" type=""><a href="/login"><i
-                                                                    class="fa fa-heart-o"></i><span class="tooltipp">add
-                                                                    to
-                                                                    wishlist</span></a></button>
+                                                                        class="fa fa-heart-o"></i><span
+                                                                        class="tooltipp">add
+                                                                        to
+                                                                        wishlist</span></a></button>
                                                             <%}%>
                                                                 <!-- <button class="add-to-compare"><i
                                                         class="fa fa-exchange"></i><span class="tooltipp">add to

@@ -9,6 +9,7 @@ const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
     const products = await productModel.find()
     const categories = await categoryModel.find()
+    const banners = await bannerModel.findOne({name: "Main"})
     const user = await userModel.findById(userId)
     if (req.user.isAdmin === true) {
         res.render("admin/index", { user: user })
@@ -53,7 +54,7 @@ const loginAdminUser = async (req, res) => {
                     console.log("Error");
                 })
         }
-        res.render("dashboard", { products, categories, count, counts, user: users });
+        res.render("dashboard", { products, categories, count, counts, banners, user: users });
     }
 }
 
