@@ -270,7 +270,10 @@ const addAddress = async (req, res) => {
 }
 
 const productLarge = async (req, res) => {
-    const userId = req.user.id;
+    let userId = null;
+    if (req.user) {
+        userId = req.user.id;
+    }
     let count = 0;
     let counts = 0;
     const cart = await cartModel.findOne({ userId });
@@ -483,7 +486,10 @@ const deleteWishList = async (req, res) => {
 }
 
 const store = async (req, res) => {
-    const userId = req.user.id;
+    let userId = null;
+    if (req.user) {
+        userId = req.user.id;
+    }
     let count = 0;
     let counts = 0;
     const cart = await cartModel.findOne({ userId });
