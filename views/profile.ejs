@@ -30,6 +30,49 @@
             </div>
         </div>
         <div class="col-md-6">
+            <div class="section-title text-center">
+                <h3 class="title">Address</h3>
+            </div>
+            <div class="container" style="width: 50rem;">
+                <form action="/address/<%= user._id%>" method="post">
+                    <div class="caption">
+                        <div class="form-group">
+                            <input class="input" type="text" name="first_name" placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="last_name" placeholder="Last name">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="email" name="email" placeholder="Email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" placeholder="Address">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="city" placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="district" placeholder="District">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="state" placeholder="State">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="country" placeholder="Country">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="zip" placeholder="Pin Code">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="tel" name="tel" placeholder="Mobile no: ">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger">+Add</button>
+                </form>
+            </div>
             <%for (let address of data.address){%>
                 <div class="section-title text-center">
                     <h3 class="title">Address</h3>

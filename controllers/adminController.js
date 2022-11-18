@@ -18,13 +18,39 @@ const loginAdminUser = async (req, res) => {
         const usersId = req.user.id;
         console.log(usersId);
         const users = await userModel.findById(usersId)
-        const cart = await cartModel.findOne({ usersId });
+        const cart = await cartModel.findOne({ user: usersId });
         if (cart) {
             count = cart.products.length;
         }
-        const wishList = await wishListModel.findOne({ usersId });
+        const wishList = await wishListModel.findOne({ user: usersId });
         if (wishList) {
             counts = wishList.products.length;
+        }
+        const carts = await cartModel.findOne({ user: userId });
+        if (!carts) {
+            const newCart = new cartModel({
+                user: req.user.id
+            });
+            await newCart.save()
+                .then(() => {
+                    
+                })
+                .catch(() => {
+                    console.log("Error");
+                })
+        }
+        const wish = await wishListModel.findOne({ user: userId });
+        if (!wish) {
+            const newWishList = new wishListModel({
+                user: req.user.id
+            });
+            await newWishList.save()
+                .then(() => {
+                    
+                })
+                .catch(() => {
+                    console.log("Error");
+                })
         }
         res.render("dashboard", { products, categories, count, counts, user: users });
     }

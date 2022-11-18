@@ -192,11 +192,11 @@ const profile = async (req, res) => {
     const user = await userModel.findById(userId)
     let count = 0;
     let counts = 0;
-    const cart = await cartModel.findOne({ userId });
+    const cart = await cartModel.findOne({ user: userId });
     if (cart) {
         count = cart.products.length;
     }
-    const wishList = await wishListModel.findOne({ userId });
+    const wishList = await wishListModel.findOne({ user: userId });
     if (wishList) {
         counts = wishList.products.length;
     }
@@ -276,11 +276,11 @@ const productLarge = async (req, res) => {
     }
     let count = 0;
     let counts = 0;
-    const cart = await cartModel.findOne({ userId });
+    const cart = await cartModel.findOne({ user: userId });
     if (cart) {
         count = cart.products.length;
     }
-    const wishList = await wishListModel.findOne({ userId });
+    const wishList = await wishListModel.findOne({ user: userId });
     if (wishList) {
         counts = wishList.products.length;
     }
@@ -302,11 +302,11 @@ const cart = async (req, res) => {
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
-    const cart = await cartModel.findOne({ userId });
+    const cart = await cartModel.findOne({ user: userId });
     if (cart) {
         count = cart.products.length;
     }
-    const wishList = await wishListModel.findOne({ userId });
+    const wishList = await wishListModel.findOne({ user: userId });
     if (wishList) {
         counts = wishList.products.length;
     }
@@ -332,20 +332,7 @@ const addToCart = async (req, res) => {
     const productId = req.params.id;
     const userId = req.user.id;
     console.log(">>>>>>>>>>>>>" + productId);
-    const cart = await cartModel.findOne({ user: userId });
     const product = await productModel.findById(productId);
-    if (!cart) {
-        const newCart = new cartModel({
-            user: req.user.id
-        });
-        await newCart.save()
-            .then(() => {
-                res.redirect("back");
-            })
-            .catch(() => {
-                console.log("Error");
-            })
-    }
     const newCart = await cartModel.findOneAndUpdate({
         user: req.user.id
     },
@@ -373,7 +360,7 @@ const deleteCart = async (req, res) => {
     const productId = req.params.id;
     console.log(productId);
     const product = await productModel.findById(productId);
-    const removeCart = await cartModel.findOneAndUpdate({ userId }, {
+    const removeCart = await cartModel.findOneAndUpdate({ user: userId }, {
         $pull: { products: productId },
         $inc: {
             total: -product.price
@@ -392,11 +379,11 @@ const checkout = async (req, res) => {
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
-    const cart = await cartModel.findOne({ userId });
+    const cart = await cartModel.findOne({ user: userId });
     if (cart) {
         count = cart.products.length;
     }
-    const wishList = await wishListModel.findOne({ userId });
+    const wishList = await wishListModel.findOne({ user: userId });
     if (wishList) {
         counts = wishList.products.length;
     }
@@ -412,11 +399,11 @@ const wishList = async (req, res) => {
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
-    const cart = await cartModel.findOne({ userId });
+    const cart = await cartModel.findOne({ user: userId });
     if (cart) {
         count = cart.products.length;
     }
-    const wishList = await wishListModel.findOne({ userId });
+    const wishList = await wishListModel.findOne({ user:userId });
     if (wishList) {
         counts = wishList.products.length;
     }
@@ -475,7 +462,7 @@ const deleteWishList = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
     console.log(productId);
-    const removeWishList = await wishListModel.findOneAndUpdate({ userId }, { $pull: { products: productId } });
+    const removeWishList = await wishListModel.findOneAndUpdate({ user: userId }, { $pull: { products: productId } });
     await removeWishList.save()
         .then(() => {
             res.redirect("/wishList");
@@ -492,11 +479,11 @@ const store = async (req, res) => {
     }
     let count = 0;
     let counts = 0;
-    const cart = await cartModel.findOne({ userId });
+    const cart = await cartModel.findOne({ user: userId });
     if (cart) {
         count = cart.products.length;
     }
-    const wishList = await wishListModel.findOne({ userId });
+    const wishList = await wishListModel.findOne({ user: userId });
     if (wishList) {
         counts = wishList.products.length;
     }
