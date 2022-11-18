@@ -2,7 +2,7 @@ const express = require('express');
 
 const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress } = require('../controllers/loginController');
 
-const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost } = require('../controllers/adminController');
+const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost } = require('../controllers/adminController');
 
 const { categoryManagement, categoryDelete, categoryAdd, categoryPost, categoryEditPost, categoryEdit } = require("../controllers/categoryController");
 
@@ -50,6 +50,8 @@ router.get("/banner", protectRoute, bannerManagement);
 
 router.get("/edit-products/:id", protectRoute, productEdit);
 
+router.get("/edit-banners/:id", protectRoute, bannerEdit);
+
 router.get("/add-categories", protectRoute, categoryAdd);
 
 router.get("/edit-categories/:id", protectRoute, categoryEdit);
@@ -79,6 +81,8 @@ router.post('/login', loginUser);
 router.post("/add-products", protectRoute, productPost);
 
 router.post('/admin/edit-products/:id', protectRoute, productEditPost);
+
+router.post("/admin/edit-banners/:id", protectRoute, bannerEditPost);
 
 router.post("/add-categories", protectRoute, categoryPost);
 

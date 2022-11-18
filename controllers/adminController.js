@@ -238,7 +238,38 @@ const bannerPost = async (req, res) => {
             console.log("Error");
         })
 }
+
+const bannerEdit = async (req, res) => {
+    let banId = req.params.id;
+    console.log(banId);
+    let Banner = await bannerModel.findOne({ _id: banId });
+    console.log(Banner);
+    if (req.user.isAdmin === true) {
+        res.render("admin/edit-banners", { Banner });
+    } else {
+        res.redirect("/banner");
+    }
+}
+
+const bannerEditPost = async (req, res) => {
+    const banId = req.params.id;
+    const { name, source } = req.body;
+    const saveEdits = await bannerModel.findOneAndUpdate(
+        { _id: banId },
+        {
+            name,
+            source
+        }
+    );
+    await saveEdits.save().then(() => {
+        res.redirect("/banner");
+    }).catch(() => {
+        console.log("Error");
+    });
+}
 module.exports = {
+    bannerEdit,
+    bannerEditPost,
     bannerAdd,
     bannerDelete,
     bannerManagement,

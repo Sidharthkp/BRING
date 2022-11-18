@@ -28,6 +28,7 @@
                                     <%= Banner.source %>
                                 </td>
                                 <td>
+                                    <a class="btn m-1 btn-outline-success" href="/edit-banners/<%= Banner._id %>">Edit</a>
                                     <a href="/bannerManage/<%= Banner._id %>" class="btn btn-outline-danger m-1"
                                         onclick="return confirm('Are you sure, you want to delete <%= Banner.name %> ?')">Delete</a>
                                 </td>
