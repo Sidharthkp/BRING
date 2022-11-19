@@ -16,6 +16,7 @@
                             <th scope="col">Category</th>
                             <th scope="col" style="width: 18rem;">Description</th>
                             <th scope="col">Amount</th>
+                            <th scope ="col">Stock</th>
                             <th scope="col">Image</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -35,6 +36,9 @@
                                 </td>
                                 <td>
                                     <%= Product.price %>
+                                </td>
+                                <td>
+                                    <%= Product.stock %>
                                 </td>
                                 <td><img src="/public/img/product_img/<%= Product.imgUrl[0] %>" style="width: 100px;" alt=""></td>
                                 <td>

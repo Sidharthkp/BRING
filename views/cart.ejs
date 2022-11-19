@@ -9,25 +9,25 @@
 
                 <div class="col-md-7">
                     <div>
-                        <%for (let cart of data.products){%>
+                        <% viewcart.products.forEach((data)=>{%>
 
                             <div class="product">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="product-img" style="width: 200px;">
-                                            <img src="/public/img/product_img/<%= cart.imgUrl[0] %>" alt="">
+                                            <img src="/public/img/product_img/<%= data.productId.imgUrl[0] %>" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="product-body">
                                             <p class="product-category">
-                                                <%= cart.category %>
+                                                <%= data.productId.category %>
                                             </p>
                                             <h3 class="product-name"><a href="#">
-                                                    <%= cart.name %>
+                                                    <%= data.productId.name %>
                                                 </a></h3>
                                             <h4 class="product-price">
-                                                ₹<%= cart.price %>
+                                                ₹<%= data.productId.price %>
                                                     <!-- <del
                                                         class="product-old-price">$990.00</del> -->
                                             </h4>
@@ -42,11 +42,11 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
                                                         class="tooltipp">add to
                                                         wishlist</span></button>
-                                                <button class="add-to-compare"><a href="/deleteCart/<%= cart._id %>"><i
+                                                <button class="add-to-compare"><a href="/deleteCart/<%= data.productId._id %>"><i
                                                             class="fa-solid fa-trash-can"></i><span class="tooltipp">add
                                                             to
                                                             delete</span></a></button>
-                                                <button class="quick-view" type=""><a href="/product/<%= cart._id %>"><i
+                                                <button class="quick-view" type=""><a href="/product/<%= data.productId._id %>"><i
                                                             class="fa fa-eye"></i>
                                                         <span class="tooltipp">quick view</span></a></button>
                                             </div>
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <%}%>
+                            <%})%>
                     </div>
 
                     <!-- Shiping Details -->
@@ -161,14 +161,14 @@
                             <div><strong>TOTAL</strong></div>
                         </div>
                         <div class="order-products">
-                            <%for (let cart of data.products){%>
+                            <%viewcart.products.forEach((data)=>{%>
                                 <div class="order-col">
-                                    <div>1x <%= cart.name %>
+                                    <div>1x <%= data.productId.name %>
                                     </div>
-                                    <div>₹<%=cart.price%>
+                                    <div>₹<%=data.productId.price%>
                                     </div>
                                 </div>
-                                <%}%>
+                                <%})%>
                                     <!-- <div class="order-col">
                                 <div>2x Product Name Goes Here</div>
                                 <div> ₹980.00</div>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="order-col">
                             <div><strong>TOTAL</strong></div>
-                            <div><strong class="order-total">₹<%= data.total %></strong></div>
+                            <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
                         </div>
                     </div>
                     <div class="payment-method">

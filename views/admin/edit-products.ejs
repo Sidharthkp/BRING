@@ -20,12 +20,15 @@
                             aria-label=".form-select-sm example">
                             <option selected>Select the category</option>
                             <% categories.forEach(function(Category) {%>
-                                <option value="mobile">
+                                <option value="<%= Category.name %>">
                                     <%= Category.name %>
                                 </option>
                                 <%})%>
                         </select>
                         </br>
+                        <input type="number" required name="stock" placeholder="Stock" class="form-control"
+                            style="border-color: grey;">
+                        <br>
                         <input type="file" required multiple name="imgUrl" class="form-control">
                         <button type="submit" class="btn btn-success mt-4">Submit</button>
                     </form>

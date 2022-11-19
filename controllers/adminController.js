@@ -117,7 +117,7 @@ const productEdit = async (req, res) => {
 
 const productEditPost = async (req, res) => {
     const prodId = req.params.id;
-    const { name, description, category, price } = req.body;
+    const { name, description, category, price, stock } = req.body;
     const productImages = req.files != null ? req.files.map((img) => img.filename) : null
     const save_edits = await productModel.findOneAndUpdate(
         { _id: prodId },
@@ -127,6 +127,7 @@ const productEditPost = async (req, res) => {
                 description,
                 price,
                 category,
+                stock,
                 imgUrl: productImages
             },
         }
@@ -139,7 +140,7 @@ const productEditPost = async (req, res) => {
 }
 
 const productPost = async (req, res) => {
-    const { name, description, category, price } = req.body;
+    const { name, description, category, price, stock } = req.body;
     req.files.forEach(img => { });
     console.log(req.files);
     const productImages = req.files != null ? req.files.map((img) => img.filename) : null
@@ -149,6 +150,7 @@ const productPost = async (req, res) => {
         description,
         price,
         category,
+        stock,
         imgUrl: productImages,
     });
     await newProduct.save()
