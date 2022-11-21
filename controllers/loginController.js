@@ -429,6 +429,9 @@ const quantityIncrement = async (req, res) => {
     let productItem = cart.products[itemIndex];
     productItem.quantity += 1;
     const qty = productItem.quantity;
+    cart.total = cart.products.reduce((acc, curr) => {
+        return acc + curr.quantity * curr.price;
+    }, 0)
     await cart.save()
         .then(() => {
             res.render("cart", {
@@ -466,6 +469,9 @@ const quantitydecrement = async (req, res) => {
     let productItem = cart.products[itemIndex];
     productItem.quantity -= 1;
     const qty = productItem.quantity;
+    cart.total = cart.products.reduce((acc, curr) => {
+        return acc + curr.quantity * curr.price;
+    }, 0)
     await cart.save()
         .then(() => {
             res.render("cart", {
