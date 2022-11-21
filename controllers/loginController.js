@@ -302,6 +302,7 @@ const productLarge = async (req, res) => {
 }
 
 const cart = async (req, res) => {
+    const productId = req.params.id;
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
@@ -317,13 +318,21 @@ const cart = async (req, res) => {
     const userDetails = await userModel.findOne({ _id: userId }).populate("address")
     const address = userDetails.address
     const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
-    res.render("cart", {
-        user: user,
-        viewcart,
-        count,
-        counts,
-        address
-    });
+    let qty = cart.products.map(p => p.quantity)
+    await cart.save()
+        .then(() => {
+            res.render("cart", {
+                user: user,
+                viewcart,
+                qty,
+                count,
+                counts,
+                address
+            });
+        })
+        .catch(() => {
+            console.log("Error");
+        })
 }
 
 const addToCart = async (req, res) => {
@@ -331,12 +340,14 @@ const addToCart = async (req, res) => {
     const productId = req.params.id;
     const userId = req.user.id;
     const quantity = parseInt(req.params.quantity);
-    const price = req.params.price;
+    const price = parseInt(req.params.price);
     console.log(">>>>>>>>>>>>>" + productId);
     const product = await productModel.findById(productId);
     let cart = await cartModel.findOne({ user: userId });
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
     if (product.stock >= quantity) {
+        // console.log(product.stock);
+        // console.log(quantity);
         product.stock -= quantity
         if (itemIndex > -1) {
             //product exists in the cart, update the quantity
@@ -397,6 +408,80 @@ const deleteCart = async (req, res) => {
         })
 }
 
+const quantityIncrement = async (req, res) => {
+    const productId = req.params.id;
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ user: userId });
+    let itemIndex = cart.products.findIndex(p => p.productId == productId);
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ user: userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
+    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
+    const address = userDetails.address
+    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
+    let productItem = cart.products[itemIndex];
+    productItem.quantity += 1;
+    const qty = productItem.quantity;
+    await cart.save()
+        .then(() => {
+            res.render("cart", {
+                user: user,
+                viewcart,
+                qty,
+                count,
+                counts,
+                address
+            });
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
+
+const quantitydecrement = async (req, res) => {
+    const productId = req.params.id;
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ user: userId });
+    let itemIndex = cart.products.findIndex(p => p.productId == productId);
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ user: userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
+    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
+    const address = userDetails.address
+    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
+    let productItem = cart.products[itemIndex];
+    productItem.quantity -= 1;
+    const qty = productItem.quantity;
+    await cart.save()
+        .then(() => {
+            res.render("cart", {
+                user: user,
+                viewcart,
+                qty,
+                count,
+                counts,
+                address
+            });
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
+
 const checkout = async (req, res) => {
     const userId = req.user.id;
     let count = 0;
@@ -430,7 +515,7 @@ const wishList = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {
+    wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {       
         if (err) {
             return console.log(err);
         }
@@ -522,6 +607,8 @@ const store = async (req, res) => {
 }
 
 module.exports = {
+    quantityIncrement,
+    quantitydecrement,
     deleteWishList,
     addToWishList,
     wishList,

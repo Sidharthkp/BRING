@@ -31,6 +31,20 @@
                                                     <!-- <del
                                                         class="product-old-price">$990.00</del> -->
                                             </h4>
+                                            <div class="qty-label">
+
+                                                <div class="input-number">
+                                                    Qty:
+                                                    <a class="qty-up" href="/button-increment/<%= data.productId._id %>"
+                                                        onclick="addToCart('<%=data.productId.id%>','<%=data.productId.name%>','<%=data.productId.price %>',1)">+</a>
+                                                        <input id="itemQty-<%= data.productId.id %>" type="text"
+                                                            value="<%= qty %>"
+                                                            style="height: 40px; width: 30px; border: none;">
+
+                                                        <a class="qty-down" href="/button-decrement/<%= data.productId._id %>"
+                                                            onclick="addToCart('<%=data.productId.id%>','<%=data.productId.name%>','<%=data.productId.price %>',-1)">-</a>
+                                                </div>
+                                            </div>
                                             <!-- <div class="product-rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
@@ -42,11 +56,13 @@
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
                                                         class="tooltipp">add to
                                                         wishlist</span></button>
-                                                <button class="add-to-compare"><a href="/deleteCart/<%= data.productId._id %>"><i
+                                                <button class="add-to-compare"><a
+                                                        href="/deleteCart/<%= data.productId._id %>"><i
                                                             class="fa-solid fa-trash-can"></i><span class="tooltipp">add
                                                             to
                                                             delete</span></a></button>
-                                                <button class="quick-view" type=""><a href="/product/<%= data.productId._id %>"><i
+                                                <button class="quick-view" type=""><a
+                                                        href="/product/<%= data.productId._id %>"><i
                                                             class="fa fa-eye"></i>
                                                         <span class="tooltipp">quick view</span></a></button>
                                             </div>
