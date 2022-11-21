@@ -9,7 +9,7 @@ const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
     const products = await productModel.find()
     const categories = await categoryModel.find()
-    const banners = await bannerModel.findOne({name: "Main"})
+    const banners = await bannerModel.findOne({ name: "Main" })
     const user = await userModel.findById(userId)
     if (req.user.isAdmin === true) {
         res.render("admin/index", { user: user })
@@ -35,7 +35,7 @@ const loginAdminUser = async (req, res) => {
             });
             await newCart.save()
                 .then(() => {
-                    
+
                 })
                 .catch(() => {
                     console.log("Error");
@@ -48,7 +48,7 @@ const loginAdminUser = async (req, res) => {
             });
             await newWishList.save()
                 .then(() => {
-                    
+
                 })
                 .catch(() => {
                     console.log("Error");
@@ -119,8 +119,8 @@ const productEditPost = async (req, res) => {
     const prodId = req.params.id;
     const { name, description, category, price, stock } = req.body;
     const productImages = req.files.length != 0 ? req.files.map((img) => img.filename) : null
-    if(productImages != null){
-        await productModel.findOneAndUpdate({_id: prodId}, {$set: {imgUrl: productImages}});
+    if (productImages != null && category != null) {
+        await productModel.findOneAndUpdate({ _id: prodId }, { $set: { imgUrl: productImages, category } });
     }
     const save_edits = await productModel.findOneAndUpdate(
         { _id: prodId },
@@ -129,7 +129,6 @@ const productEditPost = async (req, res) => {
                 name,
                 description,
                 price,
-                category,
                 stock,
             },
         }
