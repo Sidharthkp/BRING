@@ -116,7 +116,7 @@
                                                 </div>
                                             </div>
                                             <% if(user){ %>
-                                                <a href="/addToCart/<%= Product._id %>" class="add-to-cart">
+                                                <a href="/addToCart/<%= Product._id %>/<%= Product.stock %>/<%= Product.price %>" class="add-to-cart">
                                                     <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
                                                         add
                                                         to cart</button>

@@ -118,7 +118,7 @@ const productEdit = async (req, res) => {
 const productEditPost = async (req, res) => {
     const prodId = req.params.id;
     const { name, description, category, price, stock } = req.body;
-    const productImages = req.files != null ? req.files.map((img) => img.filename) : null
+    const productImages = req.files.length != 0 ? req.files.map((img) => img.filename) : null
     const save_edits = await productModel.findOneAndUpdate(
         { _id: prodId },
         {

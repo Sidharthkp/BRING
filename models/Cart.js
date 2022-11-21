@@ -15,7 +15,15 @@ const CartSchema = new mongoose.Schema({
                 type: ObjectId,
                 ref: "Product"
             },
-            quantity: Number,
+            quantity:
+            {
+                type: Number,
+                ref: "Product",
+            },
+            price: {
+                type: Number,
+                ref: "Product",
+            }
         }
     ],
     total: {
