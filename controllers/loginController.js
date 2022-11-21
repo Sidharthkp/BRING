@@ -330,42 +330,46 @@ const addToCart = async (req, res) => {
     console.log("reached here");
     const productId = req.params.id;
     const userId = req.user.id;
-    const quantity = req.params.stock;
+    const quantity = parseInt(req.params.quantity);
     const price = req.params.price;
     console.log(">>>>>>>>>>>>>" + productId);
     const product = await productModel.findById(productId);
     let cart = await cartModel.findOne({ user: userId });
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
-    if (itemIndex > -1) {
-        //product exists in the cart, update the quantity
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        let productItem = cart.products[itemIndex];
-        productItem.stock += quantity;
-        console.log("???????????????????" + productItem.stock);
+    if (product.stock >= quantity) {
+        product.stock -= quantity
+        if (itemIndex > -1) {
+            //product exists in the cart, update the quantity
+            let productItem = cart.products[itemIndex];
+            productItem.quantity += quantity;
+            cart.total = cart.products.reduce((acc, curr) => {
+                return acc + curr.quantity * curr.price;
+            }, 0)
+        } else {
+            console.log(quantity);
+            const getCart = await cartModel.findOneAndUpdate({
+                user: req.user.id
+            },
+                {
+                    $push: {
+                        products: [{ productId, quantity, price }],
+                    },
+                    $inc: {
+                        total: product.price
+                    }
+                }
+            );
+            await getCart.save()
+                .then(() => {
+                    res.redirect("back");
+                })
+                .catch(() => {
+                    console.log("Error");
+                })
+        }
         await cart.save()
             .then(() => {
-                res.redirect("back");
-            })
-            .catch(() => {
-                console.log("Error");
-            })
-    } else {
-        console.log(quantity);
-        const getCart = await cartModel.findOneAndUpdate({
-            user: req.user.id
-        },
-            {
-                $push: {
-                    products: [{ productId, quantity, price }],
-                },
-                $inc: {
-                    total: product.price
-                }
-            }
-        );
-        await getCart.save()
-            .then(() => {
-                res.redirect("back");
+                res.redirect("/cart");
             })
             .catch(() => {
                 console.log("Error");
@@ -383,10 +387,10 @@ const deleteCart = async (req, res) => {
     cart.products.splice(itemIndex, 1)
     cart.total = cart.products.reduce((acc, curr) => {
         return acc + curr.price;
-      }, 0)
+    }, 0)
     await cart.save()
         .then(() => {
-            res.send("done");
+            res.redirect("/cart");
         })
         .catch(() => {
             console.log("Error");

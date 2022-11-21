@@ -28,6 +28,9 @@ const ProductSchema = new mongoose.Schema({
   stock: {
     type: Number,
   },
+  quantity: {
+    type: Number,
+  }
 });
 const Product = mongoose.model("Product", ProductSchema);
 module.exports = Product;

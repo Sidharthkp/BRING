@@ -58,7 +58,7 @@ router.get("/edit-categories/:id", protectRoute, categoryEdit);
 
 router.get("/profile", protectRoute, profile);
 
-router.get("/addToCart/:id/:stock/:price", protectRoute, addToCart);
+router.get("/addToCart/:id/:quantity/:price", protectRoute, addToCart);
 
 router.get("/addToWishList/:id", protectRoute, addToWishList);
 
