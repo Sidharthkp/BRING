@@ -38,7 +38,7 @@
                                                     <a class="qty-up" href="/button-increment/<%= data.productId._id %>"
                                                         onclick="addToCart('<%=data.productId.id%>','<%=data.productId.name%>','<%=data.productId.price %>',1)">+</a>
                                                         <input id="itemQty-<%= data.productId.id %>" type="text"
-                                                            value="<%= qty %>"
+                                                            value="<%= data.quantity %>"
                                                             style="height: 40px; width: 30px; border: none;">
 
                                                         <a class="qty-down" href="/button-decrement/<%= data.productId._id %>"

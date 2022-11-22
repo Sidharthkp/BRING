@@ -302,7 +302,6 @@ const productLarge = async (req, res) => {
 }
 
 const cart = async (req, res) => {
-    const productId = req.params.id;
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
@@ -318,13 +317,11 @@ const cart = async (req, res) => {
     const userDetails = await userModel.findOne({ _id: userId }).populate("address")
     const address = userDetails.address
     const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
-    let qty = cart.products.map(p => p.quantity)
     await cart.save()
         .then(() => {
             res.render("cart", {
                 user: user,
                 viewcart,
-                qty,
                 count,
                 counts,
                 address
@@ -411,37 +408,13 @@ const deleteCart = async (req, res) => {
 const quantityIncrement = async (req, res) => {
     const productId = req.params.id;
     const userId = req.user.id;
-    let count = 0;
-    let counts = 0;
     const cart = await cartModel.findOne({ user: userId });
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
-    if (cart) {
-        count = cart.products.length;
-    }
-    const wishList = await wishListModel.findOne({ user: userId });
-    if (wishList) {
-        counts = wishList.products.length;
-    }
-    const user = await userModel.findById(userId)
-    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
-    const address = userDetails.address
-    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
     let productItem = cart.products[itemIndex];
     productItem.quantity += 1;
-    const qty = productItem.quantity;
-    cart.total = cart.products.reduce((acc, curr) => {
-        return acc + curr.quantity * curr.price;
-    }, 0)
     await cart.save()
         .then(() => {
-            res.render("cart", {
-                user: user,
-                viewcart,
-                qty,
-                count,
-                counts,
-                address
-            });
+            res.redirect("back")
         })
         .catch(() => {
             console.log("Error");
@@ -451,37 +424,15 @@ const quantityIncrement = async (req, res) => {
 const quantitydecrement = async (req, res) => {
     const productId = req.params.id;
     const userId = req.user.id;
-    let count = 0;
-    let counts = 0;
     const cart = await cartModel.findOne({ user: userId });
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
-    if (cart) {
-        count = cart.products.length;
-    }
-    const wishList = await wishListModel.findOne({ user: userId });
-    if (wishList) {
-        counts = wishList.products.length;
-    }
-    const user = await userModel.findById(userId)
-    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
-    const address = userDetails.address
-    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
     let productItem = cart.products[itemIndex];
-    productItem.quantity -= 1;
-    const qty = productItem.quantity;
-    cart.total = cart.products.reduce((acc, curr) => {
-        return acc + curr.quantity * curr.price;
-    }, 0)
+    if (productItem.quantity > 1) {
+        productItem.quantity -= 1;
+    }
     await cart.save()
         .then(() => {
-            res.render("cart", {
-                user: user,
-                viewcart,
-                qty,
-                count,
-                counts,
-                address
-            });
+            res.redirect("back")
         })
         .catch(() => {
             console.log("Error");
@@ -521,7 +472,7 @@ const wishList = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {       
+    wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {
         if (err) {
             return console.log(err);
         }

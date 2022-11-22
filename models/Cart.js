@@ -23,6 +23,10 @@ const CartSchema = new mongoose.Schema({
             price: {
                 type: Number,
                 ref: "Product",
+            },
+            subTotal: {
+                type: Number,
+                ref: "Product",
             }
         }
     ],
