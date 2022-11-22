@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -30,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     default: false
   },
   address: {
-    type: [String],
+    type: [ObjectId],
     ref: "Address"
   }
 });

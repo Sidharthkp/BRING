@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement } = require('../controllers/loginController');
+const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order } = require('../controllers/loginController');
 
 const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost } = require('../controllers/adminController');
 
@@ -75,6 +75,8 @@ router.get("/deleteWishList/:id", protectRoute, deleteWishList);
 router.get("/button-increment/:id", protectRoute, quantityIncrement);
 
 router.get("/button-decrement/:id", protectRoute, quantitydecrement);
+
+router.get("/placeOrder", protectRoute, order);
 
 router.post("/address/:id", addAddress);
 

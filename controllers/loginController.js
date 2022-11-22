@@ -7,8 +7,8 @@ const userModel = require("../models/User");
 const cartModel = require("../models/Cart");
 const wishListModel = require("../models/WishList");
 const addressModel = require("../models/Address");
+const orderModel = require("../models/Order");
 const nodemailer = require('nodemailer');
-const { name, resolveInclude } = require("ejs");
 const bannerModel = require("../models/Banner");
 var otp = Math.random();
 
@@ -576,7 +576,31 @@ const store = async (req, res) => {
     });
 }
 
+const order = async (req, res) => {
+    const userId = req.user.id;
+    const Address = await addressModel.findOne({ user: userId })
+    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
+    console.log(viewcart);
+    const products = viewcart.products
+
+    const newOrderList = new orderModel({
+        user: userId,
+        products: products,
+        address: Address.id,
+        total: viewcart.total
+
+    });
+    await newOrderList.save()
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
+
 module.exports = {
+    order,
     quantityIncrement,
     quantitydecrement,
     deleteWishList,
