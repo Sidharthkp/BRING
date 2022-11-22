@@ -352,6 +352,9 @@ const addToCart = async (req, res) => {
             productItem.quantity += quantity;
             productItem.subTotal = productItem.quantity * productItem.price;
             console.log(productItem.subTotal);
+            cart.total = cart.products.reduce((acc, curr) => {
+                return acc + curr.subTotal;
+            }, 0)
             await cart.save()
                 .then(() => {
                     res.redirect("/cart");
@@ -376,7 +379,7 @@ const addToCart = async (req, res) => {
             );
             await getCart.save()
                 .then(() => {
-                    res.redirect("back");
+                    res.redirect("/cart");
                 })
                 .catch(() => {
                     console.log("Error");
@@ -412,6 +415,10 @@ const quantityIncrement = async (req, res) => {
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
     let productItem = cart.products[itemIndex];
     productItem.quantity += 1;
+    productItem.subTotal = productItem.quantity * productItem.price;
+    cart.total = cart.products.reduce((acc, curr) => {
+        return acc + curr.subTotal;
+    }, 0)
     await cart.save()
         .then(() => {
             res.redirect("back")
@@ -429,6 +436,10 @@ const quantitydecrement = async (req, res) => {
     let productItem = cart.products[itemIndex];
     if (productItem.quantity > 1) {
         productItem.quantity -= 1;
+        productItem.subTotal = productItem.quantity * productItem.price;
+        cart.total = cart.products.reduce((acc, curr) => {
+            return acc + curr.subTotal;
+        }, 0)
     }
     await cart.save()
         .then(() => {
