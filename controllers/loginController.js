@@ -314,8 +314,6 @@ const cart = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
-    const address = userDetails.address
     const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
     await cart.save()
         .then(() => {
@@ -324,7 +322,6 @@ const cart = async (req, res) => {
                 viewcart,
                 count,
                 counts,
-                address
             });
         })
         .catch(() => {
@@ -463,10 +460,13 @@ const checkout = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
+    const userDetails = await userModel.findOne({ _id: userId }).populate("address")
+    const address = userDetails.address
     res.render("checkout", {
         user: "user",
         count,
-        counts
+        counts,
+        address
     });
 }
 
