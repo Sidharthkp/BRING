@@ -179,9 +179,9 @@
                         <div class="order-products">
                             <%viewcart.products.forEach((data)=>{%>
                                 <div class="order-col">
-                                    <div>1x <%= data.productId.name %>
+                                    <div><%= data.quantity %>x <%= data.productId.name %>
                                     </div>
-                                    <div>₹<%=data.productId.price%>
+                                    <div>₹<%=data.subTotal%>
                                     </div>
                                 </div>
                                 <%})%>

@@ -350,17 +350,24 @@ const addToCart = async (req, res) => {
             //product exists in the cart, update the quantity
             let productItem = cart.products[itemIndex];
             productItem.quantity += quantity;
-            cart.total = cart.products.reduce((acc, curr) => {
-                return acc + curr.quantity * curr.price;
-            }, 0)
+            productItem.subTotal = productItem.quantity * productItem.price;
+            console.log(productItem.subTotal);
+            await cart.save()
+                .then(() => {
+                    res.redirect("/cart");
+                })
+                .catch(() => {
+                    console.log("Error");
+                })
         } else {
             console.log(quantity);
+            const subTotal = product.price;
             const getCart = await cartModel.findOneAndUpdate({
                 user: req.user.id
             },
                 {
                     $push: {
-                        products: [{ productId, quantity, price }],
+                        products: [{ productId, quantity, price, subTotal }],
                     },
                     $inc: {
                         total: product.price
@@ -375,13 +382,6 @@ const addToCart = async (req, res) => {
                     console.log("Error");
                 })
         }
-        await cart.save()
-            .then(() => {
-                res.redirect("/cart");
-            })
-            .catch(() => {
-                console.log("Error");
-            })
     }
 
 }
