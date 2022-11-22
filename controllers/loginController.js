@@ -462,9 +462,11 @@ const checkout = async (req, res) => {
     const user = await userModel.findById(userId)
     const userDetails = await userModel.findOne({ _id: userId }).populate("address")
     const address = userDetails.address
+    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
     res.render("checkout", {
-        user: "user",
+        user: user,
         count,
+        viewcart,
         counts,
         address
     });
