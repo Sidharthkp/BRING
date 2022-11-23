@@ -165,7 +165,7 @@ const productPost = async (req, res) => {
 }
 
 const orderManagement = async (req, res) => {
-    const viewProducts = await orderModel.find().populate("products.productId").populate("user").exec()
+    const viewProducts = await orderModel.find().populate("products.productId").populate("user").populate("address").exec()
     if (req.user.isAdmin === true) {
         user = req.user.name;
         res.render("admin/orderManage", {
