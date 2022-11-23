@@ -79,7 +79,7 @@
                                                         <%= Product.name %>
                                                     </a></h3>
                                                 <h4 class="product-price">
-                                                    <%= Product.price %>
+                                                    <i class="fa-solid fa-indian-rupee-sign"></i> <%= Product.price %>
                                                         <!-- <del
                                                             class="product-old-price">$990.00</del> -->
                                                 </h4>
@@ -116,7 +116,8 @@
                                                 </div>
                                             </div>
                                             <% if(user){ %>
-                                                <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>" class="add-to-cart">
+                                                <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
+                                                    class="add-to-cart">
                                                     <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
                                                         add
                                                         to cart</button>
@@ -172,8 +173,8 @@
                     <div class="row">
                         <div class="products-tabs">
                             <!-- tab -->
-                            <div id="tab2" class="tab-pane fade in active">
-                                <div class="products-slick" data-nav="#slick-nav-2">
+                            <div id="tab1" class="tab-pane active">
+                                <div class="products-slick" data-nav="#slick-nav-1">
                                     <% products.forEach(function(Product) {%>
                                         <!-- product -->
                                         <div class="product">
@@ -185,13 +186,17 @@
                                                     </div> -->
                                             </div>
                                             <div class="product-body">
-                                                <p class="product-category">Category</p>
+                                                <p class="product-category">
+                                                    <%= Product.category %>
+                                                </p>
                                                 <h3 class="product-name" style="height: 30px; overflow-y: hidden;"><a
                                                         href="#">
                                                         <%= Product.name %>
                                                     </a></h3>
                                                 <h4 class="product-price">
-                                                    <%- Product.price %>
+                                                    <i class="fa-solid fa-indian-rupee-sign"></i>  <%= Product.price %>
+                                                        <!-- <del
+                                                            class="product-old-price">$990.00</del> -->
                                                 </h4>
                                                 <!-- <div class="product-rating">
                                                         <i class="fa fa-star"></i>
@@ -216,8 +221,8 @@
                                                                         wishlist</span></a></button>
                                                             <%}%>
                                                                 <!-- <button class="add-to-compare"><i
-                                                        class="fa fa-exchange"></i><span class="tooltipp">add to
-                                                        compare</span></button> -->
+                                                                class="fa fa-exchange"></i><span class="tooltipp">add to
+                                                                compare</span></button> -->
                                                                 <button class="quick-view" type=""><a
                                                                         href="/product/<%= Product._id %>"><i
                                                                             class="fa fa-eye"></i>
@@ -226,7 +231,8 @@
                                                 </div>
                                             </div>
                                             <% if(user){ %>
-                                                <a href="/addToCart/<%= Product._id %>" class="add-to-cart">
+                                                <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
+                                                    class="add-to-cart">
                                                     <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
                                                         add
                                                         to cart</button>
@@ -241,17 +247,16 @@
                                                     <%}%>
                                         </div>
                                         <!-- /product -->
+
                                         <%})%>
-
-
                                 </div>
-                                <div id="slick-nav-2" class="products-slick-nav"></div>
+                                <div id="slick-nav-1" class="products-slick-nav"></div>
                             </div>
                             <!-- /tab -->
                         </div>
                     </div>
                 </div>
-                <!-- /Products tab & slick -->
+                <!-- Products tab & slick -->
             </div>
             <!-- /row -->
         </div>
