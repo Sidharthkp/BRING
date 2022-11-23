@@ -4,6 +4,7 @@ const categoryModel = require("../models/Category")
 const cartModel = require("../models/Cart")
 const wishListModel = require("../models/WishList")
 const bannerModel = require("../models/Banner")
+const orderModel = require("../models/Order")
 
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
@@ -163,10 +164,13 @@ const productPost = async (req, res) => {
         })
 }
 
-const orderManagement = (req, res) => {
+const orderManagement = async (req, res) => {
+    const viewProducts = await orderModel.find().populate("products.productId").populate("user").exec()
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/orderManage")
+        res.render("admin/orderManage", {
+            viewProducts,
+        })
     }
     else {
         res.render("/")
