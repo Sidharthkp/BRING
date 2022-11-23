@@ -581,8 +581,7 @@ const store = async (req, res) => {
 const order = async (req, res) => {
     const userId = req.user.id;
     const Address = await addressModel.findOne({ user: userId })
-    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
-    console.log(viewcart);
+    const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
     const products = viewcart.products
 
     const newOrderList = new orderModel({
@@ -593,11 +592,12 @@ const order = async (req, res) => {
 
     });
     await newOrderList.save()
-        .then(() => {
+        .then( async () => {
+            await cartModel.deleteOne({user: userId})
             res.redirect("/");
         })
         .catch(() => {
-            console.log("Error");
+            console.log("Error in order");
         })
 }
 

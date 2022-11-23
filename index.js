@@ -12,7 +12,6 @@ const logger = require('morgan');
 const nocache = require('nocache');
 const multer = require("multer");
 
-
 // Mongo DB conncetion
 const database = process.env.MONGOLAB_URI;
 mongoose
