@@ -290,13 +290,15 @@ const productLarge = async (req, res) => {
     let prodId = req.params.id;
     console.log(prodId);
     const products = await productModel.find()
-    const Product = await productModel.findOne({ _id: prodId })
+    const Product = await productModel.findOne({ _id: prodId });
+    const prod = Product.imgUrl;
     const user = await userModel.findById(userId)
     res.render("product", {
         user: user,
         Product,
         products,
         count,
+        prod,
         counts
     });
 }
