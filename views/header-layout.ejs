@@ -52,12 +52,12 @@
 				</ul>
 				<ul class="header-links pull-right">
 					<% if(user){ %>
-					<li><i class="fa-solid fa-hand-peace"></i><a>Hi, <%= user.name %></a></li>
-					<%} %>
-					<li><i class="fa fa-user-o"></i><a href="/profile">My Profile</a></li>
-					<% if(user){ %>
-						<li><i class="fa-solid fa-right-from-bracket"></i><a href="/logout">Logout</a></li>
+						<li><i class="fa-solid fa-hand-peace"></i><a>Hi, <%= user.name %></a></li>
 						<%} %>
+							<li><i class="fa fa-user-o"></i><a href="/profile">My Profile</a></li>
+							<% if(user){ %>
+								<li><i class="fa-solid fa-right-from-bracket"></i><a href="/logout">Logout</a></li>
+								<%} %>
 				</ul>
 			</div>
 		</div>
@@ -104,7 +104,9 @@
 									<i class="fa fa-heart-o"></i>
 									<span>Your Wishlist</span>
 									<%if(user){%>
-										<div class="qty"><%= counts %></div>
+										<div class="qty">
+											<%= counts %>
+										</div>
 										<%}%>
 								</a>
 							</div>
@@ -116,12 +118,23 @@
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
 									<%if(user){%>
-										<div class="qty"><%= count %></div>
+										<div class="qty">
+											<%= count %>
+										</div>
 										<%}%>
 								</a>
 							</div>
 
 							<!-- /Cart -->
+
+							<!-- Orders -->
+							<div>
+								<a href="/orderHistory" aria-expanded="true">
+									<i class="fa-solid fa-clock-rotate-left"></i>
+									<span>Your Orders</span>
+								</a>
+							</div>
+							<!-- /Orders -->
 
 							<!-- Menu Toogle -->
 							<div class="menu-toggle">

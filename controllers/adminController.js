@@ -177,6 +177,30 @@ const orderManagement = async (req, res) => {
     }
 }
 
+const dispatched = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(
+            req.params.id,
+            { status: "Dispatched" })
+        res.redirect('back')
+    } catch (err) {
+        console.log(err);
+        res.redirect('back')
+    }
+}
+
+const delivered = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(
+            req.params.id,
+            { status: "Delivered" })
+        res.redirect('back')
+    } catch (err) {
+        console.log(err);
+        res.redirect('back')
+    }
+}
+
 const blockUser = async (req, res) => {
     try {
         await userModel.findByIdAndUpdate(
@@ -275,6 +299,8 @@ const bannerEditPost = async (req, res) => {
     });
 }
 module.exports = {
+    dispatched,
+    delivered,
     bannerEdit,
     bannerEditPost,
     bannerAdd,

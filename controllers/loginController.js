@@ -592,8 +592,8 @@ const order = async (req, res) => {
 
     });
     await newOrderList.save()
-        .then( async () => {
-            await cartModel.deleteOne({user: userId})
+        .then(async () => {
+            await cartModel.deleteOne({ user: userId })
             res.redirect("/");
         })
         .catch(() => {
@@ -601,8 +601,31 @@ const order = async (req, res) => {
         })
 }
 
+const orderHistory = async (req, res) => {
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ user: userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ user: userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
+    const viewOrders = await orderModel.find({user: userId}).populate("products.productId").exec()
+    res.render("history", {
+        user: user,
+        count,
+        counts,
+        viewOrders
+    });
+}
+
 module.exports = {
     order,
+    orderHistory,
     quantityIncrement,
     quantitydecrement,
     deleteWishList,

@@ -1,0 +1,65 @@
+<%- include('header-layout.ejs') %>
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-7">
+                    <div>
+                        <%for (let history of viewOrders){%>
+                            <% for(let prod of history.products) {%>
+                            <div class="product">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        
+                                        <div class="product-img" style="width: 100px;">
+                                            <img src="/public/img/product_img/<%= prod.productId.imgUrl[0] %>" alt="">
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="product-body">
+                                            
+                                            <h3 class="product-name"><a href="#">
+                                                <%= prod.productId.name %>
+                                                </a></h3>
+                                                <div>
+                                                    Qty:<%= prod.quantity %>
+                                                </div>
+                                            <h4 class="product-price">
+                                                ₹<%= prod.subTotal %>
+                                                    <!-- <del
+                                                        class="product-old-price">$990.00</del> -->
+                                            </h4>
+                                            <!-- <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div> -->
+                                            <div class="product-btns">
+                                                <button class="add-to-wishlist"><i class="fa-solid fa-ban"></i><span
+                                                        class="tooltipp">cancel the order</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                            <%}%>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /SECTION -->
+
+
+    <%- include('footer-layout.ejs') %>

@@ -50,7 +50,9 @@
                                             <%}%>
                                     </table>
                                 </td>
-                                <td></td>
+                                <td style="color: green;">
+                                    <%= viewProducts[i].status %>
+                                </td>
                                 <td>
                                     <%= viewProducts[i].user.name %>
                                 </td>
@@ -77,8 +79,8 @@
                                     </table>
                                 </td>
                                 <td>
-                                    <a class="btn btn-sm btn-primary" href="">Cancel</a>
-                                    <a class="btn btn-sm btn-success" href="">Dispatched</a>
+                                    <a class="btn btn-sm btn-primary" href="/dispatched/<%= viewProducts[i]._id %>">Dispatched</a>
+                                    <a class="btn btn-sm btn-success" href="/delivered/<%= viewProducts[i]._id %>">Delivered</a>
                                 </td>
                             </tr>
                             <%}%>
