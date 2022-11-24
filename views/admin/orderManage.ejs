@@ -96,11 +96,16 @@
                                                                         </table>
                                                                     </td>
                                                                     <td>
-                                                                        <a class="btn btn-sm btn-primary"
-                                                                            href="/dispatched/<%= prod.productId._id %>">Dispatched</a>
-                                                                        <a class="btn btn-sm btn-success"
-                                                                            href="/delivered/<%= prod.productId._id %>">Delivered</a>
-                                                                    </td>
+                                                                        <% if(prod.status!="Canceled" ){%>
+                                                                            <% if(prod.status!="Dispatched" && prod.status!="Delivered"){%>
+                                                                        <a class="btn btn-sm btn-primary" style="width: 100px;"
+                                                                            href="/dispatched/<%= prod.productId._id%>/<%= viewProducts[i]._id %>">Dispatched</a>
+                                                                        <%}%>
+                                                                        <% if(prod.status=="Dispatched" && prod.status!="Delivered"){%>
+                                                                            <a class="btn btn-sm btn-success" style="width: 100px;"
+                                                                            href="/delivered/<%= prod.productId._id %>/<%= viewProducts[i]._id %>">Delivered</a>
+                                                                            <%}}%>
+                                                                        </td>
                                 </tr>
                                 <%}%>
                                     <%}%>

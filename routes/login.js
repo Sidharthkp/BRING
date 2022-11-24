@@ -80,9 +80,9 @@ router.get("/placeOrder", protectRoute, order);
 
 router.get("/orderHistory", protectRoute, orderHistory);
 
-router.get("/dispatched/:id", protectRoute, dispatched);
+router.get("/dispatched/:id/:orderId", protectRoute, dispatched);
 
-router.get("/delivered/:id", protectRoute, delivered);
+router.get("/delivered/:id/:orderId", protectRoute, delivered);
 
 router.get("/canceled/:id/:orderId", protectRoute, cancelOrder);
 

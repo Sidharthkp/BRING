@@ -182,15 +182,15 @@ const dispatched = async (req, res) => {
     try {
         const params = req.params.id
         const aw = await orderModel.findOneAndUpdate(
-            { "products.productId":  params},
-            {$set: {'products.$.status': "Dispatched" }})
+            { "products.productId": params, _id: req.params.orderId },
+            { $set: { 'products.$.status': "Dispatched" } })
         aw.save()
-        .then(()=>{
-            res.redirect('back')
-        })
-        .catch(()=>{
-            console.log("error");
-        })
+            .then(() => {
+                res.redirect('back')
+            })
+            .catch(() => {
+                console.log("error");
+            })
     } catch (err) {
         console.log(err);
         res.redirect('back')
@@ -201,15 +201,15 @@ const delivered = async (req, res) => {
     try {
         const params = req.params.id
         const aw = await orderModel.findOneAndUpdate(
-            { "products.productId":  params},
-            {$set: {'products.$.status': "Delivered" }})
+            { "products.productId": params, _id: req.params.orderId },
+            { $set: { 'products.$.status': "Delivered" } })
         aw.save()
-        .then(()=>{
-            res.redirect('back')
-        })
-        .catch(()=>{
-            console.log("error");
-        })
+            .then(() => {
+                res.redirect('back')
+            })
+            .catch(() => {
+                console.log("error");
+            })
     } catch (err) {
         console.log(err);
         res.redirect('back')
