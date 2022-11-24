@@ -60,7 +60,7 @@
                                     <%= Product.description %>
                                 </p>
 
-                                <div class="product-options">
+                                <!-- <div class="product-options">
                                     <label>
                                         Variant
                                         <select class="input-select">
@@ -73,24 +73,29 @@
                                             <option value="0">Red</option>
                                         </select>
                                     </label>
-                                </div>
+                                </div> -->
 
                                 <div class="add-to-cart">
-                                    <div class="qty-label">
-                                        Qty
-                                        <div class="input-number">
-                                            <input type="number">
-                                            <span class="qty-up">+</span>
-                                            <span class="qty-down">-</span>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-                                        cart</button>
+                                    <% if(user){ %>
+                                        <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
+                                            class="add-to-cart">
+                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
+                                                add
+                                                to cart</button>
+                                        </a>
+                                        <%}else{%>
+                                            <a href="/login" class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i
+                                                        class="fa fa-shopping-cart"></i>
+                                                    add
+                                                    to cart</button>
+                                            </a>
+                                            <%}%>
                                 </div>
 
                                 <ul class="product-btns">
-                                    <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
+                                    <li><a href="/addToWishList/<%= Product._id %>"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+                                    <!-- <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li> -->
                                 </ul>
 
                                 <ul class="product-links">

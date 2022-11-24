@@ -356,7 +356,7 @@ const addToCart = async (req, res) => {
             }, 0)
             await cart.save()
                 .then(() => {
-                    res.redirect("/cart");
+                    res.redirect("back");
                 })
                 .catch(() => {
                     console.log("Error");
@@ -378,7 +378,7 @@ const addToCart = async (req, res) => {
             );
             await getCart.save()
                 .then(() => {
-                    res.redirect("/cart");
+                    res.redirect("back");
                 })
                 .catch(() => {
                     console.log("Error");
