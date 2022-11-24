@@ -625,9 +625,11 @@ const orderHistory = async (req, res) => {
 
 const cancelOrder = async (req, res) => {
     try {
-        await orderModel.findByIdAndUpdate(
-            req.params.id,
-            { status: "Canceled" })
+        const params = req.params.id
+        const aw = await orderModel.findOneAndUpdate(
+            { "products.productId":  params},
+            {$set: {'products.$.status': "Canceled" }})
+        aw.save()
         res.redirect('back')
     } catch (err) {
         console.log(err);
