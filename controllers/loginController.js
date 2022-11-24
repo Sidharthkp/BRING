@@ -289,9 +289,9 @@ const productLarge = async (req, res) => {
     }
     let prodId = req.params.id;
     console.log(prodId);
-    const products = await productModel.find()
     const Product = await productModel.findOne({ _id: prodId });
     const prod = Product.imgUrl;
+    const products = await productModel.find({category: Product.category})
     const user = await userModel.findById(userId)
     res.render("product", {
         user: user,
@@ -475,6 +475,7 @@ const checkout = async (req, res) => {
 }
 
 const wishList = async (req, res) => {
+    const sort = { date: -1 }
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
@@ -487,7 +488,7 @@ const wishList = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    wishListModel.findOne({ user: userId }).populate("products").exec((err, data) => {
+    wishListModel.findOne({ user: userId }).populate("products").sort(sort).exec((err, data) => {
         if (err) {
             return console.log(err);
         }
@@ -602,6 +603,7 @@ const order = async (req, res) => {
 }
 
 const orderHistory = async (req, res) => {
+    const sort = { date: -1 }
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
@@ -614,7 +616,7 @@ const orderHistory = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    const viewOrders = await orderModel.find({user: userId}).populate("products.productId").exec()
+    const viewOrders = await orderModel.find({user: userId}).populate("products.productId").sort(sort).exec()
     res.render("history", {
         user: user,
         count,
