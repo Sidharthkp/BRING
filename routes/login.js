@@ -84,7 +84,7 @@ router.get("/dispatched/:id", protectRoute, dispatched);
 
 router.get("/delivered/:id", protectRoute, delivered);
 
-router.get("/canceled/:id", protectRoute, cancelOrder);
+router.get("/canceled/:id/:orderId", protectRoute, cancelOrder);
 
 router.post("/address/:id", addAddress);
 

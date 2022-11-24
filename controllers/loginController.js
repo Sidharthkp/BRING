@@ -625,9 +625,10 @@ const orderHistory = async (req, res) => {
 
 const cancelOrder = async (req, res) => {
     try {
+        const userId = req.user.id;
         const params = req.params.id
         const aw = await orderModel.findOneAndUpdate(
-            { "products.productId":  params},
+            { "products.productId":  params, user: userId, _id: req.params.orderId},
             {$set: {'products.$.status': "Canceled" }})
         aw.save()
         res.redirect('back')
