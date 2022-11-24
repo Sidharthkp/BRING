@@ -10,7 +10,7 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-white">
-                            <!-- <th scope="col"><input class="form-check-input" type="checkbox"></th> -->
+                            <th scope="col">Date</th>
                             <th scope="col">Products</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Status</th>
@@ -24,57 +24,79 @@
                         <% let i=-1; for( let data of viewProducts){ i +=1 %>
                             <% for(let prod of data.products) { %>
                                 <tr>
-                                    <!-- <td><input class="form-check-input" type="checkbox"></td> -->
+                                    <td>
+                                        <%= viewProducts[i].date %>
+                                    </td>
                                     <td>
                                         <%= prod.productId.name %>
                                     </td>
                                     <td>
                                         <%= prod.quantity %>
                                     </td>
-                                    <td style="color: green;">
-                                        <%= prod.status %>
-                                    </td>
-                                    <td>
-                                        <%= viewProducts[i].user.name %>
-                                    </td>
-                                    <td>
-                                        <%= viewProducts[i].total %>
-                                    </td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <%= viewProducts[i].address.address %>
+                                    <% if(prod.status=="Delivered" ){%>
+                                        <td style="color: green;">
+                                            <%= prod.status %>
+                                        </td>
+                                        <%}else{%>
+                                            <% if(prod.status=="Dispatched" ){%>
+                                                <td style="color: orangered;">
+                                                    <%= prod.status %>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <%= viewProducts[i].address.city %>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <%= viewProducts[i].address.district %>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <%= viewProducts[i].address.state %>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <%= viewProducts[i].address.country %>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary"
-                                            href="/dispatched/<%= prod.productId._id %>">Dispatched</a>
-                                        <a class="btn btn-sm btn-success"
-                                            href="/delivered/<%= prod.productId._id %>">Delivered</a>
-                                    </td>
+                                                <%}else{%>
+                                                    <% if(prod.status=="Canceled" ){%>
+                                                        <td style="color: red;">
+                                                            <%= prod.status %>
+                                                        </td>
+                                                        <%}else{%>
+                                                            <% if(prod.status=="Order placed" ){%>
+                                                                <td style="color: yellow;">
+                                                                    <%= prod.status %>
+                                                                </td>
+                                                                <%}}}}%>
+                                                                    <td>
+                                                                        <%= viewProducts[i].user.name %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= viewProducts[i].total %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%= viewProducts[i].address.address
+                                                                                        %>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%= viewProducts[i].address.city %>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%= viewProducts[i].address.district
+                                                                                        %>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%= viewProducts[i].address.state %>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%= viewProducts[i].address.country
+                                                                                        %>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="btn btn-sm btn-primary"
+                                                                            href="/dispatched/<%= prod.productId._id %>">Dispatched</a>
+                                                                        <a class="btn btn-sm btn-success"
+                                                                            href="/delivered/<%= prod.productId._id %>">Delivered</a>
+                                                                    </td>
                                 </tr>
                                 <%}%>
                                     <%}%>
