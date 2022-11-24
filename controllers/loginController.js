@@ -316,7 +316,7 @@ const cart = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
+    const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
     await cart.save()
         .then(() => {
             res.render("cart", {
@@ -464,7 +464,7 @@ const checkout = async (req, res) => {
     const user = await userModel.findById(userId)
     const userDetails = await userModel.findOne({ _id: userId }).populate("address")
     const address = userDetails.address
-    const viewcart = await cartModel.findOne({ userId: userId }).populate("products.productId").exec()
+    const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
     res.render("checkout", {
         user: user,
         count,
@@ -623,7 +623,20 @@ const orderHistory = async (req, res) => {
     });
 }
 
+const cancelOrder = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(
+            req.params.id,
+            { status: "Canceled" })
+        res.redirect('back')
+    } catch (err) {
+        console.log(err);
+        res.redirect('back')
+    }
+}
+
 module.exports = {
+    cancelOrder,
     order,
     orderHistory,
     quantityIncrement,

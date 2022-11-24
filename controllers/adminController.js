@@ -165,7 +165,8 @@ const productPost = async (req, res) => {
 }
 
 const orderManagement = async (req, res) => {
-    const viewProducts = await orderModel.find().populate("products.productId").populate("user").populate("address").exec()
+    const sort = { date: -1 }
+    const viewProducts = await orderModel.find().populate("products.productId").populate("user").populate("address").sort(sort).exec()
     if (req.user.isAdmin === true) {
         user = req.user.name;
         res.render("admin/orderManage", {
@@ -179,10 +180,17 @@ const orderManagement = async (req, res) => {
 
 const dispatched = async (req, res) => {
     try {
-        await orderModel.findByIdAndUpdate(
-            req.params.id,
-            { status: "Dispatched" })
-        res.redirect('back')
+        const params = req.params.id
+        const aw = await orderModel.findOneAndUpdate(
+            { "products.productId":  params},
+            {$set: {'products.$.status': "Dispatched" }})
+        aw.save()
+        .then(()=>{
+            res.redirect('back')
+        })
+        .catch(()=>{
+            console.log("error");
+        })
     } catch (err) {
         console.log(err);
         res.redirect('back')
@@ -191,10 +199,17 @@ const dispatched = async (req, res) => {
 
 const delivered = async (req, res) => {
     try {
-        await orderModel.findByIdAndUpdate(
-            req.params.id,
-            { status: "Delivered" })
-        res.redirect('back')
+        const params = req.params.id
+        const aw = await orderModel.findOneAndUpdate(
+            { "products.productId":  params},
+            {$set: {'products.$.status': "Delivered" }})
+        aw.save()
+        .then(()=>{
+            res.redirect('back')
+        })
+        .catch(()=>{
+            console.log("error");
+        })
     } catch (err) {
         console.log(err);
         res.redirect('back')

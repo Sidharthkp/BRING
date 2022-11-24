@@ -27,6 +27,10 @@ const OrderSchema = new mongoose.Schema({
             subTotal: {
                 type: Number,
                 ref: "Product",
+            },
+            status: {
+                type: String,
+                default: "Order placed"
             }
         }
     ],
@@ -41,10 +45,6 @@ const OrderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    status: {
-        type: String,
-        default: "Order placed"
-    }
 });
 const Order = mongoose.model("Order", OrderSchema);
 module.exports = Order;
