@@ -34,6 +34,30 @@
                                                     <!-- <del
                                                         class="product-old-price">$990.00</del> -->
                                             </h4>
+                                            <% if(prod.status=="Delivered" ){%>
+                                                <p style="color: green;">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    <%= prod.status %>
+                                                </p>
+                                                <%}else{%>
+                                                    <% if(prod.status=="Dispatched" ){%>
+                                                        <p style="color: orangered;">
+                                                            <i class="fa-solid fa-check-double"></i>
+                                                            <%= prod.status %>
+                                                        </p>
+                                                        <%}else{%>
+                                                            <% if(prod.status=="Canceled" ){%>
+                                                                <p style="color: red;">
+                                                                    <i class="fa-solid fa-ban"></i>
+                                                                    <%= prod.status %>
+                                                                </p>
+                                                                <%}else{%>
+                                                                    <% if(prod.status=="Order placed" ){%>
+                                                                        <p style="color: yellow;">
+                                                                            <i class="fa-solid fa-dollar-sign"></i>
+                                                                            <%= prod.status %>
+                                                                        </p>
+                                                                        <%}}}}%>
                                             <!-- <div class="product-rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>

@@ -13,7 +13,7 @@
                             <th scope="col">Date</th>
                             <th scope="col">Products</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Status</th>
+                            <th scope="col" style="width: 100px;">Status</th>
                             <th scope="col">Customer</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Place</th>
@@ -35,21 +35,25 @@
                                     </td>
                                     <% if(prod.status=="Delivered" ){%>
                                         <td style="color: green;">
+                                            <i class="fa-solid fa-check"></i>
                                             <%= prod.status %>
                                         </td>
                                         <%}else{%>
                                             <% if(prod.status=="Dispatched" ){%>
                                                 <td style="color: orangered;">
+                                                    <i class="fa-solid fa-check-double"></i>
                                                     <%= prod.status %>
                                                 </td>
                                                 <%}else{%>
                                                     <% if(prod.status=="Canceled" ){%>
                                                         <td style="color: red;">
+                                                            <i class="fa-solid fa-ban"></i>
                                                             <%= prod.status %>
                                                         </td>
                                                         <%}else{%>
                                                             <% if(prod.status=="Order placed" ){%>
                                                                 <td style="color: yellow;">
+                                                                    <i class="fa-solid fa-dollar-sign"></i>
                                                                     <%= prod.status %>
                                                                 </td>
                                                                 <%}}}}%>
