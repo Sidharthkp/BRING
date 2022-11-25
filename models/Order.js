@@ -48,6 +48,10 @@ const OrderSchema = new mongoose.Schema({
     payment_method: {
         type: String,
         default: 'none'
+    },
+    payment_status: {
+        type: String,
+        default: "Not paid"
     }
 });
 const Order = mongoose.model("Order", OrderSchema);
