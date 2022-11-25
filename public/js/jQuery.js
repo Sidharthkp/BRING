@@ -19,7 +19,7 @@ $("#checkout-form").submit((e) => {
 });
 
 function razorpayPayment(order) {
-    console.log(order)
+    console.log(order.order.id,"order")
     var options = {
         key: "rzp_test_P5UVBo7REfUbfI", // Enter the Key ID generated from the Dashboard
         amount: 2342, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -27,9 +27,12 @@ function razorpayPayment(order) {
         name: "BRING",
         description: "Test Transaction",
         image: "",
-        order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        order_id: order.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
         handler: function (response) {
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature)
             verifyPayment(response, order);
         },
         prefill: {

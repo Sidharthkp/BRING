@@ -635,28 +635,26 @@ const order = async (req, res) => {
 const verifyPayment = async (req, res) => {
     const userId = req.user.id;
     const details = req.body
-    console.log(details);
+    console.log(req.body,"dt");
     const crypto = require('crypto')
     const cart = await cartModel.findOne({ userId })
-    let hmac = crypto.createHmac('sha256', process.env.key_secret)
-    hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]'])
+    let hmac = crypto.createHmac('sha256', "pdJvl0uokFgHKnqTsJw0jFBl")
+    hmac.update(details['payment[razorpay_order_id]'] + "|" + details['payment[razorpay_payment_id]'],"pdJvl0uokFgHKnqTsJw0jFBl");
     hmac = hmac.digest('hex')
 
     const orderId = details['order[order][receipt]']
     console.log("Showing orderID");
     console.log(orderId);
-    if (hmac == details['payment[razorpay_signature]']) {
+    // console.log(hmac,details['payment[razorpay_signature]'],"check match")
+    let response = { "cod": false }
+    if (details['payment[razorpay_signature]'] == hmac) {
         console.log('order Successfull');
-        await cartModel.findByIdAndDelete({ _id: cart._id })
-        await orderModel.findByIdAndUpdate(orderId, { $set: { payment_status: 'paid' } }).then((data) => {
-            res.json({ cod: true, data })
-        }).catch((err) => {
-            res.data({ cod: false, err })
-        })
+        response = { "cod": true }
     } else {
-        res.json({ cod: false })
+        response = { "cod": false }
         console.log('payment failed');
     }
+    res.send(response);
 };
 
 const orderSuccess = async (req, res) => {
