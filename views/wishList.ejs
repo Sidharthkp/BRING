@@ -2,74 +2,79 @@
 
     <!-- SECTION -->
     <div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
+        <% if(data !=null) {%>
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
 
-                <div class="col-md-7">
-                    <div>
-                        <%for (let wishList of data.products){%>
+                    <div class="col-md-7">
+                        <div>
+                            <%for (let wishList of data.products){%>
 
-                            <div class="product">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="product-img" style="width: 200px;">
-                                            <img src="/public/img/product_img/<%= wishList.imgUrl[0] %>" alt="">
+                                <div class="product">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="product-img" style="width: 200px;">
+                                                <img src="/public/img/product_img/<%= wishList.imgUrl[0] %>" alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="product-body">
-                                            <p class="product-category">
-                                                <%= wishList.category %>
-                                            </p>
-                                            <h3 class="product-name"><a href="#">
-                                                    <%= wishList.name %>
-                                                </a></h3>
-                                            <h4 class="product-price">
-                                                ₹<%= wishList.price %>
-                                                    <!-- <del
+                                        <div class="col-md-6">
+                                            <div class="product-body">
+                                                <p class="product-category">
+                                                    <%= wishList.category %>
+                                                </p>
+                                                <h3 class="product-name"><a href="#">
+                                                        <%= wishList.name %>
+                                                    </a></h3>
+                                                <h4 class="product-price">
+                                                    ₹<%= wishList.price %>
+                                                        <!-- <del
                                                         class="product-old-price">$990.00</del> -->
-                                            </h4>
-                                            <!-- <div class="product-rating">
+                                                </h4>
+                                                <!-- <div class="product-rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                 </div> -->
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                        class="tooltipp">add to
-                                                        wishlist</span></button>
-                                                <button class="add-to-compare"><a
-                                                        href="/deleteWishList/<%= wishList._id %>"><i
-                                                            class="fa-solid fa-trash-can"></i><span class="tooltipp">add
-                                                            to
-                                                            delete</span></a></button>
-                                                <button class="quick-view" type=""><a
-                                                        href="/product/<%= wishList._id %>"><i class="fa fa-eye"></i>
-                                                        <span class="tooltipp">quick view</span></a></button>
+                                                <div class="product-btns">
+                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                            class="tooltipp">add to
+                                                            wishlist</span></button>
+                                                    <button class="add-to-compare"><a
+                                                            href="/deleteWishList/<%= wishList._id %>"><i
+                                                                class="fa-solid fa-trash-can"></i><span
+                                                                class="tooltipp">add
+                                                                to
+                                                                delete</span></a></button>
+                                                    <button class="quick-view" type=""><a
+                                                            href="/product/<%= wishList._id %>"><i
+                                                                class="fa fa-eye"></i>
+                                                            <span class="tooltipp">quick view</span></a></button>
+                                                </div>
+                                                <a
+                                                    href="/addToCart/<%= wishList._id %>/<%= wishList.quantity %>/<%= wishList.price %>">
+                                                    <button class="add-to-cart-btn"
+                                                        style="border: none; margin-top: 10px; background-color: white;"><i
+                                                            class="fa fa-shopping-cart"></i>
+                                                        Add
+                                                        to cart</button>
+                                                </a>
                                             </div>
-                                            <a href="/addToCart/<%= wishList._id %>/<%= wishList.quantity %>/<%= wishList.price %>">
-                                                <button class="add-to-cart-btn"
-                                                    style="border: none; margin-top: 10px; background-color: white;"><i
-                                                        class="fa fa-shopping-cart"></i>
-                                                    Add
-                                                    to cart</button>
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <%}%>
-                    </div>
+                                <%}%>
+                        </div>
 
+                    </div>
                 </div>
+                <!-- /row -->
             </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
+            <!-- /container -->
+            <%}%>
     </div>
     <!-- /SECTION -->
 

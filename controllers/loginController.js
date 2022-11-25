@@ -318,18 +318,12 @@ const cart = async (req, res) => {
     }
     const user = await userModel.findById(userId)
     const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
-    await cart.save()
-        .then(() => {
-            res.render("cart", {
-                user: user,
-                viewcart,
-                count,
-                counts,
-            });
-        })
-        .catch(() => {
-            console.log("Error");
-        })
+    res.render("cart", {
+        user: user,
+        viewcart,
+        count,
+        counts,
+    });
 }
 
 const addToCart = async (req, res) => {
@@ -464,15 +458,20 @@ const checkout = async (req, res) => {
     }
     const user = await userModel.findById(userId)
     const userDetails = await userModel.findOne({ _id: userId }).populate("address")
-    const address = userDetails.address
     const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
-    res.render("checkout", {
-        user: user,
-        count,
-        viewcart,
-        counts,
-        address
-    });
+    if (userDetails.address.length != 0) {
+        const address = userDetails.address
+        res.render("checkout", {
+            user: user,
+            count,
+            viewcart,
+            counts,
+            address
+        });
+    } else {
+        console.log("please add address");
+        res.redirect("/profile")
+    }
 }
 
 const wishList = async (req, res) => {
@@ -581,31 +580,14 @@ const store = async (req, res) => {
 }
 
 const order = async (req, res) => {
-    const userId = req.user.id;
     const payment_method = req.body.paymentType
     console.log(req.body.paymentType);
-    const Address = await addressModel.findOne({ user: userId })
+    const userId = req.user.id;
     const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
-    const products = viewcart.products
 
     if (payment_method == "cod") {
         console.log("reached on cod");
         res.json({ cod: true });
-
-        const newOrderList = new orderModel({
-            user: userId,
-            products: products,
-            address: Address.id,
-            total: viewcart.total
-        });
-        await newOrderList.save()
-            .then(async () => {
-                await cartModel.deleteOne({ user: userId })
-            })
-            .catch(() => {
-                console.log("Send to Jquery");
-            })
-
     } else {
         console.log("reached on online ");
         var instance = new Razorpay({
@@ -635,11 +617,10 @@ const order = async (req, res) => {
 const verifyPayment = async (req, res) => {
     const userId = req.user.id;
     const details = req.body
-    console.log(req.body,"dt");
+    console.log(req.body, "dt");
     const crypto = require('crypto')
-    const cart = await cartModel.findOne({ userId })
     let hmac = crypto.createHmac('sha256', "pdJvl0uokFgHKnqTsJw0jFBl")
-    hmac.update(details['payment[razorpay_order_id]'] + "|" + details['payment[razorpay_payment_id]'],"pdJvl0uokFgHKnqTsJw0jFBl");
+    hmac.update(details['payment[razorpay_order_id]'] + "|" + details['payment[razorpay_payment_id]'], "pdJvl0uokFgHKnqTsJw0jFBl");
     hmac = hmac.digest('hex')
 
     const orderId = details['order[order][receipt]']
@@ -657,7 +638,7 @@ const verifyPayment = async (req, res) => {
     res.send(response);
 };
 
-const orderSuccess = async (req, res) => {
+const thankyou = async (req, res) => {
     const userId = req.user.id;
     let count = 0;
     let counts = 0;
@@ -670,11 +651,32 @@ const orderSuccess = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    res.render("orderSuccess", {
+    res.render("thankyou", {
         user: user,
         count,
         counts,
     });
+}
+
+const orderSuccess = async (req, res) => {
+    const userId = req.user.id;
+    const Address = await addressModel.findOne({ user: userId })
+    const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
+    const products = viewcart.products
+    const newOrderList = new orderModel({
+        user: userId,
+        products: products,
+        address: Address.id,
+        total: viewcart.total
+    });
+    await newOrderList.save()
+        .then(async () => {
+            await cartModel.deleteOne({ user: userId })
+            res.redirect("/thankyou")
+        })
+        .catch(() => {
+            console.log("Send to Jquery");
+        })
 }
 
 const orderHistory = async (req, res) => {
@@ -716,6 +718,7 @@ const cancelOrder = async (req, res) => {
 }
 
 module.exports = {
+    thankyou,
     verifyPayment,
     cancelOrder,
     order,

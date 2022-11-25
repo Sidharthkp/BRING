@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess } = require('../controllers/loginController');
+const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess, thankyou } = require('../controllers/loginController');
 
 const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost, dispatched, delivered } = require('../controllers/adminController');
 
@@ -85,6 +85,8 @@ router.get("/delivered/:id/:orderId", protectRoute, delivered);
 router.get("/canceled/:id/:orderId", protectRoute, cancelOrder);
 
 router.get("/orderSuccess", protectRoute, orderSuccess);
+
+router.get("/thankyou", protectRoute, thankyou);
 
 router.post("/verify-payment", protectRoute, verifyPayment);
 

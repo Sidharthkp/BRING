@@ -2,117 +2,124 @@
 
     <!-- SECTION -->
     <div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
+        <% if(viewcart !=null) {%>
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
 
-                <div class="col-md-7">
-                    <div>
-                        <% viewcart.products.forEach((data)=>{%>
+                    <div class="col-md-7">
+                        <div>
+                            <% viewcart.products.forEach((data)=>{%>
 
-                            <div class="product">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="product-img" style="width: 200px;">
-                                            <img src="/public/img/product_img/<%= data.productId.imgUrl[0] %>" alt="">
+                                <div class="product">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="product-img" style="width: 200px;">
+                                                <img src="/public/img/product_img/<%= data.productId.imgUrl[0] %>"
+                                                    alt="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="product-body">
-                                            <p class="product-category">
-                                                <%= data.productId.category %>
-                                            </p>
-                                            <h3 class="product-name"><a href="#">
-                                                    <%= data.productId.name %>
-                                                </a></h3>
-                                            <h4 class="product-price">
-                                                ₹<%= data.productId.price %>
-                                                    <!-- <del
+                                        <div class="col-md-6">
+                                            <div class="product-body">
+                                                <p class="product-category">
+                                                    <%= data.productId.category %>
+                                                </p>
+                                                <h3 class="product-name"><a href="#">
+                                                        <%= data.productId.name %>
+                                                    </a></h3>
+                                                <h4 class="product-price">
+                                                    ₹<%= data.productId.price %>
+                                                        <!-- <del
                                                         class="product-old-price">$990.00</del> -->
-                                            </h4>
-                                            <div class="qty-label">
+                                                </h4>
+                                                <div class="qty-label">
 
-                                                <div class="input-number">
-                                                    Qty:
-                                                    <a class="qty-up" href="/button-increment/<%= data.productId._id %>">+</a>
+                                                    <div class="input-number">
+                                                        Qty:
+                                                        <a class="qty-up"
+                                                            href="/button-increment/<%= data.productId._id %>">+</a>
                                                         <input id="itemQty-<%= data.productId.id %>" type="text"
                                                             value="<%= data.quantity %>"
                                                             style="height: 40px; width: 30px; border: none;">
 
-                                                        <a class="qty-down" href="/button-decrement/<%= data.productId._id %>">-</a>
+                                                        <a class="qty-down"
+                                                            href="/button-decrement/<%= data.productId._id %>">-</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- <div class="product-rating">
+                                                <!-- <div class="product-rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                 </div> -->
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                        class="tooltipp">add to
-                                                        wishlist</span></button>
-                                                <button class="add-to-compare"><a
-                                                        href="/deleteCart/<%= data.productId._id %>"><i
-                                                            class="fa-solid fa-trash-can"></i><span class="tooltipp">add
-                                                            to
-                                                            delete</span></a></button>
-                                                <button class="quick-view" type=""><a
-                                                        href="/product/<%= data.productId._id %>"><i
-                                                            class="fa fa-eye"></i>
-                                                        <span class="tooltipp">quick view</span></a></button>
+                                                <div class="product-btns">
+                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                            class="tooltipp">add to
+                                                            wishlist</span></button>
+                                                    <button class="add-to-compare"><a
+                                                            href="/deleteCart/<%= data.productId._id %>"><i
+                                                                class="fa-solid fa-trash-can"></i><span
+                                                                class="tooltipp">add
+                                                                to
+                                                                delete</span></a></button>
+                                                    <button class="quick-view" type=""><a
+                                                            href="/product/<%= data.productId._id %>"><i
+                                                                class="fa fa-eye"></i>
+                                                            <span class="tooltipp">quick view</span></a></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <%})%>
-                    </div>
-                </div>
-
-                <!-- Order Details -->
-                <div class="col-md-5 order-details">
-                    <div class="section-title text-center">
-                        <h3 class="title">Your Order</h3>
-                    </div>
-                    <div class="order-summary">
-                        <div class="order-col">
-                            <div><strong>PRODUCT</strong></div>
-                            <div><strong>TOTAL</strong></div>
-                        </div>
-                        <div class="order-products">
-                            <%viewcart.products.forEach((data)=>{%>
-                                <div class="order-col">
-                                    <div><%= data.quantity %>x <%= data.productId.name %>
-                                    </div>
-                                    <div>₹<%=data.subTotal%>
-                                    </div>
-                                </div>
                                 <%})%>
-                                    <!-- <div class="order-col">
+                        </div>
+                    </div>
+
+                    <!-- Order Details -->
+                    <div class="col-md-5 order-details">
+                        <div class="section-title text-center">
+                            <h3 class="title">Your Order</h3>
+                        </div>
+                        <div class="order-summary">
+                            <div class="order-col">
+                                <div><strong>PRODUCT</strong></div>
+                                <div><strong>TOTAL</strong></div>
+                            </div>
+                            <div class="order-products">
+                                <%viewcart.products.forEach((data)=>{%>
+                                    <div class="order-col">
+                                        <div>
+                                            <%= data.quantity %>x <%= data.productId.name %>
+                                        </div>
+                                        <div>₹<%=data.subTotal%>
+                                        </div>
+                                    </div>
+                                    <%})%>
+                                        <!-- <div class="order-col">
                                 <div>2x Product Name Goes Here</div>
                                 <div> ₹980.00</div>
                             </div> -->
+                            </div>
+                            <div class="order-col">
+                                <div>Shiping</div>
+                                <div><strong>FREE</strong></div>
+                            </div>
+                            <div class="order-col">
+                                <div><strong>TOTAL</strong></div>
+                                <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
+                            </div>
                         </div>
-                        <div class="order-col">
-                            <div>Shiping</div>
-                            <div><strong>FREE</strong></div>
-                        </div>
-                        <div class="order-col">
-                            <div><strong>TOTAL</strong></div>
-                            <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
-                        </div>
+
+                        <a href="/checkout" class="primary-btn order-submit">checkout</a>
                     </div>
-                    
-                    <a href="/checkout" class="primary-btn order-submit">checkout</a>
+                    <!-- /Order Details -->
                 </div>
-                <!-- /Order Details -->
+                <!-- /row -->
             </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
+            <!-- /container -->
+            <%}%>
     </div>
     <!-- /SECTION -->
 
