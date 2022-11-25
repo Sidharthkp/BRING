@@ -47,11 +47,11 @@ const OrderSchema = new mongoose.Schema({
     },
     payment_method: {
         type: String,
-        default: 'none'
+        default: 'None'
     },
     payment_status: {
         type: String,
-        default: "Not paid"
+        default: "Pending"
     }
 });
 const Order = mongoose.model("Order", OrderSchema);

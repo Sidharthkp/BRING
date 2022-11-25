@@ -615,7 +615,6 @@ const order = async (req, res) => {
 }
 
 const verifyPayment = async (req, res) => {
-    const userId = req.user.id;
     const details = req.body
     console.log(req.body, "dt");
     const crypto = require('crypto')
