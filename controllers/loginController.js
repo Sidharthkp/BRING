@@ -597,7 +597,7 @@ const order = async (req, res) => {
 
         instance.orders.create(
             {
-                amount: viewcart.total,
+                amount: (viewcart.total)*100,
                 currency: "INR",
                 receipt: "asd1234123",
             },

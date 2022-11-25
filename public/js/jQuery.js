@@ -22,11 +22,11 @@ function razorpayPayment(order) {
     console.log(order.order.id,"order")
     var options = {
         key: "rzp_test_P5UVBo7REfUbfI", // Enter the Key ID generated from the Dashboard
-        amount: 2342, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        amount: order.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: "INR",
         name: "BRING",
         description: "Test Transaction",
-        image: "",
+        image: "https://i.pinimg.com/736x/e3/46/35/e34635d7e861c21b9b9c8513ea0780c1.jpg",
         order_id: order.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
         handler: function (response) {
@@ -37,14 +37,14 @@ function razorpayPayment(order) {
         },
         prefill: {
             name: "BRING",
-            email: "gaurav.kumar@example.com",
-            contact: "9999999999",
+            email: "BRING@brototype.com",
+            contact: "216987239134",
         },
         notes: {
             address: "Razorpay Corporate Office",
         },
         theme: {
-            color: "#3399cc",
+            color: "#D10024",
         },
     };
     function verifyPayment(payment, order) {
