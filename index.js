@@ -23,6 +23,7 @@ app.set("view engine", "ejs");
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(nocache());
+app.use(express.json());
 
 //BodyParsing
 app.use(express.urlencoded({ extended: false }));

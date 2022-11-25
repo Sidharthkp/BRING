@@ -94,7 +94,7 @@
                     </div>
                     <!-- /Shiping Details -->
                 </div>
-                <form>
+                <form id="checkout-form">
                     <!-- Order Details -->
                     <div class="col-md-5 order-details">
                         <div class="section-title text-center">
@@ -129,48 +129,26 @@
                                 <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
                             </div>
                         </div>
-                        <div class="payment-method">
-                            <div class="input-radio">
-                                <input type="radio" name="payment" id="payment-1" value="1" required>
-                                <label for="payment-1">
-                                    <span></span>
-                                    Cash on delivery
-                                </label>
-                                <div class="caption">
-                                    <p>Please use this payment method only if you are certain that someone will be
-                                        available
-                                        to receive and pay for your order upon delivery. If you intend to leave the
-                                        address
-                                        you provided, kindly endorse your payment to another party to ensure your order
-                                        is
-                                        delivered successfully. The standard, but not guaranteed, timeframe for shipping
-                                        is
-                                        between 2 and 7 days.</p>
-                                </div>
-                            </div>
-                            <div class="input-radio">
-                                <input type="radio" name="payment" id="payment-2" value="2">
-                                <label for="payment-2">
-                                    <span></span>
-                                    Razorpay
-                                </label>
-                                <div class="caption">
-                                    <p>The price and availability of items at BRING are subject to change. The shopping
-                                        cart is a temporary place to store a list of your items and reflects each item's
-                                        most recent price.
-                                        Do you have a promotional code? We'll ask you to enter your claim code when it's
-                                        time to pay.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="form-check">
+                            <label for="cod">
+                              <input class="form-check-input" type="radio" id="cod" name="paymentType" checked value="cod">
+                              Cash on delivery </i>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label for="online-payment">
+                              <input class="form-check-input" id="online-payment" type="radio" name="paymentType" value="razorpay">
+                              Online Payment </i>
+                            </label>
+                          </div>
                         <div class="input-checkbox">
-                            <input type="checkbox" required id="terms">
+                            <input type="checkbox" id="terms">
                             <label for="terms">
                                 <span></span>
                                 I've read and accept the <a href="#">terms & conditions</a>
                             </label>
                         </div>
-                        <a href="/placeOrder" onclick="myPayment()" class="primary-btn order-submit">Place order</a>
+                        <button type="submit" class="primary-btn order-submit">Place order</button>
                     </div>
                     <!-- /Order Details -->
                 </form>
@@ -180,11 +158,6 @@
         <!-- /container -->
     </div>
     <!-- /SECTION -->
-    <script>
-        function myPayment() {
-            var g = document.getElementById("payment-1").required;
-            document.getElementById("sudo").innerHTML = g;
-        }
-    </script>
+
 
     <%- include('footer-layout.ejs') %>

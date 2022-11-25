@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder } = require('../controllers/loginController');
+const { loginView, signupUser, loginUser, logout, home, verifyOtp, resendOtp, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess } = require('../controllers/loginController');
 
 const { loginAdminUser, userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost, dispatched, delivered } = require('../controllers/adminController');
 
@@ -76,8 +76,6 @@ router.get("/button-increment/:id", protectRoute, quantityIncrement);
 
 router.get("/button-decrement/:id", protectRoute, quantitydecrement);
 
-router.get("/placeOrder", protectRoute, order);
-
 router.get("/orderHistory", protectRoute, orderHistory);
 
 router.get("/dispatched/:id/:orderId", protectRoute, dispatched);
@@ -85,6 +83,12 @@ router.get("/dispatched/:id/:orderId", protectRoute, dispatched);
 router.get("/delivered/:id/:orderId", protectRoute, delivered);
 
 router.get("/canceled/:id/:orderId", protectRoute, cancelOrder);
+
+router.get("/orderSuccess", protectRoute, orderSuccess);
+
+router.post("/verify-payment", protectRoute, verifyPayment);
+
+router.post("/placeOrder", protectRoute, order);
 
 router.post("/address/:id", addAddress);
 

@@ -11,6 +11,7 @@ const orderModel = require("../models/Order");
 const nodemailer = require('nodemailer');
 const bannerModel = require("../models/Banner");
 var otp = Math.random();
+const Razorpay = require("razorpay");
 
 var Email;
 var newUser;
@@ -291,7 +292,7 @@ const productLarge = async (req, res) => {
     console.log(prodId);
     const Product = await productModel.findOne({ _id: prodId });
     const prod = Product.imgUrl;
-    const products = await productModel.find({category: Product.category})
+    const products = await productModel.find({ category: Product.category })
     const user = await userModel.findById(userId)
     res.render("product", {
         user: user,
@@ -581,25 +582,100 @@ const store = async (req, res) => {
 
 const order = async (req, res) => {
     const userId = req.user.id;
+    const payment_method = req.body.paymentType
+    console.log(req.body.paymentType);
     const Address = await addressModel.findOne({ user: userId })
     const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
     const products = viewcart.products
 
-    const newOrderList = new orderModel({
-        user: userId,
-        products: products,
-        address: Address.id,
-        total: viewcart.total
+    if (payment_method == "cod") {
+        console.log("reached on cod");
+        res.json({ cod: true });
 
+        const newOrderList = new orderModel({
+            user: userId,
+            products: products,
+            address: Address.id,
+            total: viewcart.total
+        });
+        await newOrderList.save()
+            .then(async () => {
+                await cartModel.deleteOne({ user: userId })
+            })
+            .catch(() => {
+                console.log("Send to Jquery");
+            })
+
+    } else {
+        console.log("reached on online ");
+        var instance = new Razorpay({
+            key_id: "rzp_test_P5UVBo7REfUbfI",
+            key_secret: "pdJvl0uokFgHKnqTsJw0jFBl",
+        });
+
+        instance.orders.create(
+            {
+                amount: viewcart.total,
+                currency: "INR",
+                receipt: "asd1234123",
+            },
+            function (err, order) {
+                if (err) {
+                    console.log('Error');
+                    console.log(err);
+                } else {
+                    res.json({order, cod: false});
+                    console.log("New Order: ", order);
+                }
+            }
+        );
+    }
+}
+
+const verifyPayment = async (req, res) => {
+    const userId = req.user.id;
+    const details = req.body
+    console.log(details);
+    const crypto = require('crypto')
+    const cart = await cartModel.findOne({ userId })
+    let hmac = crypto.createHmac('sha256', "pdJvl0uokFgHKnqTsJw0jFBl")
+    hmac.update(details['payment[razorpay_order_id]'] + '|' + details['payment[razorpay_payment_id]'])
+    hmac = hmac.digest('hex')
+
+    const orderId = details['order[order][receipt]']
+    console.log(orderId);
+    if (hmac == details['payment[razorpay_signature]']) {
+        console.log('order Successfull');
+        await cartModel.findByIdAndDelete({ _id: cart._id }).then((data) => {
+            // await orderModel.findByIdAndUpdate(orderId, { $set: { payment_status: 'paid' } })
+            res.json({ status: true, data })
+        }).catch((err) => {
+            res.data({ status: false, err })
+        })
+    } else {
+        res.json({ status: false })
+        console.log('payment failed');
+    }
+};
+
+const orderSuccess = async (req, res) => {
+    const userId = req.user.id;
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ user: userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ user: userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
+    res.render("orderSuccess", {
+        user: user,
+        count,
+        counts,
     });
-    await newOrderList.save()
-        .then(async () => {
-            await cartModel.deleteOne({ user: userId })
-            res.redirect("/");
-        })
-        .catch(() => {
-            console.log("Error in order");
-        })
 }
 
 const orderHistory = async (req, res) => {
@@ -616,7 +692,7 @@ const orderHistory = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    const viewOrders = await orderModel.find({user: userId}).populate("products.productId").sort(sort).exec()
+    const viewOrders = await orderModel.find({ user: userId }).populate("products.productId").sort(sort).exec()
     res.render("history", {
         user: user,
         count,
@@ -630,8 +706,8 @@ const cancelOrder = async (req, res) => {
         const userId = req.user.id;
         const params = req.params.id
         const aw = await orderModel.findOneAndUpdate(
-            { "products.productId":  params, user: userId, _id: req.params.orderId},
-            {$set: {'products.$.status': "Canceled" }})
+            { "products.productId": params, user: userId, _id: req.params.orderId },
+            { $set: { 'products.$.status': "Canceled" } })
         aw.save()
         res.redirect('back')
     } catch (err) {
@@ -641,6 +717,7 @@ const cancelOrder = async (req, res) => {
 }
 
 module.exports = {
+    verifyPayment,
     cancelOrder,
     order,
     orderHistory,
@@ -666,5 +743,6 @@ module.exports = {
     profile,
     editProfile,
     changePassword,
-    addAddress
+    addAddress,
+    orderSuccess
 };
