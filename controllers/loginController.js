@@ -387,7 +387,7 @@ const deleteCart = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
     console.log(productId);
-    const cart = await cartModel.findOne({ userId })
+    const cart = await cartModel.findOne({ user: userId })
     const itemIndex = cart.products.findIndex(product => product.productId == productId);
     cart.products.splice(itemIndex, 1)
     cart.total = cart.products.reduce((acc, curr) => {
