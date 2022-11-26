@@ -19,7 +19,6 @@ $("#checkout-form").submit((e) => {
 });
 
 function razorpayPayment(order) {
-    console.log(order.order.id,"order")
     var options = {
         key: "rzp_test_P5UVBo7REfUbfI", // Enter the Key ID generated from the Dashboard
         amount: order.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise

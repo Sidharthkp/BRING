@@ -441,8 +441,8 @@ const order = async (req, res) => {
     } else {
         console.log("reached on online ");
         var instance = new Razorpay({
-            key_id: "rzp_test_P5UVBo7REfUbfI",
-            key_secret: "pdJvl0uokFgHKnqTsJw0jFBl",
+            key_id: process.env.KEY_ID,
+            key_secret: process.env.KEY_SECRET,
         });
 
         instance.orders.create(
@@ -468,8 +468,8 @@ const verifyPayment = async (req, res) => {
     const details = req.body
     console.log(req.body, "dt");
     const crypto = require('crypto')
-    let hmac = crypto.createHmac('sha256', "pdJvl0uokFgHKnqTsJw0jFBl")
-    hmac.update(details['payment[razorpay_order_id]'] + "|" + details['payment[razorpay_payment_id]'], "pdJvl0uokFgHKnqTsJw0jFBl");
+    let hmac = crypto.createHmac('sha256', process.env.KEY_SECRET)
+    hmac.update(details['payment[razorpay_order_id]'] + "|" + details['payment[razorpay_payment_id]'], process.env.KEY_SECRET);
     hmac = hmac.digest('hex')
 
     const orderId = details['order[order][receipt]']
