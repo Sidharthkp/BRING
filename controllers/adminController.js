@@ -16,7 +16,7 @@ const userManagement = async (req, res) => {
     }
 }
 
-//adminside products view
+//adminside products view>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const productManagement = async (req, res) => {
     const sort = { date: -1 }
     const products = await productModel.find().sort(sort)
