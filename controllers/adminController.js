@@ -1,69 +1,14 @@
 const userModel = require("../models/User")
 const productModel = require("../models/Product")
 const categoryModel = require("../models/Category")
-const cartModel = require("../models/Cart")
-const wishListModel = require("../models/WishList")
 const bannerModel = require("../models/Banner")
 const orderModel = require("../models/Order")
-
-const loginAdminUser = async (req, res) => {
-    const userId = req.user.id;
-    const products = await productModel.find()
-    const categories = await categoryModel.find()
-    const banners = await bannerModel.findOne({ name: "Main" })
-    const user = await userModel.findById(userId)
-    if (req.user.isAdmin === true) {
-        res.render("admin/index", { user: user })
-    }
-    else {
-        let count = 0;
-        let counts = 0;
-        const usersId = req.user.id;
-        console.log(usersId);
-        const users = await userModel.findById(usersId)
-        const cart = await cartModel.findOne({ user: usersId });
-        if (cart) {
-            count = cart.products.length;
-        }
-        const wishList = await wishListModel.findOne({ user: usersId });
-        if (wishList) {
-            counts = wishList.products.length;
-        }
-        const carts = await cartModel.findOne({ user: userId });
-        if (!carts) {
-            const newCart = new cartModel({
-                user: req.user.id
-            });
-            await newCart.save()
-                .then(() => {
-
-                })
-                .catch(() => {
-                    console.log("Error");
-                })
-        }
-        const wish = await wishListModel.findOne({ user: userId });
-        if (!wish) {
-            const newWishList = new wishListModel({
-                user: req.user.id
-            });
-            await newWishList.save()
-                .then(() => {
-
-                })
-                .catch(() => {
-                    console.log("Error");
-                })
-        }
-        res.render("dashboard", { products, categories, count, counts, banners, user: users });
-    }
-}
 
 const userManagement = async (req, res) => {
     const sort = { date: -1 }
     const users = await userModel.find().sort(sort)
     if (req.user.isAdmin === true) {
-        user = req.user.name;
+        user = req.user.name
         res.render("admin/userManage", { users })
     }
     else {
@@ -141,6 +86,7 @@ const productEditPost = async (req, res) => {
     });
 }
 
+//
 const productPost = async (req, res) => {
     const { name, description, category, price, stock } = req.body;
     req.files.forEach(img => { });
@@ -324,7 +270,6 @@ module.exports = {
     bannerPost,
     blockUser,
     activeUser,
-    loginAdminUser,
     userManagement,
     productManagement,
     orderManagement,
