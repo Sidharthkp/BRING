@@ -16,9 +16,9 @@ router.get('/wishList', protectRoute, wishList);
 
 router.get('/checkout', protectRoute, checkout);
 
-router.get('/store/:id', store);
+router.get('/store/:id', protectRoute, store);
 
-router.get('/changePassword/:id', changePassword);
+router.get('/changePassword/:id', protectRoute, changePassword);
 
 router.get("/profile", protectRoute, profile);
 
@@ -46,8 +46,8 @@ router.post("/verify-payment", protectRoute, verifyPayment);
 
 router.post("/placeOrder", protectRoute, order);
 
-router.post("/address/:id", addAddress);
+router.post("/address/:id", protectRoute, addAddress);
 
-router.post('/editProfile/:id', editProfile);
+router.post('/editProfile/:id', protectRoute, editProfile);
 
 module.exports = router;
