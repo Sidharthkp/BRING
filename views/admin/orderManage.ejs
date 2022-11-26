@@ -10,6 +10,7 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-white">
+                            <th scope="col">Order Id</th>
                             <th scope="col">Date</th>
                             <th scope="col">Products</th>
                             <th scope="col">Quantity</th>
@@ -17,6 +18,8 @@
                             <th scope="col">Customer</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Place</th>
+                            <th scope="col">Payment method</th>
+                            <th scope="col">Payment status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -24,6 +27,9 @@
                         <% let i=-1; for( let data of viewProducts){ i +=1 %>
                             <% for(let prod of data.products) { %>
                                 <tr>
+                                    <td>
+                                        <%= viewProducts[i]._id %>
+                                    </td>
                                     <td>
                                         <%= viewProducts[i].date %>
                                     </td>
@@ -94,6 +100,12 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= viewProducts[i].payment_method %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= viewProducts[i].payment_status %>
                                                                     </td>
                                                                     <td>
                                                                         <% if(prod.status!="Canceled" ){%>

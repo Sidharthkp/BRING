@@ -9,7 +9,7 @@ $("#checkout-form").submit((e) => {
             console.log(response);
             if (response.cod) {
                 console.log("reached here");
-                window.location.href = "/orderSuccess";
+                window.location.href = "/orderSuccessCOD";
                 console.log(response);
             } else {
                 razorpayPayment(response);

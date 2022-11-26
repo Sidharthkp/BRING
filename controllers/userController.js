@@ -388,6 +388,69 @@ const addToWishList = async (req, res) => {
 
 }
 
+const addToCartFromWishlist = async (req, res) => {
+    console.log("reached here");
+    const productId = req.params.id;
+    const userId = req.user.id;
+    const quantity = parseInt(req.params.quantity);
+    const price = parseInt(req.params.price);
+    console.log(">>>>>>>>>>>>>" + productId);
+    const product = await productModel.findById(productId);
+    let cart = await cartModel.findOne({ user: userId });
+    let itemIndex = cart.products.findIndex(p => p.productId == productId);
+    if (product.stock >= quantity) {
+        // console.log(product.stock);
+        // console.log(quantity);
+        product.stock -= quantity
+        if (itemIndex > -1) {
+            //product exists in the cart, update the quantity
+            let productItem = cart.products[itemIndex];
+            productItem.quantity += quantity;
+            productItem.subTotal = productItem.quantity * productItem.price;
+            console.log(productItem.subTotal);
+            cart.total = cart.products.reduce((acc, curr) => {
+                return acc + curr.subTotal;
+            }, 0)
+            await cart.save()
+                .then(() => {
+                    res.redirect("back");
+                })
+                .catch(() => {
+                    console.log("Error");
+                })
+        } else {
+            console.log(quantity);
+            const subTotal = product.price;
+            const getCart = await cartModel.findOneAndUpdate({
+                user: req.user.id
+            },
+                {
+                    $push: {
+                        products: [{ productId, quantity, price, subTotal }],
+                    },
+                    $inc: {
+                        total: product.price
+                    }
+                }
+            );
+            await getCart.save()
+                .then(async () => {
+                    const removeWishList = await wishListModel.findOneAndUpdate({ user: userId }, { $pull: { products: productId } });
+                    await removeWishList.save()
+                        .then(() => {
+                            res.redirect("back");
+                        })
+                        .catch(() => {
+                            console.log("Error");
+                        })
+                })
+                .catch(() => {
+                    console.log("Error");
+                })
+        }
+    }
+}
+
 const deleteWishList = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
@@ -447,7 +510,7 @@ const order = async (req, res) => {
 
         instance.orders.create(
             {
-                amount: (viewcart.total)*100,
+                amount: (viewcart.total) * 100,
                 currency: "INR",
                 receipt: "asd1234123",
             },
@@ -516,7 +579,31 @@ const orderSuccess = async (req, res) => {
         user: userId,
         products: products,
         address: Address.id,
-        total: viewcart.total
+        total: viewcart.total,
+        payment_method: "Razorpay",
+        payment_status: "Paid"
+    });
+    await newOrderList.save()
+        .then(async () => {
+            await cartModel.deleteOne({ user: userId })
+            res.redirect("/thankyou")
+        })
+        .catch(() => {
+            console.log("Send to Jquery");
+        })
+}
+
+const orderSuccessCOD = async (req, res) => {
+    const userId = req.user.id;
+    const Address = await addressModel.findOne({ user: userId })
+    const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
+    const products = viewcart.products
+    const newOrderList = new orderModel({
+        user: userId,
+        products: products,
+        address: Address.id,
+        total: viewcart.total,
+        payment_method: "Cash On Delivery",
     });
     await newOrderList.save()
         .then(async () => {
@@ -567,6 +654,7 @@ const cancelOrder = async (req, res) => {
 }
 
 module.exports = {
+    orderSuccessCOD,
     thankyou,
     verifyPayment,
     cancelOrder,
@@ -588,5 +676,6 @@ module.exports = {
     editProfile,
     changePassword,
     addAddress,
-    orderSuccess
+    orderSuccess,
+    addToCartFromWishlist
 }

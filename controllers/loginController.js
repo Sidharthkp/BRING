@@ -39,11 +39,11 @@ console.log(otp);
 const signupUser = (req, res) => {
     const { name, email, password, confirm } = req.body;
     if (!name || !email || !password || !confirm) {
-        alert("Fill the empty fields");
+        console.log("Fill empty fields");
     }
     //Confirm Passwords
     if (password !== confirm) {
-        alert("Password must match");
+        console.log("Passwords must match");
     } else {
         //Validation
         User.findOne({ email: email, verified: true }).then((user) => {
