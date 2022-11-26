@@ -131,16 +131,18 @@
                         </div>
                         <div class="form-check">
                             <label for="cod">
-                              <input class="form-check-input" type="radio" id="cod" name="paymentType" checked value="cod">
-                              Cash on delivery </i>
+                                <input class="form-check-input" type="radio" id="cod" name="paymentType" checked
+                                    value="cod">
+                                Cash on delivery </i>
                             </label>
-                          </div>
-                          <div class="form-check">
+                        </div>
+                        <div class="form-check">
                             <label for="online-payment">
-                              <input class="form-check-input" id="online-payment" type="radio" name="paymentType" value="razorpay">
-                              Online Payment </i>
+                                <input class="form-check-input" id="online-payment" type="radio" name="paymentType"
+                                    value="razorpay">
+                                Online Payment </i>
                             </label>
-                          </div>
+                        </div>
                         <div class="input-checkbox">
                             <input type="checkbox" id="terms">
                             <label for="terms">
@@ -158,6 +160,11 @@
         <!-- /container -->
     </div>
     <!-- /SECTION -->
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="/public/js/jQuery.js"></script>
 
 
     <%- include('footer-layout.ejs') %>
