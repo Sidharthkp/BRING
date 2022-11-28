@@ -33,7 +33,6 @@ let transporter = nodemailer.createTransport({
 });
 otp = otp * 1000000;
 otp = parseInt(otp);
-console.log(otp);
 
 //Post Request that handles Signup
 const signupUser = (req, res) => {

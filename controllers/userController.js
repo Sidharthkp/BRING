@@ -583,6 +583,11 @@ const orderSuccess = async (req, res) => {
         payment_method: "Razorpay",
         payment_status: "Paid"
     });
+    for (let product of products) {
+        let id = product.productId
+        let stock = product.quantity * -1
+        await productModel.updateOne({ _id: id }, { $inc: { stock } })
+    }
     await newOrderList.save()
         .then(async () => {
             await cartModel.deleteOne({ user: userId })
@@ -597,7 +602,7 @@ const orderSuccessCOD = async (req, res) => {
     const userId = req.user.id;
     const Address = await addressModel.findOne({ user: userId })
     const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
-    const products = viewcart.products
+    const products = viewcart.products;
     const newOrderList = new orderModel({
         user: userId,
         products: products,
@@ -605,13 +610,18 @@ const orderSuccessCOD = async (req, res) => {
         total: viewcart.total,
         payment_method: "Cash On Delivery",
     });
+    for (let product of products) {
+        let id = product.productId
+        let stock = product.quantity * -1
+        await productModel.updateOne({ _id: id }, { $inc: { stock } })
+    }
     await newOrderList.save()
         .then(async () => {
             await cartModel.deleteOne({ user: userId })
             res.redirect("/thankyou")
         })
         .catch(() => {
-            console.log("Send to Jquery");
+            console.log("Error");
         })
 }
 
