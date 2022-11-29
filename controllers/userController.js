@@ -669,6 +669,29 @@ const orderHistory = async (req, res) => {
     });
 }
 
+const invoice = async (req, res) => {
+    const userId = req.user.id;
+    const params = req.params.orderId
+    let count = 0;
+    let counts = 0;
+    const cart = await cartModel.findOne({ user: userId });
+    if (cart) {
+        count = cart.products.length;
+    }
+    const wishList = await wishListModel.findOne({ user: userId });
+    if (wishList) {
+        counts = wishList.products.length;
+    }
+    const user = await userModel.findById(userId)
+    const viewInvoice = await orderModel.findOne({ user: userId, _id: params }).populate("products.productId").populate("address").exec()
+    res.render("invoice", {
+        user: user,
+        count,
+        counts,
+        viewInvoice
+    });
+}
+
 const cancelOrder = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -685,6 +708,7 @@ const cancelOrder = async (req, res) => {
 }
 
 module.exports = {
+    invoice,
     orderSuccessCOD,
     thankyou,
     verifyPayment,

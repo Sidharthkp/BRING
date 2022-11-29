@@ -105,11 +105,9 @@ const loginAdminUser = async (req, res) => {
     const user = await userModel.findById(userId)
     if (req.user.isAdmin === true) {
         const PRODUCT = await productModel.find({stock: 0});
-        console.log(PRODUCT);
         let Product = 0
         if(PRODUCT.length != 0){
              Product = 1;
-             console.log(Product);
         }
         res.render("admin/index", { user: user, Product })
     }
