@@ -40,9 +40,6 @@
                                                     <i class="fa fa-star"></i>
                                                 </div> -->
                                                 <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to
-                                                            wishlist</span></button>
                                                     <button class="add-to-compare"><a
                                                             href="/deleteWishList/<%= wishList._id %>"><i
                                                                 class="fa-solid fa-trash-can"></i><span
@@ -54,7 +51,15 @@
                                                                 class="fa fa-eye"></i>
                                                             <span class="tooltipp">quick view</span></a></button>
                                                 </div>
-                                                <a
+                                                <% if (wishList.stock==0){%>
+                                                    <a
+                                                    href="#">
+                                                    <button class="add-to-cart-btn"
+                                                        style="border: none; margin-top: 10px; background-color: white;"><i class="fa-solid fa-circle-xmark"></i>
+                                                        Out Of Stock</button>
+                                                </a>
+                                                <%}else{%>
+                                                    <a
                                                     href="/addToCartFromWishlist/<%= wishList._id %>/<%= wishList.quantity %>/<%= wishList.price %>">
                                                     <button class="add-to-cart-btn"
                                                         style="border: none; margin-top: 10px; background-color: white;"><i
@@ -62,6 +67,7 @@
                                                         Add
                                                         to cart</button>
                                                 </a>
+                                                <%}%>
                                             </div>
                                         </div>
                                     </div>

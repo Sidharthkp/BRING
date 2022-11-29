@@ -392,7 +392,6 @@
                             <div id="tab1" class="tab-pane active">
                                 <div class="products-slick" data-nav="#slick-nav-1">
                                     <% products.forEach(function(Product) {%>
-                                        <!-- product -->
                                         <div class="product">
                                             <div class="product-img">
                                                 <img src="/public/img/product_img/<%= Product.imgUrl[0] %>" alt="">
@@ -410,7 +409,8 @@
                                                         <%= Product.name %>
                                                     </a></h3>
                                                 <h4 class="product-price">
-                                                    <i class="fa-solid fa-indian-rupee-sign"></i> <%= Product.price %>
+                                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                    <%= Product.price %>
                                                         <!-- <del
                                                             class="product-old-price">$990.00</del> -->
                                                 </h4>
@@ -446,24 +446,31 @@
                                                                             view</span></a></button>
                                                 </div>
                                             </div>
-                                            <% if(user){ %>
-                                                <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
-                                                    class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>
-                                                        add
-                                                        to cart</button>
+                                            <% if (Product.stock==0){%>
+                                                <a href="#" class="add-to-cart">
+                                                    <button class="add-to-cart-btn"><i class="fa-solid fa-circle-xmark"></i>
+                                                        Out of stock</button>
                                                 </a>
                                                 <%}else{%>
-                                                    <a href="/login" class="add-to-cart">
-                                                        <button class="add-to-cart-btn"><i
-                                                                class="fa fa-shopping-cart"></i>
-                                                            add
-                                                            to cart</button>
-                                                    </a>
-                                                    <%}%>
+                                                    <% if(user){ %>
+                                                        <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
+                                                            class="add-to-cart">
+                                                            <button class="add-to-cart-btn"><i
+                                                                    class="fa fa-shopping-cart"></i>
+                                                                add
+                                                                to cart</button>
+                                                        </a>
+                                                        <%}else{%>
+                                                            <a href="/login" class="add-to-cart">
+                                                                <button class="add-to-cart-btn"><i
+                                                                        class="fa fa-shopping-cart"></i>
+                                                                    add
+                                                                    to cart</button>
+                                                            </a>
+                                                            <%}}%>
+
                                         </div>
                                         <!-- /product -->
-
                                         <%})%>
                                 </div>
                                 <div id="slick-nav-1" class="products-slick-nav"></div>

@@ -610,15 +610,36 @@ const orderSuccessCOD = async (req, res) => {
         total: viewcart.total,
         payment_method: "Cash On Delivery",
     });
+    let PRO
+    let flag = 1;
     for (let product of products) {
         let id = product.productId
-        let stock = product.quantity * -1
-        await productModel.updateOne({ _id: id }, { $inc: { stock } })
+        const pro = await productModel.findOne({ _id: id });
+        PRO = pro.name;
+        console.log(product.quantity);
+        console.log(pro.stock);
+        if (product.quantity > pro.stock) {
+            flag = 0
+            console.log("NO STOCK");
+            break;
+        }
+    }
+    if (flag == 1) {
+        for (let product of products) {
+            let id = product.productId
+            let stock = product.quantity * -1
+            await productModel.updateOne({ _id: id }, { $inc: { stock } });
+        }
     }
     await newOrderList.save()
         .then(async () => {
-            await cartModel.deleteOne({ user: userId })
-            res.redirect("/thankyou")
+            if (flag == 1) {
+                await cartModel.deleteOne({ user: userId })
+                res.redirect("/thankyou")
+            } else {
+                console.log("Please remove this item " + PRO + " or reduce the quantity, since it is out of stock")
+                res.redirect("/cart");
+            }
         })
         .catch(() => {
             console.log("Error");

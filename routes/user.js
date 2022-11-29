@@ -16,7 +16,7 @@ router.get('/wishList', protectRoute, wishList);
 
 router.get('/checkout', protectRoute, checkout);
 
-router.get('/store/:id', protectRoute, store);
+router.get('/store/:id', store);
 
 router.get('/changePassword/:id', protectRoute, changePassword);
 
