@@ -8,8 +8,13 @@ const userManagement = async (req, res) => {
     const sort = { date: -1 }
     const users = await userModel.find().sort(sort)
     if (req.user.isAdmin === true) {
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
         // user = req.user.name
-        res.render("admin/userManage", { users })
+        res.render("admin/userManage", { users, Product })
     }
     else {
         res.render("/")
@@ -22,7 +27,12 @@ const productManagement = async (req, res) => {
     const products = await productModel.find().sort(sort)
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/productManage", { products })
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/productManage", { products, Product })
     }
     else {
         res.render("/")
@@ -33,7 +43,12 @@ const productAdd = async (req, res) => {
     const categories = await categoryModel.find()
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/add-products", { categories })
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/add-products", { categories, Product })
     }
     else {
         res.render("/")
@@ -52,11 +67,14 @@ const productDelete = async (req, res) => {
 const productEdit = async (req, res) => {
     const categories = await categoryModel.find()
     let prodId = req.params.id;
-    console.log(prodId);
-    let Product = await productModel.findOne({ _id: prodId });
-    console.log(Product);
+    let product = await productModel.findOne({ _id: prodId });
     if (req.user.isAdmin === true) {
-        res.render("admin/edit-products", { Product, categories });
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/edit-products", { Product, categories, product });
     } else {
         res.redirect("/productManage");
     }
@@ -116,8 +134,13 @@ const orderManagement = async (req, res) => {
     const viewProducts = await orderModel.find().populate("products.productId").populate("user").populate("address").sort(sort).exec()
     if (req.user.isAdmin === true) {
         user = req.user.name;
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
         res.render("admin/orderManage", {
-            viewProducts,
+            viewProducts, Product
         })
     }
     else {
@@ -191,17 +214,27 @@ const bannerManagement = async (req, res) => {
     const banners = await bannerModel.find().sort(sort)
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/bannerView", { banners })
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/bannerView", { banners, Product })
     }
     else {
         res.render("/")
     }
 }
 
-const bannerAdd = (req, res) => {
+const bannerAdd = async (req, res) => {
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/add-banners")
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/add-banners", { Product })
     }
     else {
         res.render("/")
@@ -238,7 +271,12 @@ const bannerEdit = async (req, res) => {
     let Banner = await bannerModel.findOne({ _id: banId });
     console.log(Banner);
     if (req.user.isAdmin === true) {
-        res.render("admin/edit-banners", { Banner });
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/edit-banners", { Banner, Product });
     } else {
         res.redirect("/banner");
     }

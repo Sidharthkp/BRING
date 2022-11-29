@@ -4,15 +4,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="text-center">Edit Product</h2>
-                    <form action="/admin/edit-products/<%= Product._id %>" method="post" enctype="multipart/form-data">
+                    <form action="/admin/edit-products/<%= product._id %>" method="post" enctype="multipart/form-data">
                         </br>
-                        <input type="text" required name="name" class="form-control" value="<%= Product.name %>"
+                        <input type="text" required name="name" class="form-control" value="<%= product.name %>"
                             style="border-color: grey;">
                         </br>
-                        <input type="text" required name="price" class="form-control" value="<%= Product.price %>"
+                        <input type="text" required name="price" class="form-control" value="<%= product.price %>"
                             style="border-color: grey;">
                         </br>
-                        <input type="text" required name="description" class="form-control" value="<%= Product.description %>"
+                        <input type="text" required name="description" class="form-control" value="<%= product.description %>"
                             style="border-color: grey;">
                         </br>
 

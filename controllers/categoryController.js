@@ -1,21 +1,32 @@
 const categoryModel = require("../models/Category");
+const productModel = require("../models/Product");
 
 const categoryManagement = async (req, res) => {
     const sort = { date: -1 }
     const categories = await categoryModel.find().sort(sort)
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/categoryManage", { categories })
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/categoryManage", { categories, Product })
     }
     else {
         res.render("/")
     }
 }
 
-const categoryAdd = (req, res) => {
+const categoryAdd = async (req, res) => {
     if (req.user.isAdmin === true) {
         user = req.user.name;
-        res.render("admin/add-categories")
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/add-categories", { Product })
     }
     else {
         res.render("/")
@@ -37,7 +48,12 @@ const categoryEdit = async (req, res) => {
     let Category = await categoryModel.findOne({ _id: catId });
     console.log(Category);
     if (req.user.isAdmin === true) {
-        res.render("admin/edit-categories", { Category });
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/edit-categories", { Category, Product });
     } else {
         res.redirect("/categoryManage");
     }
