@@ -104,7 +104,14 @@ const loginAdminUser = async (req, res) => {
     const banners = await bannerModel.findOne({ name: "Main" })
     const user = await userModel.findById(userId)
     if (req.user.isAdmin === true) {
-        res.render("admin/index", { user: user })
+        const PRODUCT = await productModel.find({stock: 0});
+        console.log(PRODUCT);
+        let Product = 0
+        if(PRODUCT.length != 0){
+             Product = 1;
+             console.log(Product);
+        }
+        res.render("admin/index", { user: user, Product })
     }
     else {
         let count = 0;

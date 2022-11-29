@@ -37,9 +37,16 @@
                                 <td>
                                     <%= Product.price %>
                                 </td>
+                                <% if(Product.stock== 0 ){%>
+                                    <td style="color: yellow;">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                        <%= Product.stock %>
+                                    </td>
+                                    <%}else{%>
                                 <td>
                                     <%= Product.stock %>
                                 </td>
+                                <%}%>
                                 <td><img src="/public/img/product_img/<%= Product.imgUrl[0] %>" style="width: 100px;" alt=""></td>
                                 <td>
                                     <a class="btn m-1 btn-outline-success" href="/edit-products/<%= Product._id %>">Edit</a>

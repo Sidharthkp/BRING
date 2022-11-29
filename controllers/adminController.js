@@ -8,7 +8,7 @@ const userManagement = async (req, res) => {
     const sort = { date: -1 }
     const users = await userModel.find().sort(sort)
     if (req.user.isAdmin === true) {
-        user = req.user.name
+        // user = req.user.name
         res.render("admin/userManage", { users })
     }
     else {
