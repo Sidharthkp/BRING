@@ -1,130 +1,166 @@
 <%- include('../admin/header-layout.ejs') %>
     <!-- Recent Sales Start -->
-    <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary text-center rounded p-4">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Recent Orders</h6>
-                <a href="">Show All</a>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                        <tr class="text-white">
-                            <th scope="col">Order Id</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Products</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col" style="width: 100px;">Status</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Place</th>
-                            <th scope="col">Payment method</th>
-                            <th scope="col">Payment status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% let i=-1; for( let data of viewProducts){ i +=1 %>
-                            <% for(let prod of data.products) { %>
-                                <tr>
-                                    <td>
-                                        <%= viewProducts[i]._id %>
-                                    </td>
-                                    <td>
-                                        <%= viewProducts[i].date %>
-                                    </td>
-                                    <td>
-                                        <%= prod.productId.name %>
-                                    </td>
-                                    <td>
-                                        <%= prod.quantity %>
-                                    </td>
-                                    <% if(prod.status=="Delivered" ){%>
-                                        <td style="color: green;">
-                                            <i class="fa-solid fa-check"></i>
-                                            <%= prod.status %>
+    <div class="container">
+        <div class="d-flex p-2" style="justify-content: end;">
+            <button id="download-button" style="color: red;"><i class="fa-solid fa-file-pdf me-2" style="color: red;"></i>Download as pdf</button>
+        </div>
+    </div>
+    <div id="invoice">
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-secondary text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Recent Orders</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-white">
+                                <th scope="col">Order Id</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Products</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col" style="width: 100px;">Status</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Place</th>
+                                <th scope="col">Payment method</th>
+                                <th scope="col">Payment status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let i=-1; for( let data of viewProducts){ i +=1 %>
+                                <% for(let prod of data.products) { %>
+                                    <tr>
+                                        <td>
+                                            <%= viewProducts[i]._id %>
                                         </td>
-                                        <%}else{%>
-                                            <% if(prod.status=="Dispatched" ){%>
-                                                <td style="color: orangered;">
-                                                    <i class="fa-solid fa-check-double"></i>
-                                                    <%= prod.status %>
-                                                </td>
-                                                <%}else{%>
-                                                    <% if(prod.status=="Canceled" ){%>
-                                                        <td style="color: red;">
-                                                            <i class="fa-solid fa-ban"></i>
-                                                            <%= prod.status %>
-                                                        </td>
-                                                        <%}else{%>
-                                                            <% if(prod.status=="Order placed" ){%>
-                                                                <td style="color: yellow;">
-                                                                    <i class="fa-solid fa-dollar-sign"></i>
-                                                                    <%= prod.status %>
-                                                                </td>
-                                                                <%}}}}%>
-                                                                    <td>
-                                                                        <%= viewProducts[i].user.name %>
+                                        <td>
+                                            <%= viewProducts[i].date %>
+                                        </td>
+                                        <td>
+                                            <%= prod.productId.name %>
+                                        </td>
+                                        <td>
+                                            <%= prod.quantity %>
+                                        </td>
+                                        <% if(prod.status=="Delivered" ){%>
+                                            <td style="color: green;">
+                                                <i class="fa-solid fa-check"></i>
+                                                <%= prod.status %>
+                                            </td>
+                                            <%}else{%>
+                                                <% if(prod.status=="Dispatched" ){%>
+                                                    <td style="color: orangered;">
+                                                        <i class="fa-solid fa-check-double"></i>
+                                                        <%= prod.status %>
+                                                    </td>
+                                                    <%}else{%>
+                                                        <% if(prod.status=="Canceled" ){%>
+                                                            <td style="color: red;">
+                                                                <i class="fa-solid fa-ban"></i>
+                                                                <%= prod.status %>
+                                                            </td>
+                                                            <%}else{%>
+                                                                <% if(prod.status=="Order placed" ){%>
+                                                                    <td style="color: yellow;">
+                                                                        <i class="fa-solid fa-dollar-sign"></i>
+                                                                        <%= prod.status %>
                                                                     </td>
-                                                                    <td>
-                                                                        <%= prod.subTotal %>
-                                                                    </td>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <%= viewProducts[i].address.address
-                                                                                        %>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <%= viewProducts[i].address.city %>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <%= viewProducts[i].address.district
-                                                                                        %>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <%= viewProducts[i].address.state %>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <%= viewProducts[i].address.country
-                                                                                        %>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= viewProducts[i].payment_method %>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= viewProducts[i].payment_status %>
-                                                                    </td>
-                                                                    <td>
-                                                                        <% if(prod.status!="Canceled" ){%>
-                                                                            <% if(prod.status!="Dispatched" && prod.status!="Delivered"){%>
-                                                                        <a class="btn btn-sm btn-primary" style="width: 100px;"
-                                                                            href="/dispatched/<%= prod.productId._id%>/<%= viewProducts[i]._id %>">Dispatched</a>
-                                                                        <%}%>
-                                                                        <% if(prod.status=="Dispatched" && prod.status!="Delivered"){%>
-                                                                            <a class="btn btn-sm btn-success" style="width: 100px;"
-                                                                            href="/delivered/<%= prod.productId._id %>/<%= viewProducts[i]._id %>">Delivered</a>
-                                                                            <%}}%>
+                                                                    <%}}}}%>
+                                                                        <td>
+                                                                            <%= viewProducts[i].user.name %>
                                                                         </td>
-                                </tr>
-                                <%}%>
+                                                                        <td>
+                                                                            <%= prod.subTotal %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= viewProducts[i].address.address
+                                                                                            %>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= viewProducts[i].address.city
+                                                                                            %>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= viewProducts[i].address.district
+                                                                                            %>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= viewProducts[i].address.state
+                                                                                            %>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <%= viewProducts[i].address.country
+                                                                                            %>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%= viewProducts[i].payment_method %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%= viewProducts[i].payment_status %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <% if(prod.status!="Canceled" ){%>
+                                                                                <% if(prod.status!="Dispatched" &&
+                                                                                    prod.status!="Delivered" ){%>
+                                                                                    <a class="btn btn-sm btn-primary"
+                                                                                        style="width: 100px;"
+                                                                                        href="/dispatched/<%= prod.productId._id%>/<%= viewProducts[i]._id %>">Dispatched</a>
+                                                                                    <%}%>
+                                                                                        <% if(prod.status=="Dispatched"
+                                                                                            && prod.status!="Delivered"
+                                                                                            ){%>
+                                                                                            <a class="btn btn-sm btn-success"
+                                                                                                style="width: 100px;"
+                                                                                                href="/delivered/<%= prod.productId._id %>/<%= viewProducts[i]._id %>">Delivered</a>
+                                                                                            <%}}%>
+                                                                        </td>
+                                    </tr>
                                     <%}%>
-                    </tbody>
-                </table>
+                                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     <!-- Recent Sales End -->
+
+    <script>
+        const button = document.getElementById('download-button');
+
+        function generatePDF() {
+            var opt = {
+                margin: 0,
+                filename: 'Report.pdf',
+                image: { type: 'jpg', quality: 0.98 },
+                html2canvas: { useCORS: true, scale: 3, y: 0, scrollY: 0 },
+                jsPDF: { format: 'A4' },
+            };
+            // Choose the element that your content will be rendered to.
+            const element = document.getElementById('invoice');
+            // Choose the element and save the PDF for your user.
+            html2pdf().set(opt).from(element).save();
+        }
+
+        button.addEventListener('click', generatePDF);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <%- include('../admin/footer-layout.ejs') %>
