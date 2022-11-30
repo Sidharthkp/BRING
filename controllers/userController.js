@@ -8,6 +8,8 @@ const addressModel = require("../models/Address");
 const orderModel = require("../models/Order");
 const Razorpay = require("razorpay");
 
+const dateTime = new Date()
+
 const home = async (req, res) => {
     const userId = null;
     const count = null;
@@ -177,25 +179,20 @@ const cart = async (req, res) => {
 }
 
 const addToCart = async (req, res) => {
-    console.log("reached here");
     const productId = req.params.id;
     const userId = req.user.id;
     const quantity = parseInt(req.params.quantity);
     const price = parseInt(req.params.price);
-    console.log(">>>>>>>>>>>>>" + productId);
     const product = await productModel.findById(productId);
     let cart = await cartModel.findOne({ user: userId });
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
     if (product.stock >= quantity) {
-        // console.log(product.stock);
-        // console.log(quantity);
         product.stock -= quantity
         if (itemIndex > -1) {
             //product exists in the cart, update the quantity
             let productItem = cart.products[itemIndex];
             productItem.quantity += quantity;
             productItem.subTotal = productItem.quantity * productItem.price;
-            console.log(productItem.subTotal);
             cart.total = cart.products.reduce((acc, curr) => {
                 return acc + curr.subTotal;
             }, 0)
@@ -208,7 +205,7 @@ const addToCart = async (req, res) => {
                 })
         } else {
             console.log(quantity);
-            const subTotal = product.price;
+            const subTotal = product.newPrice;
             const getCart = await cartModel.findOneAndUpdate({
                 user: req.user.id
             },
@@ -217,7 +214,7 @@ const addToCart = async (req, res) => {
                         products: [{ productId, quantity, price, subTotal }],
                     },
                     $inc: {
-                        total: product.price
+                        total: product.newPrice
                     }
                 }
             );
@@ -389,12 +386,10 @@ const addToWishList = async (req, res) => {
 }
 
 const addToCartFromWishlist = async (req, res) => {
-    console.log("reached here");
     const productId = req.params.id;
     const userId = req.user.id;
     const quantity = parseInt(req.params.quantity);
     const price = parseInt(req.params.price);
-    console.log(">>>>>>>>>>>>>" + productId);
     const product = await productModel.findById(productId);
     let cart = await cartModel.findOne({ user: userId });
     let itemIndex = cart.products.findIndex(p => p.productId == productId);
@@ -407,7 +402,6 @@ const addToCartFromWishlist = async (req, res) => {
             let productItem = cart.products[itemIndex];
             productItem.quantity += quantity;
             productItem.subTotal = productItem.quantity * productItem.price;
-            console.log(productItem.subTotal);
             cart.total = cart.products.reduce((acc, curr) => {
                 return acc + curr.subTotal;
             }, 0)
@@ -419,8 +413,7 @@ const addToCartFromWishlist = async (req, res) => {
                     console.log("Error");
                 })
         } else {
-            console.log(quantity);
-            const subTotal = product.price;
+            const subTotal = product.newPrice;
             const getCart = await cartModel.findOneAndUpdate({
                 user: req.user.id
             },
@@ -429,7 +422,7 @@ const addToCartFromWishlist = async (req, res) => {
                         products: [{ productId, quantity, price, subTotal }],
                     },
                     $inc: {
-                        total: product.price
+                        total: product.newPrice
                     }
                 }
             );

@@ -28,11 +28,14 @@
                                                 <h3 class="product-name"><a href="#">
                                                         <%= data.productId.name %>
                                                     </a></h3>
-                                                <h4 class="product-price">
-                                                    ₹<%= data.productId.price %>
-                                                        <!-- <del
-                                                        class="product-old-price">$990.00</del> -->
-                                                </h4>
+                                                    <h4 class="product-price">
+                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                        <%= data.productId.newPrice %>
+                                                            <%if(data.productId.newPrice != data.productId.price){%>
+                                                                <del
+                                                                class="product-old-price"><i class="fa-solid fa-indian-rupee-sign"></i><%= data.productId.price %></del>
+                                                                <%}%>
+                                                    </h4>
                                                 <div class="qty-label">
 
                                                     <div class="input-number">
@@ -111,6 +114,13 @@
                                 <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
                             </div>
                         </div>
+
+                        <div>
+                            Coupon: 
+                            <input type="text" maxlength="8" name="coupon">
+                            <button>Check and Apply</button>
+                        </div>
+                        <br>
 
                         <a href="/checkout" class="primary-btn order-submit">checkout</a>
                     </div>
