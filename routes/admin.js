@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { userManagement, productManagement, orderManagement, productAdd, productPost, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost, dispatched, delivered, productList, productUnlist } = require('../controllers/adminController');
+const { userManagement, productManagement, orderManagement, productAdd, productPost, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost, dispatched, delivered, productList, productUnlist, couponAdd, couponManagement, couponPost, couponUnblock, couponBlock } = require('../controllers/adminController');
 
 const { categoryManagement, categoryDelete, categoryAdd, categoryPost, categoryEditPost, categoryEdit } = require("../controllers/categoryController");
 
@@ -30,11 +30,19 @@ router.get("/add-banners", protectRoute, bannerAdd);
 
 router.get("/banner", protectRoute, bannerManagement);
 
+router.get("/add-coupon", protectRoute, couponAdd);
+
+router.get("/coupon", protectRoute, couponManagement);
+
 router.get("/edit-products/:id", protectRoute, productEdit);
 
 router.get("/edit-banners/:id", protectRoute, bannerEdit);
 
 router.get('/bannerManage/:id', protectRoute, bannerDelete);
+
+router.get('/couponUnblock/:id', protectRoute, couponUnblock);
+
+router.get('/couponBlock/:id', protectRoute, couponBlock);
 
 router.get('/productList/:id', protectRoute, productList);
 
@@ -44,6 +52,8 @@ router.get("/dispatched/:id/:orderId", protectRoute, dispatched);
 
 router.get("/delivered/:id/:orderId", protectRoute, delivered);
 
+router.get("/add-coupons", protectRoute, couponAdd);
+
 router.post("/add-products", protectRoute, productPost);
 
 router.post('/admin/edit-products/:id', protectRoute, productEditPost);
@@ -51,6 +61,8 @@ router.post('/admin/edit-products/:id', protectRoute, productEditPost);
 router.post("/admin/edit-banners/:id", protectRoute, bannerEditPost);
 
 router.post("/add-banners", protectRoute, bannerPost);
+
+router.post("/add-coupons", protectRoute, couponPost);
 
 router.post("/admin/blockuser/:id", blockUser);
 

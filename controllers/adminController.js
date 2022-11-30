@@ -3,6 +3,7 @@ const productModel = require("../models/Product")
 const categoryModel = require("../models/Category")
 const bannerModel = require("../models/Banner")
 const orderModel = require("../models/Order")
+const couponModel = require("../models/Coupons");
 
 const userManagement = async (req, res) => {
     const sort = { date: -1 }
@@ -57,9 +58,9 @@ const productAdd = async (req, res) => {
 
 const productList = async (req, res) => {
     let prodId = req.params.id;
-    const List =  await productModel
-        .findOneAndUpdate({ _id: prodId }, {$set: {quantity:  1}})
-        List.save()
+    const List = await productModel
+        .findOneAndUpdate({ _id: prodId }, { $set: { quantity: 1 } })
+    List.save()
         .then((response) => {
             res.redirect("/productManage");
         });
@@ -68,8 +69,8 @@ const productList = async (req, res) => {
 const productUnlist = async (req, res) => {
     let prodId = req.params.id;
     const Unlist = await productModel
-        .findOneAndUpdate({ _id: prodId }, {$set: {quantity:  0}})
-        Unlist.save()
+        .findOneAndUpdate({ _id: prodId }, { $set: { quantity: 0 } })
+    Unlist.save()
         .then((response) => {
             res.redirect("/productManage");
         });
@@ -99,8 +100,8 @@ const productEditPost = async (req, res) => {
         await productModel.findOneAndUpdate({ _id: prodId }, { $set: { imgUrl: productImages, category } });
     }
     let newPrice = price
-    if(discount > 0){
-        newPrice = price-((discount/100)*price).toFixed(0);
+    if (discount > 0) {
+        newPrice = price - ((discount / 100) * price).toFixed(0);
     }
     const save_edits = await productModel.findOneAndUpdate(
         { _id: prodId },
@@ -316,7 +317,82 @@ const bannerEditPost = async (req, res) => {
         console.log("Error");
     });
 }
+
+const couponManagement = async (req, res) => {
+    const sort = { date: -1 }
+    const coupons = await couponModel.find().sort(sort)
+    if (req.user.isAdmin === true) {
+        user = req.user.name;
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/couponView", { coupons, Product })
+    }
+    else {
+        res.render("/")
+    }
+}
+
+const couponAdd = async (req, res) => {
+    if (req.user.isAdmin === true) {
+        user = req.user.name;
+        const PRODUCT = await productModel.find({ stock: 0 });
+        let Product = 0
+        if (PRODUCT.length != 0) {
+            Product = 1;
+        }
+        res.render("admin/add-coupon", { Product })
+    }
+    else {
+        res.render("/")
+    }
+}
+
+const couponBlock = async (req, res) => {
+    let coupId = req.params.id;
+    const couponStatus = await couponModel
+        .findOneAndUpdate({ _id: coupId }, { status: "blocked" })
+    couponStatus.save()
+        .then((response) => {
+            res.redirect("/coupon");
+        });
+}
+
+const couponUnblock = async (req, res) => {
+    let coupId = req.params.id;
+    const couponStatus = await couponModel
+        .findOneAndUpdate({ _id: coupId }, { status: "Unblocked" })
+    couponStatus.save()
+        .then((response) => {
+            res.redirect("/coupon");
+        });
+}
+
+const couponPost = async (req, res) => {
+    let { name, discount, maxLimit, minPurchase, expDate } = req.body;
+    const newCoupon = new couponModel({
+        name,
+        discount,
+        maxLimit,
+        minPurchase,
+        expDate
+    })
+    await newCoupon.save()
+        .then(() => {
+            res.redirect("/coupon")
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
 module.exports = {
+    couponAdd,
+    couponBlock,
+    couponUnblock,
+    couponManagement,
+    couponPost,
     dispatched,
     delivered,
     bannerEdit,
