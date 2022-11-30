@@ -52,6 +52,9 @@ const OrderSchema = new mongoose.Schema({
     payment_status: {
         type: String,
         default: "Pending"
+    },
+    coupon: {
+        type: ObjectId,
     }
 });
 const Order = mongoose.model("Order", OrderSchema);

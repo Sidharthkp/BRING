@@ -28,10 +28,6 @@ const CartSchema = new mongoose.Schema({
                 type: Number,
                 ref: "Product",
             },
-            couponStatus: {
-                type: Boolean,
-                default: false
-            }
         }
     ],
     total: {
@@ -41,6 +37,9 @@ const CartSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    coupon: {
+        type: ObjectId,
+    }
 });
 const Cart = mongoose.model("Cart", CartSchema);
 module.exports = Cart;

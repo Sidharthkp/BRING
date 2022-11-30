@@ -16,7 +16,6 @@
                             <th scope="col">Discount</th>
                             <th scope="col">Expiry</th>
                             <th scope="col">Max Limit</th>
-                            <th scope="col">Min purchase</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -39,9 +38,6 @@
                                 </td>
                                 <td>
                                     <%= Coupon.maxLimit %> Items/pieces
-                                </td>
-                                <td>
-                                    <%= Coupon.minPurchase %> Items/pieces
                                 </td>
                                 <td>
                                     <% if(Coupon.status == "blocked"){%>

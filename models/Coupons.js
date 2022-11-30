@@ -17,10 +17,6 @@ const CouponSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    minPurchase: {
-        type: Number,
-        require: true
-    },
     expDate: {
         type: Date,
         require: true
