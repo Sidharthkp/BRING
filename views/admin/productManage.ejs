@@ -15,7 +15,8 @@
                             <th scope="col" style="width: 18rem;">Product name</th>
                             <th scope="col">Category</th>
                             <th scope="col" style="width: 18rem;">Description</th>
-                            <th scope="col">Amount</th>
+                            <th scope="col" style="width: 5rem;">Price</th>
+                            <th scope="col" style="width: 5rem;"><i class="fa-solid fa-tag"></i>Price</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Stock</th>
                             <th scope="col">Image</th>
@@ -36,7 +37,18 @@
                                     <%= Product.description %>
                                 </td>
                                 <td>
-                                    <%= Product.price %>
+                                    <% if(Product.discount != 0){%>
+                                        <p style="text-decoration: line-through; color: red;"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %></p>
+                                        <%}else{%>
+                                            <i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %>
+                                            <%}%>
+                                </td>
+                                <td>
+                                    <% if(Product.discount != 0){%>
+                                        <p style="color: green;"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.newPrice %></p>
+                                        <%}else{%>
+                                            <i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %>
+                                            <%}%>
                                 </td>
                                 <td style="color: aqua;">
                                     <% if(Product.discount != 0){%>

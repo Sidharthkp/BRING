@@ -93,10 +93,14 @@ const productEdit = async (req, res) => {
 
 const productEditPost = async (req, res) => {
     const prodId = req.params.id;
-    const { name, description, category, price, stock } = req.body;
+    const { name, description, category, price, stock, discount } = req.body;
     const productImages = req.files.length != 0 ? req.files.map((img) => img.filename) : null
     if (productImages != null && category != null) {
         await productModel.findOneAndUpdate({ _id: prodId }, { $set: { imgUrl: productImages, category } });
+    }
+    let newPrice = price
+    if(discount > 0){
+        newPrice = price-((discount/100)*price).toFixed(0);
     }
     const save_edits = await productModel.findOneAndUpdate(
         { _id: prodId },
@@ -106,6 +110,8 @@ const productEditPost = async (req, res) => {
                 description,
                 price,
                 stock,
+                discount,
+                newPrice
             },
         }
     );
@@ -129,6 +135,7 @@ const productPost = async (req, res) => {
         price,
         category,
         stock,
+        discount,
         imgUrl: productImages,
     });
     await newProduct.save()

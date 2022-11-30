@@ -13,6 +13,9 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  newPrice: {
+    type: Number,
+  },
   imgUrl: {
     type: [String],
     required: true,

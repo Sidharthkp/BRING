@@ -6,17 +6,21 @@
                     <h2 class="text-center">Edit Product</h2>
                     <form action="/admin/edit-products/<%= product._id %>" method="post" enctype="multipart/form-data">
                         </br>
+                        Name:
                         <input type="text" required name="name" class="form-control" value="<%= product.name %>"
                             style="border-color: grey;">
                         </br>
+                        Price:
                         <input type="text" required name="price" class="form-control" value="<%= product.price %>"
                             style="border-color: grey;">
                         </br>
+
+                        Description:
                         <input type="text" required name="description" class="form-control" value="<%= product.description %>"
                             style="border-color: grey;">
                         </br>
 
-                        <select name="category" required style="border-color: grey;" class="form-select form-select-sm mb-3"
+                        <select name="category" style="border-color: grey;" class="form-select form-select-sm mb-3"
                             aria-label=".form-select-sm example">
                             <option selected>Select the category</option>
                             <% categories.forEach(function(Category) {%>
@@ -26,7 +30,12 @@
                                 <%})%>
                         </select>
                         </br>
+                        Stock:
                         <input type="number" name="stock" value="<%= product.stock %>" class="form-control"
+                            style="border-color: grey;">
+                        <br>
+                        Discount(%):
+                        <input type="number" name="discount" value="<%= product.discount %>" class="form-control"
                             style="border-color: grey;">
                         <br>
                         <input type="file" multiple name="imgUrl" class="form-control">
