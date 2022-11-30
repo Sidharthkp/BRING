@@ -31,7 +31,11 @@
                                     <%= Coupon.discount %>%
                                 </td>
                                 <td>
+                                    <% if(Coupon.expDate>dateTime){%>
                                     <%= Coupon.expDate.toDateString() %>
+                                    <%}else{%>
+                                        <p style="color: red;">expired</p>
+                                        <%}%>
                                 </td>
                                 <td>
                                     <%= Coupon.maxLimit %> Items/pieces

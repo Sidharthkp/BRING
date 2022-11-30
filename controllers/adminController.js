@@ -5,6 +5,8 @@ const bannerModel = require("../models/Banner")
 const orderModel = require("../models/Order")
 const couponModel = require("../models/Coupons");
 
+const dateTime = new Date()
+
 const userManagement = async (req, res) => {
     const sort = { date: -1 }
     const users = await userModel.find().sort(sort)
@@ -328,7 +330,7 @@ const couponManagement = async (req, res) => {
         if (PRODUCT.length != 0) {
             Product = 1;
         }
-        res.render("admin/couponView", { coupons, Product })
+        res.render("admin/couponView", { coupons, Product, dateTime })
     }
     else {
         res.render("/")
