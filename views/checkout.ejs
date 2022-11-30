@@ -114,7 +114,7 @@
                                         <div>₹<%=data.subTotal%>
                                         </div>
                                     </div>
-                                    <%})%>  
+                                    <%})%>
                             </div>
                             <div class="order-col">
                                 <div>Shiping</div>
@@ -125,28 +125,35 @@
                                 <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
                             </div>
                         </div>
-                        <div class="form-check">
-                            <label for="cod">
-                                <input class="form-check-input" type="radio" id="cod" name="paymentType" checked
-                                    value="cod">
-                                Cash on delivery </i>
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <label for="online-payment">
-                                <input class="form-check-input" id="online-payment" type="radio" name="paymentType"
-                                    value="razorpay">
-                                Online Payment </i>
-                            </label>
-                        </div>
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="terms">
-                            <label for="terms">
-                                <span></span>
-                                I've read and accept the <a href="#">terms & conditions</a>
-                            </label>
-                        </div>
-                        <button type="submit" class="primary-btn order-submit">Place order</button>
+                        <%viewcart.products.forEach((data)=>{ if(data.couponStatus == true){%>
+                            <div>
+                                <i class="fa-solid fa-face-grin-stars" style="color: orangered;"></i> Coupon applied on
+                                product <%= data.productId.name %>
+                            </div>
+                            <br>
+                            <%}})%>
+                                <div class="form-check">
+                                    <label for="cod">
+                                        <input class="form-check-input" type="radio" id="cod" name="paymentType" checked
+                                            value="cod">
+                                        Cash on delivery </i>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label for="online-payment">
+                                        <input class="form-check-input" id="online-payment" type="radio"
+                                            name="paymentType" value="razorpay">
+                                        Online Payment </i>
+                                    </label>
+                                </div>
+                                <div class="input-checkbox">
+                                    <input type="checkbox" id="terms">
+                                    <label for="terms">
+                                        <span></span>
+                                        I've read and accept the <a href="#">terms & conditions</a>
+                                    </label>
+                                </div>
+                                <button type="submit" class="primary-btn order-submit">Place order</button>
                     </div>
                     <!-- /Order Details -->
                 </form>

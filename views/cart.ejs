@@ -116,6 +116,14 @@
                                 <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
                             </div>
                         </div>
+                        
+                            <%viewcart.products.forEach((data)=>{ if(data.couponStatus == true){%>
+                                <div>
+                                    <i class="fa-solid fa-face-grin-stars" style="color: orangered;"></i>  Coupon applied on product <%= data.productId.name %>
+                                </div>
+                                <br>
+                                <%}})%>
+                        
 
                         <div>
                             <form id="couponCode">

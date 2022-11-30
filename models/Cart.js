@@ -27,6 +27,10 @@ const CartSchema = new mongoose.Schema({
             subTotal: {
                 type: Number,
                 ref: "Product",
+            },
+            couponStatus: {
+                type: Boolean,
+                default: false
             }
         }
     ],

@@ -705,11 +705,17 @@ const checkCode = async (req, res) => {
     try {
         const coupon = req.body.coupon;
         const couponData = await couponModel.findOne({ name: coupon });
-        console.log(couponData);
-        if (couponData) {
+        const limit = couponData.maxLimit;
+        if (couponData && limit > 0) {
             res.json({ token: true, coupon });
         } else {
-            res.json({ token: false });
+            if (limit <= 0) {
+                console.log("Coupon limit is over");
+                res.redirect("back");
+            } else {
+                res.json({ token: false });
+            }
+
         }
     } catch (err) {
         console.log(err);
@@ -720,12 +726,16 @@ const checkCode = async (req, res) => {
 const validCoupon = async (req, res) => {
     const userId = req.user.id;
     const couponName = req.params.name;
-    const cartItems = await cartModel.findOne({ user: userId });
+    const cartItems = await cartModel.findOne({ user: userId }).populate("products");
     const coupon = await couponModel.findOne({ name: couponName });
     cartItems.total = cartItems.total - ((coupon.discount / 100) * cartItems.total).toFixed(0);
+    const n = cartItems.products.length
+    for(let i = 0; i<n;i++){
+        cartItems.products[i].couponStatus = true;
+    }
     cartItems.save()
         .then(async () => {
-            let maxLimit = coupon.maxLimit -1
+            let maxLimit = coupon.maxLimit - 1
             await couponModel.findOneAndUpdate({ name: couponName }, { $set: { maxLimit } })
             res.redirect("back")
         })
