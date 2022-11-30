@@ -65,7 +65,9 @@
                                             <div class="product-img">
                                                 <img src="/public/img/product_img/<%= Product.imgUrl[0] %>" alt="">
                                                 <div class="product-label">
-                                                        <span class="sale">-30%</span>
+                                                        <% if(Product.discount>0){%>
+                                                        <span class="sale">-<%= Product.discount%>%</span>
+                                                        <%}%>
                                                         <!-- <span class="new">NEW</span> -->
                                                     </div>
                                             </div>
@@ -77,12 +79,14 @@
                                                         href="#">
                                                         <%= Product.name %>
                                                     </a></h3>
-                                                <h4 class="product-price">
-                                                    <i class="fa-solid fa-indian-rupee-sign"></i>
-                                                    <%= Product.price %>
-                                                        <!-- <del
-                                                            class="product-old-price">$990.00</del> -->
-                                                </h4>
+                                                    <h4 class="product-price">
+                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                        <%= Product.newPrice %>
+                                                            <%if(Product.newPrice != Product.price){%>
+                                                                <del
+                                                                class="product-old-price"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %></del>
+                                                                <%}%>
+                                                    </h4>
                                                 <!-- <div class="product-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -188,10 +192,12 @@
                                         <div class="product">
                                             <div class="product-img">
                                                 <img src="/public/img/product_img/<%= Product.imgUrl[0] %>" alt="">
-                                                <!-- <div class="product-label">
-                                                        <span class="sale">-30%</span>
-                                                        <span class="new">NEW</span>
-                                                    </div> -->
+                                                <div class="product-label">
+                                                        <% if(Product.discount>0){%>
+                                                        <span class="sale">-<%= Product.discount%>%</span>
+                                                        <%}%>
+                                                        <!-- <span class="new">NEW</span> -->
+                                                    </div>
                                             </div>
                                             <div class="product-body">
                                                 <p class="product-category">
@@ -201,12 +207,14 @@
                                                         href="#">
                                                         <%= Product.name %>
                                                     </a></h3>
-                                                <h4 class="product-price">
-                                                    <i class="fa-solid fa-indian-rupee-sign"></i>
-                                                    <%= Product.price %>
-                                                        <!-- <del
-                                                            class="product-old-price">$990.00</del> -->
-                                                </h4>
+                                                    <h4 class="product-price">
+                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                        <%= Product.newPrice %>
+                                                            <%if(Product.newPrice != Product.price){%>
+                                                                <del
+                                                                class="product-old-price"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %></del>
+                                                                <%}%>
+                                                    </h4>
                                                 <!-- <div class="product-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
