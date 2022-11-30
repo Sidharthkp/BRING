@@ -99,7 +99,7 @@ const signupUser = (req, res) => {
 
 const loginAdminUser = async (req, res) => {
     const userId = req.user.id;
-    const products = await productModel.find()
+    const products = await productModel.find({quantity: 1})
     const categories = await categoryModel.find()
     const banners = await bannerModel.findOne({ name: "Main" })
     const user = await userModel.findById(userId)

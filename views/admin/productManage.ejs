@@ -16,7 +16,8 @@
                             <th scope="col">Category</th>
                             <th scope="col" style="width: 18rem;">Description</th>
                             <th scope="col">Amount</th>
-                            <th scope ="col">Stock</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Stock</th>
                             <th scope="col">Image</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -37,22 +38,38 @@
                                 <td>
                                     <%= Product.price %>
                                 </td>
-                                <% if(Product.stock== 0 ){%>
-                                    <td style="color: yellow;">
+                                <td style="color: aqua;">
+                                    <% if(Product.discount != 0){%>
+                                        <%= Product.discount %>%
+                                            <%}else{%>
+                                                No Discount
+                                                <%}%>
+                                </td>
+                                <% if(Product.stock==0 ){%>
+                                    <td style="color: yellow; border-color: red;">
                                         <i class="fa-solid fa-triangle-exclamation"></i>
                                         <%= Product.stock %>
                                     </td>
                                     <%}else{%>
-                                <td>
-                                    <%= Product.stock %>
-                                </td>
-                                <%}%>
-                                <td><img src="/public/img/product_img/<%= Product.imgUrl[0] %>" style="width: 100px;" alt=""></td>
-                                <td>
-                                    <a class="btn m-1 btn-outline-success" href="/edit-products/<%= Product._id %>">Edit</a>
-                                    <a href="/productManage/<%= Product._id %>" class="btn btn-outline-danger m-1"
-                                        onclick="return confirm('Are you sure, you want to delete <%= Product.name %> ?')">Delete</a>
-                                </td>
+                                        <td>
+                                            <%= Product.stock %>
+                                        </td>
+                                        <%}%>
+                                            <td><img src="/public/img/product_img/<%= Product.imgUrl[0] %>"
+                                                    style="width: 100px;" alt=""></td>
+                                            <td>
+                                                <a class="btn m-1" style="border-color: yellow;"
+                                                    href="/edit-products/<%= Product._id %>">Edit</a>
+                                                <% if(Product.quantity == 1){%>
+                                                    <a href="/productUnlist/<%= Product._id %>"
+                                                        class="btn btn-outline-danger m-1"
+                                                        onclick="return confirm('Are you sure, you want to Unlist <%= Product.name %> ?')">Unlist</a>
+                                                <%}else{%>
+                                                    <a href="/productList/<%= Product._id %>"
+                                                        class="btn btn-outline-success m-1"
+                                                        onclick="return confirm('Are you sure, you want to List <%= Product.name %> ?')">List</a>
+                                                        <%}%>
+                                            </td>
                             </tr>
                             <%})%>
                     </tbody>

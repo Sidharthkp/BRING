@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { userManagement, productManagement, orderManagement, productAdd, productPost, productDelete, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost, dispatched, delivered } = require('../controllers/adminController');
+const { userManagement, productManagement, orderManagement, productAdd, productPost, productEdit, productEditPost, blockUser, activeUser, bannerAdd, bannerManagement, bannerDelete, bannerPost, bannerEdit, bannerEditPost, dispatched, delivered, productList, productUnlist } = require('../controllers/adminController');
 
 const { categoryManagement, categoryDelete, categoryAdd, categoryPost, categoryEditPost, categoryEdit } = require("../controllers/categoryController");
 
@@ -24,8 +24,6 @@ router.get('/productManage', protectRoute, productManagement);
 
 router.get('/orderManage', protectRoute, orderManagement);
 
-router.get('/admin/productManage/:id', protectRoute, productDelete);
-
 router.get("/add-products", protectRoute, productAdd);
 
 router.get("/add-banners", protectRoute, bannerAdd);
@@ -38,7 +36,9 @@ router.get("/edit-banners/:id", protectRoute, bannerEdit);
 
 router.get('/bannerManage/:id', protectRoute, bannerDelete);
 
-router.get('/productManage/:id', protectRoute, productDelete);
+router.get('/productList/:id', protectRoute, productList);
+
+router.get('/productUnlist/:id', protectRoute, productUnlist);
 
 router.get("/dispatched/:id/:orderId", protectRoute, dispatched);
 

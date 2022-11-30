@@ -55,10 +55,21 @@ const productAdd = async (req, res) => {
     }
 }
 
-const productDelete = async (req, res) => {
+const productList = async (req, res) => {
     let prodId = req.params.id;
-    await productModel
-        .findOneAndDelete({ _id: prodId }, { is_deleted: true })
+    const List =  await productModel
+        .findOneAndUpdate({ _id: prodId }, {$set: {quantity:  1}})
+        List.save()
+        .then((response) => {
+            res.redirect("/productManage");
+        });
+}
+
+const productUnlist = async (req, res) => {
+    let prodId = req.params.id;
+    const Unlist = await productModel
+        .findOneAndUpdate({ _id: prodId }, {$set: {quantity:  0}})
+        Unlist.save()
         .then((response) => {
             res.redirect("/productManage");
         });
@@ -314,7 +325,8 @@ module.exports = {
     orderManagement,
     productAdd,
     productPost,
-    productDelete,
+    productList,
+    productUnlist,
     productEdit,
     productEditPost
 }

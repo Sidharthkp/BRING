@@ -11,7 +11,7 @@ const Razorpay = require("razorpay");
 const home = async (req, res) => {
     const userId = null;
     const count = null;
-    const products = await productModel.find()
+    const products = await productModel.find({quantity: 1})
     const categories = await categoryModel.find()
     const banners = await bannerModel.findOne({ name: "Main" })
     const user = await userModel.findById(userId)
@@ -142,7 +142,7 @@ const productLarge = async (req, res) => {
     console.log(prodId);
     const Product = await productModel.findOne({ _id: prodId });
     const prod = Product.imgUrl;
-    const products = await productModel.find({ category: Product.category })
+    const products = await productModel.find({ category: Product.category, quantity: 1 })
     const user = await userModel.findById(userId)
     res.render("product", {
         user: user,
@@ -481,7 +481,7 @@ const store = async (req, res) => {
         counts = wishList.products.length;
     }
     let catId = req.params.id;
-    const products = await productModel.find({ category: catId })
+    const products = await productModel.find({ category: catId,quantity: 1 })
     console.log(products);
     const user = await userModel.findById(userId)
     res.render("store", {
