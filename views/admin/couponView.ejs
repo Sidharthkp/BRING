@@ -28,16 +28,16 @@
                                     <%= Coupon.name %>
                                 </td>
                                 <td>
-                                    <%= Coupon.discount %>
+                                    <%= Coupon.discount %>%
                                 </td>
                                 <td>
-                                    <%= Coupon.expDate %>
+                                    <%= Coupon.expDate.toDateString() %>
                                 </td>
                                 <td>
-                                    <%= Coupon.maxLimit %>
+                                    <%= Coupon.maxLimit %> Items/pieces
                                 </td>
                                 <td>
-                                    <%= Coupon.minPurchase %>
+                                    <%= Coupon.minPurchase %> Items/pieces
                                 </td>
                                 <td>
                                     <% if(Coupon.status == "blocked"){%>
