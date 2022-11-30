@@ -6,6 +6,23 @@ $(document).ready(function (){
     })
 })
 
+$("#couponCode").submit((e) => {
+    e.preventDefault();
+    $.ajax({
+        url: "/checkCode",
+        method: "post",
+        data: $("#couponCode").serialize(),
+        success: (response) => {
+            const coupon = response.coupon
+            if (response.token) {
+                window.location.href = `/validCoupon/${coupon}`;
+            } else {
+                window.location.href = "/invalidCoupon";
+            }
+        },
+    });
+});
+
 $("#checkout-form").submit((e) => {
     e.preventDefault();
     $.ajax({

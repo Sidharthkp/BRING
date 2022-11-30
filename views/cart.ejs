@@ -28,14 +28,16 @@
                                                 <h3 class="product-name"><a href="#">
                                                         <%= data.productId.name %>
                                                     </a></h3>
-                                                    <h4 class="product-price">
-                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
-                                                        <%= data.productId.newPrice %>
-                                                            <%if(data.productId.newPrice != data.productId.price){%>
-                                                                <del
-                                                                class="product-old-price"><i class="fa-solid fa-indian-rupee-sign"></i><%= data.productId.price %></del>
-                                                                <%}%>
-                                                    </h4>
+                                                <h4 class="product-price">
+                                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                    <%= data.productId.newPrice %>
+                                                        <%if(data.productId.newPrice !=data.productId.price){%>
+                                                            <del class="product-old-price"><i
+                                                                    class="fa-solid fa-indian-rupee-sign"></i>
+                                                                <%= data.productId.price %>
+                                                            </del>
+                                                            <%}%>
+                                                </h4>
                                                 <div class="qty-label">
 
                                                     <div class="input-number">
@@ -116,9 +118,11 @@
                         </div>
 
                         <div>
-                            Coupon: 
-                            <input type="text" maxlength="8" name="coupon">
-                            <button>Check and Apply</button>
+                            <form id="couponCode">
+                                Coupon:
+                                <input type="text" maxlength="8" name="coupon">
+                                <button type="submit">Check and Apply</button>
+                            </form>
                         </div>
                         <br>
 

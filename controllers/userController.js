@@ -6,6 +6,7 @@ const wishListModel = require("../models/WishList");
 const categoryModel = require("../models/Category");
 const addressModel = require("../models/Address");
 const orderModel = require("../models/Order");
+const couponModel = require("../models/Coupons");
 const Razorpay = require("razorpay");
 
 const dateTime = new Date()
@@ -13,7 +14,7 @@ const dateTime = new Date()
 const home = async (req, res) => {
     const userId = null;
     const count = null;
-    const products = await productModel.find({quantity: 1})
+    const products = await productModel.find({ quantity: 1 })
     const categories = await categoryModel.find()
     const banners = await bannerModel.findOne({ name: "Main" })
     const user = await userModel.findById(userId)
@@ -474,7 +475,7 @@ const store = async (req, res) => {
         counts = wishList.products.length;
     }
     let catId = req.params.id;
-    const products = await productModel.find({ category: catId,quantity: 1 })
+    const products = await productModel.find({ category: catId, quantity: 1 })
     console.log(products);
     const user = await userModel.findById(userId)
     res.render("store", {
@@ -700,7 +701,48 @@ const cancelOrder = async (req, res) => {
     }
 }
 
+const checkCode = async (req, res) => {
+    try {
+        const coupon = req.body.coupon;
+        const couponData = await couponModel.findOne({ name: coupon });
+        console.log(couponData);
+        if (couponData) {
+            res.json({ token: true, coupon });
+        } else {
+            res.json({ token: false });
+        }
+    } catch (err) {
+        console.log(err);
+        console.log("Error");
+    }
+}
+
+const validCoupon = async (req, res) => {
+    const userId = req.user.id;
+    const couponName = req.params.name;
+    const cartItems = await cartModel.findOne({ user: userId });
+    const coupon = await couponModel.findOne({ name: couponName });
+    cartItems.total = cartItems.total - ((coupon.discount / 100) * cartItems.total).toFixed(0);
+    cartItems.save()
+        .then(async () => {
+            let maxLimit = coupon.maxLimit -1
+            await couponModel.findOneAndUpdate({ name: couponName }, { $set: { maxLimit } })
+            res.redirect("back")
+        })
+        .catch(() => {
+            console.log("Error");
+        })
+}
+
+const invalidCoupon = (req, res) => {
+    console.log("Invalid Coupon entered");
+    res.redirect("back")
+}
+
 module.exports = {
+    validCoupon,
+    invalidCoupon,
+    checkCode,
     invoice,
     orderSuccessCOD,
     thankyou,
