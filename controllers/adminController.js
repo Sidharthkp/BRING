@@ -7,6 +7,7 @@ const couponModel = require("../models/Coupons");
 
 const dateTime = new Date()
 
+//user management
 const userManagement = async (req, res) => {
     try {
         const sort = { date: -1 }
@@ -17,7 +18,6 @@ const userManagement = async (req, res) => {
             if (PRODUCT.length != 0) {
                 Product = 1;
             }
-            // user = req.user.name
             res.render("admin/userManage", { users, Product })
         }
         else {
@@ -28,7 +28,7 @@ const userManagement = async (req, res) => {
     }
 }
 
-//adminside products view>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//adminside products view
 const productManagement = async (req, res) => {
     try {
         const sort = { date: -1 }
@@ -50,6 +50,7 @@ const productManagement = async (req, res) => {
     }
 }
 
+//product add page
 const productAdd = async (req, res) => {
     try {
         const categories = await categoryModel.find()
@@ -70,6 +71,8 @@ const productAdd = async (req, res) => {
     }
 }
 
+
+//product listing
 const productList = async (req, res) => {
     try {
         let prodId = req.params.id;
@@ -84,6 +87,8 @@ const productList = async (req, res) => {
     }
 }
 
+
+//product unlisting
 const productUnlist = async (req, res) => {
     try {
         let prodId = req.params.id;
@@ -98,6 +103,8 @@ const productUnlist = async (req, res) => {
     }
 }
 
+
+//Product Edititng
 const productEdit = async (req, res) => {
     try {
         const categories = await categoryModel.find()
@@ -118,6 +125,8 @@ const productEdit = async (req, res) => {
     }
 }
 
+
+//Post product after editing
 const productEditPost = async (req, res) => {
     try {
         const prodId = req.params.id;
@@ -153,7 +162,7 @@ const productEditPost = async (req, res) => {
     }
 }
 
-//
+//post product to database
 const productPost = async (req, res) => {
     try {
         const { name, description, category, price, stock } = req.body;
@@ -174,7 +183,8 @@ const productPost = async (req, res) => {
             .then(() => {
                 res.redirect("/productManage")
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err);
                 res.render("404")
             })
     } catch {
