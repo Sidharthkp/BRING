@@ -92,32 +92,26 @@ const addAddress = async (req, res) => {
     const userId = req.params.id;
     const { first_name, last_name, email, address, city, district, state, country, zip, tel } = req.body;
     const user = await userModel.findById(userId)
-    const newAddress = new addressModel({
-        user: user,
-        first_name,
-        last_name,
-        email,
-        address,
-        city,
-        district,
-        state,
-        country,
-        zip,
-        tel
-    });
-    console.log(userId);
+    const newAddress = await addressModel.findOneAndUpdate({ user: userId },
+
+        {
+            $set: {
+                user: user,
+                first_name,
+                last_name,
+                email,
+                address,
+                city,
+                district,
+                state,
+                country,
+                zip,
+                tel
+            },
+        }
+    );
     await newAddress.save()
         .then(async () => {
-            const Address = await addressModel.findOne({ user: userId })
-            console.log(userId);
-            let data = await userModel.findByIdAndUpdate(userId,
-
-                {
-                    $push: {
-                        address: Address.id,
-                    },
-                }
-            );
             res.redirect('/profile');
         })
         .catch((err) => {
@@ -725,9 +719,9 @@ const checkCode = async (req, res) => {
         const couponName = req.body.coupon;
         const couponData = await couponModel.findOne({ name: couponName });
         const coupon = couponData.id
-        for(let user of couponData.userId){
-            if (user == userId){
-                res.json({user: true})
+        for (let user of couponData.userId) {
+            if (user == userId) {
+                res.json({ user: true })
             }
         }
         if (couponData && couponData.status == "Unblocked") {
@@ -762,7 +756,7 @@ const removeCoupon = async (req, res) => {
     const cart = await cartModel.findOne({ user: userId }).populate("coupon")
     cart.grandTotal = 0
     const couponId = cart.coupon.id
-    await couponModel.findOneAndUpdate({ _id:  couponId}, { $pull: { userId: userId } });
+    await couponModel.findOneAndUpdate({ _id: couponId }, { $pull: { userId: userId } });
     cart.coupon = null
     cart.save().then(() => {
         res.redirect("back")
