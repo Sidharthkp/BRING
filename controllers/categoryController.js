@@ -80,11 +80,13 @@ const categoryEditPost = async (req, res) => {
         const catId = req.params.id;
         const { name } = req.body;
         const categoryImages = req.files != null ? req.files.map((img) => img.filename) : null
+        if (categoryImages != null) {
+            await productModel.findOneAndUpdate({ _id: catId }, { $set: { imgUrl: categoryImages } });
+        }
         const saveEdits = await categoryModel.findOneAndUpdate(
             { _id: catId },
             {
                 name,
-                imgUrl: categoryImages
             }
         );
         await saveEdits.save().then(() => {
