@@ -25,13 +25,14 @@ const signupView = (req, res) => {
 
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    ignoreTLS: false,
+    secure: false,
     service: 'Gmail',
 
     auth: {
-        user: 'nodemailermernstack@gmail.com',
-        pass: 'cllwhtytqrqacphy',
+        user: process.env.USER,
+        pass: process.env.PASS,
     }
 
 });
