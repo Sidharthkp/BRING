@@ -41,11 +41,11 @@
                     <form class="forms_form" action="/login" method="post">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
-                                <input type="email" name="email" placeholder="Email" class="forms_field-input" required
+                                <input type="email" name="email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$" placeholder="Email" class="forms_field-input" required
                                     autofocus />
                             </div>
                             <div class="forms_field">
-                                <input type="password" id="myInput" name="password" placeholder="Password" class="forms_field-input"
+                                <input type="password" id="myInput" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" name="password" placeholder="Password" class="forms_field-input"
                                     required />
                             </div>
                             <div>
@@ -63,19 +63,19 @@
                     <form class="forms_form" action="/signup" method="post">
                         <fieldset class="forms_fieldset">
                             <div class="forms_field">
-                                <input type="text" name="name" placeholder="Full Name" class="forms_field-input"
+                                <input type="text" name="name" pattern="^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$" placeholder="Full Name" class="forms_field-input"
                                     required />
                             </div>
                             <div class="forms_field">
-                                <input type="email" name="email" placeholder="Email" class="forms_field-input"
+                                <input type="email" name="email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$" placeholder="Email" class="forms_field-input"
                                     required />
                             </div>
                             <div class="forms_field">
-                                <input type="password" name="password" placeholder="Password" class="forms_field-input"
+                                <input type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" placeholder="Password" class="forms_field-input"
                                     required />
                             </div>
                             <div class="forms_field">
-                                <input type="password" name="confirm" placeholder="Re-enter the password" class="forms_field-input"
+                                <input type="password" name="confirm" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" placeholder="Re-enter the password" class="forms_field-input"
                                     required />
                             </div>
                         </fieldset>
