@@ -65,11 +65,11 @@
                                             <div class="product-img">
                                                 <img src="/public/img/product_img/<%= Product.imgUrl[0] %>" alt="">
                                                 <div class="product-label">
-                                                        <% if(Product.discount>0){%>
+                                                    <% if(Product.discount>0){%>
                                                         <span class="sale">-<%= Product.discount%>%</span>
                                                         <%}%>
-                                                        <!-- <span class="new">NEW</span> -->
-                                                    </div>
+                                                            <!-- <span class="new">NEW</span> -->
+                                                </div>
                                             </div>
                                             <div class="product-body">
                                                 <p class="product-category">
@@ -79,14 +79,16 @@
                                                         href="#">
                                                         <%= Product.name %>
                                                     </a></h3>
-                                                    <h4 class="product-price">
-                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
-                                                        <%= Product.newPrice %>
-                                                            <%if(Product.newPrice != Product.price){%>
-                                                                <del
-                                                                class="product-old-price"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %></del>
-                                                                <%}%>
-                                                    </h4>
+                                                <h4 class="product-price">
+                                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                    <%= Product.newPrice %>
+                                                        <%if(Product.newPrice !=Product.price){%>
+                                                            <del class="product-old-price"><i
+                                                                    class="fa-solid fa-indian-rupee-sign"></i>
+                                                                <%= Product.price %>
+                                                            </del>
+                                                            <%}%>
+                                                </h4>
                                                 <!-- <div class="product-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -121,7 +123,8 @@
                                             </div>
                                             <% if (Product.stock==0){%>
                                                 <a href="#" class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa-solid fa-circle-xmark"></i>
+                                                    <button class="add-to-cart-btn"><i
+                                                            class="fa-solid fa-circle-xmark"></i>
                                                         Out of stock</button>
                                                 </a>
                                                 <%}else{%>
@@ -161,137 +164,145 @@
     </div>
     <!-- /SECTION -->
 
-    <a href="/login" class="col-12 p-0">
-        <img src="<%= banners.source %>" style="width: 100%;" alt="">
-    </a>
+    <%if(banners){%>
+        <a href="/login" class="col-12 p-0">
+            <img src="<%= banners.source %>" style="width: 100%;" alt="">
+        </a>
+        <%}%>
 
-    <!-- SECTION -->
-    <div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-
-                <!-- section title -->
-                <div class="col-md-12">
-                    <div class="section-title">
-                        <h3 class="title">Top selling</h3>
-                    </div>
-                </div>
-                <!-- /section title -->
-
-                <!-- Products tab & slick -->
-                <div class="col-md-12">
+            <!-- SECTION -->
+            <div class="section">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
                     <div class="row">
-                        <div class="products-tabs">
-                            <!-- tab -->
-                            <div id="tab1" class="tab-pane active">
-                                <div class="products-slick" data-nav="#slick-nav-2">
-                                    <% products.forEach(function(Product) {%>
-                                        <!-- product -->
-                                        <div class="product">
-                                            <div class="product-img">
-                                                <img src="/public/img/product_img/<%= Product.imgUrl[0] %>" alt="">
-                                                <div class="product-label">
-                                                        <% if(Product.discount>0){%>
-                                                        <span class="sale">-<%= Product.discount%>%</span>
-                                                        <%}%>
-                                                        <!-- <span class="new">NEW</span> -->
-                                                    </div>
-                                            </div>
-                                            <div class="product-body">
-                                                <p class="product-category">
-                                                    <%= Product.category %>
-                                                </p>
-                                                <h3 class="product-name" style="height: 30px; overflow-y: hidden;"><a
-                                                        href="#">
-                                                        <%= Product.name %>
-                                                    </a></h3>
-                                                    <h4 class="product-price">
-                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
-                                                        <%= Product.newPrice %>
-                                                            <%if(Product.newPrice != Product.price){%>
-                                                                <del
-                                                                class="product-old-price"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %></del>
+
+                        <!-- section title -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3 class="title">Top selling</h3>
+                            </div>
+                        </div>
+                        <!-- /section title -->
+
+                        <!-- Products tab & slick -->
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="products-tabs">
+                                    <!-- tab -->
+                                    <div id="tab1" class="tab-pane active">
+                                        <div class="products-slick" data-nav="#slick-nav-2">
+                                            <% products.forEach(function(Product) {%>
+                                                <!-- product -->
+                                                <div class="product">
+                                                    <div class="product-img">
+                                                        <img src="/public/img/product_img/<%= Product.imgUrl[0] %>"
+                                                            alt="">
+                                                        <div class="product-label">
+                                                            <% if(Product.discount>0){%>
+                                                                <span class="sale">-<%= Product.discount%>%</span>
                                                                 <%}%>
-                                                    </h4>
-                                                <!-- <div class="product-rating">
+                                                                    <!-- <span class="new">NEW</span> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-body">
+                                                        <p class="product-category">
+                                                            <%= Product.category %>
+                                                        </p>
+                                                        <h3 class="product-name"
+                                                            style="height: 30px; overflow-y: hidden;"><a href="#">
+                                                                <%= Product.name %>
+                                                            </a></h3>
+                                                        <h4 class="product-price">
+                                                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                            <%= Product.newPrice %>
+                                                                <%if(Product.newPrice !=Product.price){%>
+                                                                    <del class="product-old-price"><i
+                                                                            class="fa-solid fa-indian-rupee-sign"></i>
+                                                                        <%= Product.price %>
+                                                                    </del>
+                                                                    <%}%>
+                                                        </h4>
+                                                        <!-- <div class="product-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </div> -->
-                                                <div class="product-btns">
-                                                    <% if(user){ %>
+                                                        <div class="product-btns">
+                                                            <% if(user){ %>
 
-                                                        <button class="quick-view" type=""><a
-                                                                href="/addToWishList/<%= Product._id %>"><i
-                                                                    class="fa fa-heart-o"></i><span class="tooltipp">add
-                                                                    to
-                                                                    wishlist</span></a></button>
-                                                        <%}else{%>
-                                                            <button class="add-to-wishlist" type=""><a href="/login"><i
-                                                                        class="fa fa-heart-o"></i><span
-                                                                        class="tooltipp">add
-                                                                        to
-                                                                        wishlist</span></a></button>
-                                                            <%}%>
-                                                                <!-- <button class="add-to-compare"><i
+                                                                <button class="quick-view" type=""><a
+                                                                        href="/addToWishList/<%= Product._id %>"><i
+                                                                            class="fa fa-heart-o"></i><span
+                                                                            class="tooltipp">add
+                                                                            to
+                                                                            wishlist</span></a></button>
+                                                                <%}else{%>
+                                                                    <button class="add-to-wishlist" type=""><a
+                                                                            href="/login"><i
+                                                                                class="fa fa-heart-o"></i><span
+                                                                                class="tooltipp">add
+                                                                                to
+                                                                                wishlist</span></a></button>
+                                                                    <%}%>
+                                                                        <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->
-                                                                <button class="quick-view" type=""><a
-                                                                        href="/product/<%= Product._id %>"><i
-                                                                            class="fa fa-eye"></i>
-                                                                        <span class="tooltipp">quick
-                                                                            view</span></a></button>
-                                                </div>
-                                            </div>
-                                            <% if (Product.stock==0){%>
-                                                <a href="#" class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa-solid fa-circle-xmark"></i>
-                                                        Out of stock</button>
-                                                </a>
-                                                <%}else{%>
-                                                    <% if(user){ %>
-                                                        <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
-                                                            class="add-to-cart">
+                                                                        <button class="quick-view" type=""><a
+                                                                                href="/product/<%= Product._id %>"><i
+                                                                                    class="fa fa-eye"></i>
+                                                                                <span class="tooltipp">quick
+                                                                                    view</span></a></button>
+                                                        </div>
+                                                    </div>
+                                                    <% if (Product.stock==0){%>
+                                                        <a href="#" class="add-to-cart">
                                                             <button class="add-to-cart-btn"><i
-                                                                    class="fa fa-shopping-cart"></i>
-                                                                add
-                                                                to cart</button>
+                                                                    class="fa-solid fa-circle-xmark"></i>
+                                                                Out of stock</button>
                                                         </a>
                                                         <%}else{%>
-                                                            <a href="/login" class="add-to-cart">
-                                                                <button class="add-to-cart-btn"><i
-                                                                        class="fa fa-shopping-cart"></i>
-                                                                    add
-                                                                    to cart</button>
-                                                            </a>
-                                                            <%}}%>
+                                                            <% if(user){ %>
+                                                                <a href="/addToCart/<%= Product._id %>/<%= Product.quantity %>/<%= Product.price %>"
+                                                                    class="add-to-cart">
+                                                                    <button class="add-to-cart-btn"><i
+                                                                            class="fa fa-shopping-cart"></i>
+                                                                        add
+                                                                        to cart</button>
+                                                                </a>
+                                                                <%}else{%>
+                                                                    <a href="/login" class="add-to-cart">
+                                                                        <button class="add-to-cart-btn"><i
+                                                                                class="fa fa-shopping-cart"></i>
+                                                                            add
+                                                                            to cart</button>
+                                                                    </a>
+                                                                    <%}}%>
 
+                                                </div>
+                                                <!-- /product -->
+
+                                                <%})%>
                                         </div>
-                                        <!-- /product -->
-
-                                        <%})%>
+                                        <div id="slick-nav-2" class="products-slick-nav"></div>
+                                    </div>
+                                    <!-- /tab -->
                                 </div>
-                                <div id="slick-nav-2" class="products-slick-nav"></div>
                             </div>
-                            <!-- /tab -->
                         </div>
+                        <!-- Products tab & slick -->
                     </div>
+                    <!-- /row -->
                 </div>
-                <!-- Products tab & slick -->
+                <!-- /container -->
             </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
-    <!-- /SECTION -->
+            <!-- /SECTION -->
 
-    <!-- SECTION -->
+            <!-- SECTION -->
 
-    <!-- /SECTION -->
+            <!-- /SECTION -->
 
 
-    <%- include('footer-layout.ejs') %>
+            <%- include('footer-layout.ejs') %>

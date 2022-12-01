@@ -12,7 +12,7 @@ const logger = require('morgan');
 const nocache = require('nocache');
 const multer = require("multer");
 
-// Mongo DB conncetion
+// Mongo DB connection
 const database = process.env.MONGOLAB_URI;
 mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
