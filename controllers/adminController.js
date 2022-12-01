@@ -8,164 +8,200 @@ const couponModel = require("../models/Coupons");
 const dateTime = new Date()
 
 const userManagement = async (req, res) => {
-    const sort = { date: -1 }
-    const users = await userModel.find().sort(sort)
-    if (req.user.isAdmin === true) {
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const sort = { date: -1 }
+        const users = await userModel.find().sort(sort)
+        if (req.user.isAdmin === true) {
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            // user = req.user.name
+            res.render("admin/userManage", { users, Product })
         }
-        // user = req.user.name
-        res.render("admin/userManage", { users, Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 //adminside products view>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const productManagement = async (req, res) => {
-    const sort = { date: -1 }
-    const products = await productModel.find().sort(sort)
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const sort = { date: -1 }
+        const products = await productModel.find().sort(sort)
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/productManage", { products, Product })
         }
-        res.render("admin/productManage", { products, Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const productAdd = async (req, res) => {
-    const categories = await categoryModel.find()
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const categories = await categoryModel.find()
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/add-products", { categories, Product })
         }
-        res.render("admin/add-products", { categories, Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const productList = async (req, res) => {
-    let prodId = req.params.id;
-    const List = await productModel
-        .findOneAndUpdate({ _id: prodId }, { $set: { quantity: 1 } })
-    List.save()
-        .then((response) => {
-            res.redirect("/productManage");
-        });
+    try {
+        let prodId = req.params.id;
+        const List = await productModel
+            .findOneAndUpdate({ _id: prodId }, { $set: { quantity: 1 } })
+        List.save()
+            .then((response) => {
+                res.redirect("/productManage");
+            });
+    } catch {
+        res.render("404");
+    }
 }
 
 const productUnlist = async (req, res) => {
-    let prodId = req.params.id;
-    const Unlist = await productModel
-        .findOneAndUpdate({ _id: prodId }, { $set: { quantity: 0 } })
-    Unlist.save()
-        .then((response) => {
-            res.redirect("/productManage");
-        });
+    try {
+        let prodId = req.params.id;
+        const Unlist = await productModel
+            .findOneAndUpdate({ _id: prodId }, { $set: { quantity: 0 } })
+        Unlist.save()
+            .then((response) => {
+                res.redirect("/productManage");
+            });
+    } catch {
+        res.render("404")
+    }
 }
 
 const productEdit = async (req, res) => {
-    const categories = await categoryModel.find()
-    let prodId = req.params.id;
-    let product = await productModel.findOne({ _id: prodId });
-    if (req.user.isAdmin === true) {
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const categories = await categoryModel.find()
+        let prodId = req.params.id;
+        let product = await productModel.findOne({ _id: prodId });
+        if (req.user.isAdmin === true) {
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/edit-products", { Product, categories, product });
+        } else {
+            res.redirect("/productManage");
         }
-        res.render("admin/edit-products", { Product, categories, product });
-    } else {
-        res.redirect("/productManage");
+    } catch {
+        res.render("404")
     }
 }
 
 const productEditPost = async (req, res) => {
-    const prodId = req.params.id;
-    const { name, description, category, price, stock, discount } = req.body;
-    const productImages = req.files.length != 0 ? req.files.map((img) => img.filename) : null
-    if (productImages != null && category != null) {
-        await productModel.findOneAndUpdate({ _id: prodId }, { $set: { imgUrl: productImages, category } });
-    }
-    let newPrice = price
-    if (discount > 0) {
-        newPrice = price - ((discount / 100) * price).toFixed(0);
-    }
-    const save_edits = await productModel.findOneAndUpdate(
-        { _id: prodId },
-        {
-            $set: {
-                name,
-                description,
-                price,
-                stock,
-                discount,
-                newPrice
-            },
+    try {
+        const prodId = req.params.id;
+        const { name, description, category, price, stock, discount } = req.body;
+        const productImages = req.files.length != 0 ? req.files.map((img) => img.filename) : null
+        if (productImages != null && category != null) {
+            await productModel.findOneAndUpdate({ _id: prodId }, { $set: { imgUrl: productImages, category } });
         }
-    );
-    await save_edits.save().then(() => {
-        res.redirect("/productManage");
-    }).catch(() => {
-        console.log("Error");
-    });
+        let newPrice = price
+        if (discount > 0) {
+            newPrice = price - ((discount / 100) * price).toFixed(0);
+        }
+        const save_edits = await productModel.findOneAndUpdate(
+            { _id: prodId },
+            {
+                $set: {
+                    name,
+                    description,
+                    price,
+                    stock,
+                    discount,
+                    newPrice
+                },
+            }
+        );
+        await save_edits.save().then(() => {
+            res.redirect("/productManage");
+        }).catch(() => {
+            res.render("404")
+        });
+    } catch {
+        res.render("404")
+    }
 }
 
 //
 const productPost = async (req, res) => {
-    const { name, description, category, price, stock } = req.body;
-    req.files.forEach(img => { });
-    console.log(req.files);
-    const productImages = req.files != null ? req.files.map((img) => img.filename) : null
-    console.log(productImages);
-    const newProduct = new productModel({
-        name,
-        description,
-        price,
-        category,
-        stock,
-        discount,
-        imgUrl: productImages,
-    });
-    await newProduct.save()
-        .then(() => {
-            res.redirect("/productManage")
-        })
-        .catch(() => {
-            console.log("Error");
-        })
+    try {
+        const { name, description, category, price, stock } = req.body;
+        req.files.forEach(img => { });
+        console.log(req.files);
+        const productImages = req.files != null ? req.files.map((img) => img.filename) : null
+        console.log(productImages);
+        const newProduct = new productModel({
+            name,
+            description,
+            price,
+            category,
+            stock,
+            discount,
+            imgUrl: productImages,
+        });
+        await newProduct.save()
+            .then(() => {
+                res.redirect("/productManage")
+            })
+            .catch(() => {
+                res.render("404")
+            })
+    } catch {
+        res.render("404")
+    }
 }
 
 const orderManagement = async (req, res) => {
-    const sort = { date: -1 }
-    const viewProducts = await orderModel.find().populate("products.productId").populate("user").populate("address").sort(sort).exec()
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const sort = { date: -1 }
+        const viewProducts = await orderModel.find().populate("products.productId").populate("user").populate("address").sort(sort).exec()
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/orderManage", {
+                viewProducts, Product
+            })
         }
-        res.render("admin/orderManage", {
-            viewProducts, Product
-        })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
@@ -180,11 +216,10 @@ const dispatched = async (req, res) => {
                 res.redirect('back')
             })
             .catch(() => {
-                console.log("error");
+                res.render("404")
             })
     } catch (err) {
-        console.log(err);
-        res.redirect('back')
+        res.render("404")
     }
 }
 
@@ -199,11 +234,10 @@ const delivered = async (req, res) => {
                 res.redirect('back')
             })
             .catch(() => {
-                console.log("error");
+                res.render("404")
             })
     } catch (err) {
-        console.log(err);
-        res.redirect('back')
+        res.render("404")
     }
 }
 
@@ -214,8 +248,7 @@ const blockUser = async (req, res) => {
             { isActive: false })
         res.redirect('back')
     } catch (err) {
-        console.log(err);
-        res.redirect('back')
+        res.render("404")
     }
 }
 const activeUser = async (req, res) => {
@@ -225,167 +258,210 @@ const activeUser = async (req, res) => {
             { isActive: true })
         res.redirect('back')
     } catch {
-        console.log(err);
-        res.redirect('back')
+        res.render("404")
     }
 }
 
 const bannerManagement = async (req, res) => {
-    const sort = { date: -1 }
-    const banners = await bannerModel.find().sort(sort)
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const sort = { date: -1 }
+        const banners = await bannerModel.find().sort(sort)
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/bannerView", { banners, Product })
         }
-        res.render("admin/bannerView", { banners, Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const bannerAdd = async (req, res) => {
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/add-banners", { Product })
         }
-        res.render("admin/add-banners", { Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const bannerDelete = async (req, res) => {
-    let banId = req.params.id;
-    await bannerModel
-        .findOneAndDelete({ _id: banId }, { is_deleted: true })
-        .then((response) => {
-            res.redirect("/banner");
-        });
+    try {
+        let banId = req.params.id;
+        await bannerModel
+            .findOneAndDelete({ _id: banId }, { is_deleted: true })
+            .then((response) => {
+                res.redirect("/banner");
+            });
+    } catch {
+        res.render("404")
+    }
 }
 
 const bannerPost = async (req, res) => {
-    const { name, source } = req.body;
-    const newBanner = new bannerModel({
-        name,
-        source,
-    });
-    await newBanner.save()
-        .then(() => {
-            res.redirect("/banner")
-        })
-        .catch(() => {
-            console.log("Error");
-        })
+    try {
+        const { name, source } = req.body;
+        const newBanner = new bannerModel({
+            name,
+            source,
+        });
+        await newBanner.save()
+            .then(() => {
+                res.redirect("/banner")
+            })
+            .catch(() => {
+                res.render("404")
+            })
+    } catch {
+        res.render("404")
+    }
 }
 
 const bannerEdit = async (req, res) => {
-    let banId = req.params.id;
-    console.log(banId);
-    let Banner = await bannerModel.findOne({ _id: banId });
-    console.log(Banner);
-    if (req.user.isAdmin === true) {
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        let banId = req.params.id;
+        console.log(banId);
+        let Banner = await bannerModel.findOne({ _id: banId });
+        console.log(Banner);
+        if (req.user.isAdmin === true) {
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/edit-banners", { Banner, Product });
+        } else {
+            res.redirect("/banner");
         }
-        res.render("admin/edit-banners", { Banner, Product });
-    } else {
-        res.redirect("/banner");
+    } catch {
+        res.render("404")
     }
 }
 
 const bannerEditPost = async (req, res) => {
-    const banId = req.params.id;
-    const { name, source } = req.body;
-    const saveEdits = await bannerModel.findOneAndUpdate(
-        { _id: banId },
-        {
-            name,
-            source
-        }
-    );
-    await saveEdits.save().then(() => {
-        res.redirect("/banner");
-    }).catch(() => {
-        console.log("Error");
-    });
+    try {
+        const banId = req.params.id;
+        const { name, source } = req.body;
+        const saveEdits = await bannerModel.findOneAndUpdate(
+            { _id: banId },
+            {
+                name,
+                source
+            }
+        );
+        await saveEdits.save().then(() => {
+            res.redirect("/banner");
+        }).catch(() => {
+            res.render("404")
+        });
+    } catch {
+        res.render("404")
+    }
 }
 
 const couponManagement = async (req, res) => {
-    const sort = { date: -1 }
-    const coupons = await couponModel.find().sort(sort)
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const sort = { date: -1 }
+        const coupons = await couponModel.find().sort(sort)
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/couponView", { coupons, Product, dateTime })
         }
-        res.render("admin/couponView", { coupons, Product, dateTime })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const couponAdd = async (req, res) => {
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/add-coupon", { Product })
         }
-        res.render("admin/add-coupon", { Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const couponBlock = async (req, res) => {
-    let coupId = req.params.id;
-    const couponStatus = await couponModel
-        .findOneAndUpdate({ _id: coupId }, { status: "blocked" })
-    couponStatus.save()
-        .then((response) => {
-            res.redirect("/coupon");
-        });
+    try {
+        let coupId = req.params.id;
+        const couponStatus = await couponModel
+            .findOneAndUpdate({ _id: coupId }, { status: "blocked" })
+        couponStatus.save()
+            .then((response) => {
+                res.redirect("/coupon");
+            });
+    } catch {
+        res.render("404")
+    }
 }
 
 const couponUnblock = async (req, res) => {
-    let coupId = req.params.id;
-    const couponStatus = await couponModel
-        .findOneAndUpdate({ _id: coupId }, { status: "Unblocked" })
-    couponStatus.save()
-        .then((response) => {
-            res.redirect("/coupon");
-        });
+    try {
+        let coupId = req.params.id;
+        const couponStatus = await couponModel
+            .findOneAndUpdate({ _id: coupId }, { status: "Unblocked" })
+        couponStatus.save()
+            .then((response) => {
+                res.redirect("/coupon");
+            });
+    } catch {
+        res.render("404")
+    }
 }
 
 const couponPost = async (req, res) => {
-    let { name, discount, expDate } = req.body;
-    const newCoupon = new couponModel({
-        name,
-        discount,
-        expDate
-    })
-    await newCoupon.save()
-        .then(() => {
-            res.redirect("/coupon")
+    try {
+        let { name, discount, expDate } = req.body;
+        const newCoupon = new couponModel({
+            name,
+            discount,
+            expDate
         })
-        .catch(() => {
-            console.log("Error");
-        })
+        await newCoupon.save()
+            .then(() => {
+                res.redirect("/coupon")
+            })
+            .catch(() => {
+                res.render("404")
+            })
+    } catch {
+        res.render("404")
+    }
 }
 module.exports = {
     couponAdd,

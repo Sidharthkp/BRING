@@ -14,9 +14,13 @@ var Email;
 var newUser;
 //For Signup Page
 const signupView = (req, res) => {
-    res.render("signup", {
-        user: ""
-    });
+    try {
+        res.render("signup", {
+            user: ""
+        });
+    } catch {
+        res.render("404")
+    }
 }
 
 let transporter = nodemailer.createTransport({
@@ -36,78 +40,83 @@ otp = parseInt(otp);
 
 //Post Request that handles Signup
 const signupUser = (req, res) => {
-    const { name, email, password, confirm } = req.body;
-    if (!name || !email || !password || !confirm) {
-        console.log("Fill empty fields");
-    }
-    //Confirm Passwords
-    if (password !== confirm) {
-        console.log("Passwords must match");
-    } else {
-        //Validation
-        User.findOne({ email: email, verified: true }).then((user) => {
-            if (user) {
-                console.log("email exists");
-                res.render("login", {
-                    name,
-                    email,
-                    password,
-                    confirm,
-                });
-            } else {
-                //Validation
-                newUser = new User({
-                    name,
-                    email,
-                    password,
-                });
-                Email = email;
-                //Password Hashing
-                bcrypt.genSalt(10, (err, salt) =>
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        // const email = req.body.email;
-                        console.log(email);
-                        if (err) throw err;
-                        // let User = userModel.findOne({ _id: userId });
-                        console.log(User);
-                        newUser.password = hash;
-                        var mailOptions = {
-                            to: newUser.email,
-                            subject: "Otp for registration is: ",
-                            html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
-                        };
+    try {
+        const { name, email, password, confirm } = req.body;
+        if (!name || !email || !password || !confirm) {
+            console.log("Fill empty fields");
+        }
+        //Confirm Passwords
+        if (password !== confirm) {
+            console.log("Passwords must match");
+        } else {
+            //Validation
+            User.findOne({ email: email, verified: true }).then((user) => {
+                if (user) {
+                    console.log("email exists");
+                    res.render("login", {
+                        name,
+                        email,
+                        password,
+                        confirm,
+                    });
+                } else {
+                    //Validation
+                    newUser = new User({
+                        name,
+                        email,
+                        password,
+                    });
+                    Email = email;
+                    //Password Hashing
+                    bcrypt.genSalt(10, (err, salt) =>
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            // const email = req.body.email;
+                            console.log(email);
+                            if (err) throw err;
+                            // let User = userModel.findOne({ _id: userId });
+                            console.log(User);
+                            newUser.password = hash;
+                            var mailOptions = {
+                                to: newUser.email,
+                                subject: "Otp for registration is: ",
+                                html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
+                            };
 
-                        transporter.sendMail(mailOptions, (error, info) => {
-                            if (error) {
-                                return console.log(error);
-                            }
-                            console.log('Message sent: %s', info.messageId);
-                            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                        });
-                        newUser
-                            .save()
-                            .then(
-                                res.render('otp', { newUser, msg: "Otp has been sent", colour: "green" })
-                            )
-                            .catch((err) => console.log(err));
-                    })
-                );
-            }
-        });
+                            transporter.sendMail(mailOptions, (error, info) => {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message sent: %s', info.messageId);
+                                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                            });
+                            newUser
+                                .save()
+                                .then(
+                                    res.render('otp', { newUser, msg: "Otp has been sent", colour: "green" })
+                                )
+                                .catch((err) => res.render("404"))
+                        })
+                    );
+                }
+            });
+        }
+    } catch {
+        res.render("404")
     }
 };
 
 const loginAdminUser = async (req, res) => {
-    const userId = req.user.id;
-    const products = await productModel.find({quantity: 1})
+    try{
+        const userId = req.user.id;
+    const products = await productModel.find({ quantity: 1 })
     const categories = await categoryModel.find()
     const banners = await bannerModel.findOne({ name: "Main" })
     const user = await userModel.findById(userId)
     if (req.user.isAdmin === true) {
-        const PRODUCT = await productModel.find({stock: 0});
+        const PRODUCT = await productModel.find({ stock: 0 });
         let Product = 0
-        if(PRODUCT.length != 0){
-             Product = 1;
+        if (PRODUCT.length != 0) {
+            Product = 1;
         }
         res.render("admin/index", { user: user, Product })
     }
@@ -135,7 +144,7 @@ const loginAdminUser = async (req, res) => {
 
                 })
                 .catch(() => {
-                    console.log("Error");
+                    res.render("404")
                 })
         }
         const wish = await wishListModel.findOne({ user: userId });
@@ -148,15 +157,19 @@ const loginAdminUser = async (req, res) => {
 
                 })
                 .catch(() => {
-                    console.log("Error");
+                    res.render("404")
                 })
         }
         res.render("dashboard", { products, categories, count, counts, banners, user: users });
     }
+    }catch{
+        res.render("404")
+    }
 }
 
 const verifyOtp = async (req, res) => {
-    let userId = req.params.id;
+    try{
+        let userId = req.params.id;
     if (req.body.otp == otp) {
         await userModel.findOneAndUpdate(
             { _id: userId },
@@ -168,32 +181,43 @@ const verifyOtp = async (req, res) => {
     else {
         res.render('otp', { newUser, msg: "Incorrect otp entered", colour: "red" });
     }
+    }catch{
+        res.render("404")
+    }
 }
 
 const resendOtp = function (req, res) {
-    var mailOptions = {
-        to: Email,
-        subject: "Otp for registration is: ",
-        html:
-            "<h3>OTP for account verification is </h3>" +
-            "<h1 style='font-weight:bold;'>" +
-            otp +
-            "</h1>", // html body
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log("Message sent: %s", info.messageId);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        res.render("otp", { newUser, msg: "Otp has been sent", colour: "green" });
-    });
+    try{
+        var mailOptions = {
+            to: Email,
+            subject: "Otp for registration is: ",
+            html:
+                "<h3>OTP for account verification is </h3>" +
+                "<h1 style='font-weight:bold;'>" +
+                otp +
+                "</h1>", // html body
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            res.render("otp", { newUser, msg: "Otp has been sent", colour: "green" });
+        });
+    }catch{
+        res.render("404")
+    }
 };
 // For login View
 const loginView = (req, res) => {
+   try{
     res.render("login", {
         user: req.user
     });
+   }catch{
+    res.render("404")
+   }
 }
 
 const loginUser =

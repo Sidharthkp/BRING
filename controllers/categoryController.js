@@ -2,48 +2,61 @@ const categoryModel = require("../models/Category");
 const productModel = require("../models/Product");
 
 const categoryManagement = async (req, res) => {
-    const sort = { date: -1 }
-    const categories = await categoryModel.find().sort(sort)
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try {
+        const sort = { date: -1 }
+        const categories = await categoryModel.find().sort(sort)
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/categoryManage", { categories, Product })
         }
-        res.render("admin/categoryManage", { categories, Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    } catch {
+        res.render("404")
     }
 }
 
 const categoryAdd = async (req, res) => {
-    if (req.user.isAdmin === true) {
-        user = req.user.name;
-        const PRODUCT = await productModel.find({ stock: 0 });
-        let Product = 0
-        if (PRODUCT.length != 0) {
-            Product = 1;
+    try{
+        if (req.user.isAdmin === true) {
+            user = req.user.name;
+            const PRODUCT = await productModel.find({ stock: 0 });
+            let Product = 0
+            if (PRODUCT.length != 0) {
+                Product = 1;
+            }
+            res.render("admin/add-categories", { Product })
         }
-        res.render("admin/add-categories", { Product })
-    }
-    else {
-        res.render("/")
+        else {
+            res.render("/")
+        }
+    }catch{
+        res.render("404")
     }
 }
 
 const categoryDelete = async (req, res) => {
-    let catId = req.params.id;
+    try{
+        let catId = req.params.id;
     await categoryModel
         .findOneAndDelete({ _id: catId }, { is_deleted: true })
         .then((response) => {
             res.redirect("/categoryManage");
         });
+    }catch{
+        res.render("404")
+    }
 }
 
 const categoryEdit = async (req, res) => {
-    let catId = req.params.id;
+    try{
+        let catId = req.params.id;
     console.log(catId);
     let Category = await categoryModel.findOne({ _id: catId });
     console.log(Category);
@@ -57,10 +70,14 @@ const categoryEdit = async (req, res) => {
     } else {
         res.redirect("/categoryManage");
     }
+    }catch{
+        res.render("404")
+    }
 }
 
 const categoryEditPost = async (req, res) => {
-    const catId = req.params.id;
+    try{
+        const catId = req.params.id;
     const { name } = req.body;
     const categoryImages = req.files != null ? req.files.map((img) => img.filename) : null
     const saveEdits = await categoryModel.findOneAndUpdate(
@@ -73,12 +90,16 @@ const categoryEditPost = async (req, res) => {
     await saveEdits.save().then(() => {
         res.redirect("/categoryManage");
     }).catch(() => {
-        console.log("Error");
+        res.render("404")
     });
+    }catch{
+        res.render("404")
+    }
 }
 
 const categoryPost = async (req, res) => {
-    const { name } = req.body;
+    try{
+        const { name } = req.body;
     req.files.forEach(img => { });
     console.log(req.files);
     const categoryImages = req.files != null ? req.files.map((img) => img.filename) : null
@@ -92,8 +113,11 @@ const categoryPost = async (req, res) => {
             res.redirect("/categoryManage")
         })
         .catch(() => {
-            console.log("Error");
+            res.render("404")
         })
+    }catch{
+        res.render("404")
+    }
 }
 
 module.exports = {
