@@ -167,9 +167,7 @@ const productPost = async (req, res) => {
     try {
         const { name, description, category, price, stock } = req.body;
         req.files.forEach(img => { });
-        console.log(req.files);
         const productImages = req.files != null ? req.files.map((img) => img.filename) : null
-        console.log(productImages);
         const newProduct = new productModel({
             name,
             description,
