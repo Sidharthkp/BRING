@@ -358,7 +358,6 @@ const addToWishList = async (req, res) => {
     console.log("reached here");
     const productId = req.params.id;
     const userId = req.user.id;
-    console.log(">>>>>>>>>>>>>" + productId);
     const wishList = await wishListModel.findOne({ user: userId });
     if (!wishList) {
         const newWishList = new wishListModel({
@@ -741,25 +740,29 @@ const checkCode = async (req, res) => {
 }
 
 const validCoupon = async (req, res) => {
-    userId = req.user.id
+    const userId = req.user.id
     const cart = await cartModel.findOne({ user: userId })
     const couponId = req.params.id
     const couponSchema = await couponModel.findById(couponId)
     cart.grandTotal = cart.total - ((couponSchema.discount / 100) * cart.total).toFixed(0);
+    cart.coupon = couponId
     cart.save().then(async () => {
-        await couponSchema.findOneAndUpdate({ _id: couponId }, { $push: { userId: userId } });
+        await couponModel.findOneAndUpdate({ _id: couponId }, { $push: { userId: userId } });
         res.redirect("back")
-    }).catch(() => {
-        console.log("Errors");
+    }).catch((err) => {
+        console.log(err);
         res.redirect("back");
     })
 }
 
 const removeCoupon = async (req, res) => {
     userId = req.user.id
-    const cart = await cartModel.findOne({ user: userId })
+    const cart = await cartModel.findOne({ user: userId }).populate("coupon")
     cart.grandTotal = 0
-    cart.save().then(async () => {
+    const couponId = cart.coupon.id
+    await couponModel.findOneAndUpdate({ _id:  couponId}, { $pull: { userId: userId } });
+    cart.coupon = null
+    cart.save().then(() => {
         res.redirect("back")
     }).catch(() => {
         console.log("Errors");

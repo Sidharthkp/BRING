@@ -106,13 +106,15 @@
                     <div class="col-lg-4 col-sm-5 ml-auto text-end">
                         <table class="table table-clear">
                             <tbody>
+                                <% if(viewcart.grandTotal != 0){%>
                                         <tr>
                                             <td class="left">
-                                                <strong class="text-dark-invoice">Coupon (<%= console.log(viewInvoice) %>%)</strong>
+                                                <strong class="text-dark-invoice">Coupon Applied</strong>
                                             </td>
                                             <td class="right">$2,304,00</td>
                                         </tr>
-                                <tr>
+                                        <tr>
+                                    <%}%>
                                     <td class="left">
                                         <strong class="text-dark-invoice">Total</strong>
                                     </td>

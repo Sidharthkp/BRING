@@ -22,10 +22,7 @@ const CouponSchema = new mongoose.Schema({
     status: {
         type: String
     },
-    userId: {
-        type: [ObjectId],
-        ref: "User"
-    }
+    userId: [ObjectId]
 });
 const Coupon = mongoose.model("Coupons", CouponSchema);
 module.exports = Coupon;
