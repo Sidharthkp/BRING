@@ -176,9 +176,9 @@ const productPost = async (req, res) => {
             name,
             description,
             price,
-            category,
             stock,
             discount,
+            newPrice,
             imgUrl: productImages,
         });
         await newProduct.save()
