@@ -106,22 +106,25 @@
                     <div class="col-lg-4 col-sm-5 ml-auto text-end">
                         <table class="table table-clear">
                             <tbody>
-                                <% if(viewcart.grandTotal != 0){%>
+                                <%if(viewInvoice.grandTotal != 0){%>
+                                    <tr>
+                                        <td class="left">
+                                            <strong class="text-dark-invoice">Total(Coupon applied)</strong>
+                                        </td>
+                                        <td class="right">
+                                            <strong class="text-dark-invoice">₹<%= viewInvoice.grandTotal%></strong>
+                                        </td>
+                                    </tr>
+                                    <%}else{%>
                                         <tr>
                                             <td class="left">
-                                                <strong class="text-dark-invoice">Coupon Applied</strong>
+                                                <strong class="text-dark-invoice">Total</strong>
                                             </td>
-                                            <td class="right">$2,304,00</td>
+                                            <td class="right">
+                                                <strong class="text-dark-invoice">₹<%= viewInvoice.total%></strong>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                    <%}%>
-                                    <td class="left">
-                                        <strong class="text-dark-invoice">Total</strong>
-                                    </td>
-                                    <td class="right">
-                                        <strong class="text-dark-invoice">₹<%= viewInvoice.total%></strong>
-                                    </td>
-                                </tr>
+                                        <%}%>
                             </tbody>
                         </table>
                     </div>

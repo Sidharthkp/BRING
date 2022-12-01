@@ -579,7 +579,8 @@ const orderSuccess = async (req, res) => {
         address: Address.id,
         total: viewcart.total,
         payment_method: "Razorpay",
-        payment_status: "Paid"
+        payment_status: "Paid",
+        grandTotal: viewcart.grandTotal
     });
     for (let product of products) {
         let id = product.productId
@@ -614,6 +615,7 @@ const orderSuccessCOD = async (req, res) => {
         address: Address.id,
         total: viewcart.total,
         payment_method: "Cash On Delivery",
+        grandTotal: viewcart.grandTotal
     });
     let PRO
     let flag = 1;
@@ -693,7 +695,7 @@ const invoice = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    const viewInvoice = await orderModel.findOne({ user: userId, _id: params }).populate("products.productId").populate("address").populate("coupon").exec()
+    const viewInvoice = await orderModel.findOne({ user: userId, _id: params }).populate("products.productId").populate("address").exec()
     res.render("invoice", {
         user: user,
         count,
