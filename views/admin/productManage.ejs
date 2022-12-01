@@ -37,21 +37,19 @@
                                     <%= Product.description %>
                                 </td>
                                 <td>
-                                    <% if(Product.discount != 0){%>
+                                    <% if(Product.discount != null){%>
                                         <p style="text-decoration: line-through; color: red;"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %></p>
                                         <%}else{%>
                                             <i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %>
                                             <%}%>
                                 </td>
                                 <td>
-                                    <% if(Product.discount != 0){%>
+                                    <% if(Product.discount != null){%>
                                         <p style="color: green;"><i class="fa-solid fa-indian-rupee-sign"></i><%= Product.newPrice %></p>
-                                        <%}else{%>
-                                            <i class="fa-solid fa-indian-rupee-sign"></i><%= Product.price %>
-                                            <%}%>
+                                        <%}%>
                                 </td>
                                 <td style="color: aqua;">
-                                    <% if(Product.discount != 0){%>
+                                    <% if(Product.discount != null){%>
                                         <%= Product.discount %>%
                                             <%}else{%>
                                                 No Discount
