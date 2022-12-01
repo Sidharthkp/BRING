@@ -120,18 +120,24 @@
                                 <div>Shiping</div>
                                 <div><strong>FREE</strong></div>
                             </div>
-                            <div class="order-col">
-                                <div><strong>TOTAL</strong></div>
-                                <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
-                            </div>
+                            <% if(viewcart.grandTotal != 0){%>
+                                <div class="order-col">
+                                    <div><strong>TOTAL</strong></div>
+                                    <div><strong class="order-total" style="text-decoration: line-through;">₹<%= viewcart.total %></strong></div>
+                                </div>
+                                <div class="order-col">
+                                    <div>Coupon applied</div>
+                                    <div id="strong">You need to pay only <strong class="order-total">₹<%= viewcart.grandTotal %></strong></div>
+                                </div>
+                                <a class="primary-btn order-submit" style="width: 200px;" href="/removeCoupon">Remove coupon</a>
+                                <%}else{%>
+                                    <div class="order-col">
+                                        <div><strong>TOTAL</strong></div>
+                                        <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
+                                    </div>
+                                    <%}%>
                         </div>
-                        <%viewcart.products.forEach((data)=>{ if(data.couponStatus == true){%>
-                            <div>
-                                <i class="fa-solid fa-face-grin-stars" style="color: orangered;"></i> Coupon applied on
-                                product <%= data.productId.name %>
-                            </div>
                             <br>
-                            <%}})%>
                                 <div class="form-check">
                                     <label for="cod">
                                         <input class="form-check-input" type="radio" id="cod" name="paymentType" checked
@@ -153,10 +159,21 @@
                                         I've read and accept the <a href="#">terms & conditions</a>
                                     </label>
                                 </div>
-                                <button type="submit" class="primary-btn order-submit">Place order</button>
+                                <button type="submit" class="primary-btn order-submit" style="background-color: green;">Place order</button>
                     </div>
                     <!-- /Order Details -->
                 </form>
+
+                <%if(viewcart.grandTotal == 0){%>
+                    <div>
+                        <form id="couponCode">
+                            Coupon:
+                            <input type="text" maxlength="8" name="coupon">
+                            <button type="submit" class="primary-btn order-submit">Apply</button>
+                        </form>
+                    </div>
+                    <%}%>
+
             </div>
             <!-- /row -->
         </div>

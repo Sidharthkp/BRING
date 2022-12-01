@@ -15,7 +15,6 @@
                             <th scope="col" style="width: 18rem;">Coupon name</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Expiry</th>
-                            <th scope="col">Max Limit</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -35,9 +34,6 @@
                                     <%}else{%>
                                         <p style="color: red;">expired</p>
                                         <%}%>
-                                </td>
-                                <td>
-                                    <%= Coupon.maxLimit %> Items/pieces
                                 </td>
                                 <td>
                                     <% if(Coupon.status == "blocked"){%>

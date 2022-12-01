@@ -309,13 +309,18 @@ const checkout = async (req, res) => {
     const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
     if (userDetails.address.length != 0) {
         const address = userDetails.address
-        res.render("checkout", {
-            user: user,
-            count,
-            viewcart,
-            counts,
-            address
-        });
+        if (viewcart.products.length == 0) {
+            console.log("Please add atleast one product");
+            res.redirect("/")
+        } else {
+            res.render("checkout", {
+                user: user,
+                count,
+                viewcart,
+                counts,
+                address
+            });
+        }
     } else {
         console.log("please add address");
         res.redirect("/profile")
@@ -584,8 +589,15 @@ const orderSuccess = async (req, res) => {
     }
     await newOrderList.save()
         .then(async () => {
-            await cartModel.deleteOne({ user: userId })
-            res.redirect("/thankyou")
+            const cart = await cartModel.findOne({ user: userId })
+            cart.total = cart.grandTotal
+            cart.save().then(async () => {
+                await cartModel.deleteOne({ user: userId })
+                res.redirect("/thankyou")
+            }).catch(() => {
+                console.log("Errors");
+                res.redirect("back");
+            })
         })
         .catch(() => {
             console.log("Send to Jquery");
@@ -610,8 +622,6 @@ const orderSuccessCOD = async (req, res) => {
         let id = product.productId
         const pro = await productModel.findOne({ _id: id });
         PRO = pro.name;
-        console.log(product.quantity);
-        console.log(pro.stock);
         if (product.quantity > pro.stock) {
             flag = 0
             console.log("NO STOCK");
@@ -628,8 +638,15 @@ const orderSuccessCOD = async (req, res) => {
     await newOrderList.save()
         .then(async () => {
             if (flag == 1) {
-                await cartModel.deleteOne({ user: userId })
-                res.redirect("/thankyou")
+                const cart = await cartModel.findOne({ user: userId })
+                cart.total = cart.grandTotal
+                cart.save().then(async () => {
+                    await cartModel.deleteOne({ user: userId })
+                    res.redirect("/thankyou")
+                }).catch(() => {
+                    console.log("Errors");
+                    res.redirect("back");
+                })
             } else {
                 console.log("Please remove this item " + PRO + " or reduce the quantity, since it is out of stock")
                 res.redirect("/cart");
@@ -677,7 +694,7 @@ const invoice = async (req, res) => {
         counts = wishList.products.length;
     }
     const user = await userModel.findById(userId)
-    const viewInvoice = await orderModel.findOne({ user: userId, _id: params }).populate("products.productId").populate("address").exec()
+    const viewInvoice = await orderModel.findOne({ user: userId, _id: params }).populate("products.productId").populate("address").populate("coupon").exec()
     res.render("invoice", {
         user: user,
         count,
@@ -703,19 +720,19 @@ const cancelOrder = async (req, res) => {
 
 const checkCode = async (req, res) => {
     try {
-        const coupon = req.body.coupon;
-        const couponData = await couponModel.findOne({ name: coupon });
-        const limit = couponData.maxLimit;
-        if (couponData && limit > 0) {
+        const userId = req.user.id
+        const couponName = req.body.coupon;
+        const couponData = await couponModel.findOne({ name: couponName });
+        const coupon = couponData.id
+        for(let user of couponData.userId){
+            if (user == userId){
+                res.json({user: true})
+            }
+        }
+        if (couponData && couponData.status == "Unblocked") {
             res.json({ token: true, coupon });
         } else {
-            if (limit <= 0) {
-                console.log("Coupon limit is over");
-                res.redirect("back");
-            } else {
-                res.json({ token: false });
-            }
-
+            res.json({ token: false });
         }
     } catch (err) {
         console.log(err);
@@ -724,34 +741,35 @@ const checkCode = async (req, res) => {
 }
 
 const validCoupon = async (req, res) => {
-    const userId = req.user.id;
-    const couponName = req.params.name;
-    const cartItems = await cartModel.findOne({ user: userId }).populate("products");
-    const coupon = await couponModel.findOne({ name: couponName });
-    cartItems.total = cartItems.total - ((coupon.discount / 100) * cartItems.total).toFixed(0);
-    const n = cartItems.products.length
-    for(let i = 0; i<n;i++){
-        cartItems.products[i].couponStatus = true;
-    }
-    cartItems.save()
-        .then(async () => {
-            let maxLimit = coupon.maxLimit - 1
-            await couponModel.findOneAndUpdate({ name: couponName }, { $set: { maxLimit } })
-            res.redirect("back")
-        })
-        .catch(() => {
-            console.log("Error");
-        })
+    userId = req.user.id
+    const cart = await cartModel.findOne({ user: userId })
+    const couponId = req.params.id
+    const couponSchema = await couponModel.findById(couponId)
+    cart.grandTotal = cart.total - ((couponSchema.discount / 100) * cart.total).toFixed(0);
+    cart.save().then(async () => {
+        await couponSchema.findOneAndUpdate({ _id: couponId }, { $push: { userId: userId } });
+        res.redirect("back")
+    }).catch(() => {
+        console.log("Errors");
+        res.redirect("back");
+    })
 }
 
-const invalidCoupon = (req, res) => {
-    console.log("Invalid Coupon entered");
-    res.redirect("back")
+const removeCoupon = async (req, res) => {
+    userId = req.user.id
+    const cart = await cartModel.findOne({ user: userId })
+    cart.grandTotal = 0
+    cart.save().then(async () => {
+        res.redirect("back")
+    }).catch(() => {
+        console.log("Errors");
+        res.redirect("back");
+    })
 }
 
 module.exports = {
+    removeCoupon,
     validCoupon,
-    invalidCoupon,
     checkCode,
     invoice,
     orderSuccessCOD,
@@ -777,5 +795,5 @@ module.exports = {
     changePassword,
     addAddress,
     orderSuccess,
-    addToCartFromWishlist
+    addToCartFromWishlist,
 }

@@ -373,11 +373,10 @@ const couponUnblock = async (req, res) => {
 }
 
 const couponPost = async (req, res) => {
-    let { name, discount, maxLimit, expDate } = req.body;
+    let { name, discount, expDate } = req.body;
     const newCoupon = new couponModel({
         name,
         discount,
-        maxLimit,
         expDate
     })
     await newCoupon.save()

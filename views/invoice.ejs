@@ -71,6 +71,7 @@
                                 <th style="width: 50rem;">Description</th>
                                 <th class="right">Price</th>
                                 <th class="center">Qty</th>
+                                <th class="center">Discount</th>
                                 <th class="right">Total</th>
                             </tr>
                         </thead>
@@ -91,6 +92,9 @@
                                     <td class="center">
                                         <%= product.quantity %>
                                     </td>
+                                    <td>
+                                        <%= product.productId.discount %>%
+                                    </td>
                                     <td class="right">₹<%= product.subTotal %>
                                     </td>
                                 </tr>
@@ -102,24 +106,12 @@
                     <div class="col-lg-4 col-sm-5 ml-auto text-end">
                         <table class="table table-clear">
                             <tbody>
-                                <!-- <tr>
-                                            <td class="left">
-                                                <strong class="text-dark-invoice">Subtotal</strong>
-                                            </td>
-                                            <td class="right">$28,809,00</td>
-                                        </tr>
                                         <tr>
                                             <td class="left">
-                                                <strong class="text-dark-invoice">Discount (20%)</strong>
-                                            </td>
-                                            <td class="right">$5,761,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="left">
-                                                <strong class="text-dark-invoice">VAT (10%)</strong>
+                                                <strong class="text-dark-invoice">Coupon (<%= console.log(viewInvoice) %>%)</strong>
                                             </td>
                                             <td class="right">$2,304,00</td>
-                                        </tr> -->
+                                        </tr>
                                 <tr>
                                     <td class="left">
                                         <strong class="text-dark-invoice">Total</strong>

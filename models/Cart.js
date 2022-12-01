@@ -28,7 +28,7 @@ const CartSchema = new mongoose.Schema({
                 type: Number,
                 ref: "Product",
             },
-        }
+        } 
     ],
     total: {
         type: Number
@@ -37,8 +37,9 @@ const CartSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    coupon: {
-        type: ObjectId,
+    grandTotal: {
+        type: Number,
+        default: 0
     }
 });
 const Cart = mongoose.model("Cart", CartSchema);

@@ -17,7 +17,11 @@ $("#couponCode").submit((e) => {
             if (response.token) {
                 window.location.href = `/validCoupon/${coupon}`;
             } else {
-                window.location.href = "/invalidCoupon";
+                if(response.user){
+                    alert("Coupen already taken")
+                }else{
+                    alert('Coupon is invalid');
+                }
             }
         },
     });

@@ -116,23 +116,6 @@
                                 <div><strong class="order-total">₹<%= viewcart.total %></strong></div>
                             </div>
                         </div>
-                        
-                            <%viewcart.products.forEach((data)=>{ if(data.couponStatus == true){%>
-                                <div>
-                                    <i class="fa-solid fa-face-grin-stars" style="color: orangered;"></i>  Coupon applied on product <%= data.productId.name %>
-                                </div>
-                                <br>
-                                <%}})%>
-                        
-
-                        <div>
-                            <form id="couponCode">
-                                Coupon:
-                                <input type="text" maxlength="8" name="coupon">
-                                <button type="submit">Check and Apply</button>
-                            </form>
-                        </div>
-                        <br>
 
                         <a href="/checkout" class="primary-btn order-submit">checkout</a>
                     </div>

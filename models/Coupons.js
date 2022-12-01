@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 const CouponSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -13,16 +15,16 @@ const CouponSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    maxLimit: {
-        type: Number,
-        require: true
-    },
     expDate: {
         type: Date,
         require: true
     },
     status: {
         type: String
+    },
+    userId: {
+        type: [ObjectId],
+        ref: "User"
     }
 });
 const Coupon = mongoose.model("Coupons", CouponSchema);
