@@ -165,9 +165,13 @@ const productEditPost = async (req, res) => {
 //post product to database
 const productPost = async (req, res) => {
     try {
-        const { name, description, category, price, stock } = req.body;
+        const { name, description, category, price, stock, discount } = req.body;
         req.files.forEach(img => { });
         const productImages = req.files != null ? req.files.map((img) => img.filename) : null
+        let newPrice = price
+        if (discount > 0) {
+            newPrice = price - ((discount / 100) * price).toFixed(0);
+        }
         const newProduct = new productModel({
             name,
             description,
