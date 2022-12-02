@@ -432,19 +432,38 @@
                                                     </div> -->
                                                 <div class="product-btns">
                                                     <% if(user){ %>
+                                                        <% let flag=false; if(wishList.products){%>
+                                                            <%for(let pro of wishList.products){%>
 
-                                                        <button class="quick-view" type=""><a
-                                                                href="/addToWishList/<%= Product._id %>"><i
-                                                                    class="fa fa-heart-o"></i><span class="tooltipp">add
-                                                                    to
-                                                                    wishlist</span></a></button>
-                                                        <%}else{%>
-                                                            <button class="add-to-wishlist" type=""><a href="/login"><i
-                                                                        class="fa fa-heart-o"></i><span
-                                                                        class="tooltipp">add
-                                                                        to
-                                                                        wishlist</span></a></button>
-                                                            <%}%>
+                                                                <% if(pro.toString()==Product._id.toString()){
+                                                                    flag=true;%>
+
+                                                                    <%}}%>
+                                                                        <%if(flag==true){%>
+                                                                            <button class="quick-view" type=""><a
+                                                                                    href="/addToWishList/<%= Product._id %>"><i
+                                                                                        class="fa-solid fa-heart"
+                                                                                        style="color: red;"></i><span
+                                                                                        class="tooltipp">add
+                                                                                        to
+                                                                                        wishlist</span></a></button>
+                                                                            <%}else{%>
+                                                                                <button class="quick-view" type=""><a
+                                                                                        href="/addToWishList/<%= Product._id %>"><i
+                                                                                            class="fa fa-heart-o"></i><span
+                                                                                            class="tooltipp">add
+                                                                                            to
+                                                                                            wishlist</span></a></button>
+                                                                                <%}%>
+
+                                                                                    <%}}else{%>
+                                                                                        <button class="add-to-wishlist"
+                                                                                            type=""><a href="/login"><i
+                                                                                                    class="fa fa-heart-o"></i><span
+                                                                                                    class="tooltipp">add
+                                                                                                    to
+                                                                                                    wishlist</span></a></button>
+                                                                                        <%}%>
                                                                 <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->

@@ -188,7 +188,8 @@ const productLarge = async (req, res) => {
             products,
             count,
             prod,
-            counts
+            counts,
+            wishList
         });
     } catch {
         res.render("404")
@@ -585,7 +586,8 @@ const store = async (req, res) => {
             user: user,
             products,
             count,
-            counts
+            counts,
+            wishList
         });
     } catch {
         res.render("404")
