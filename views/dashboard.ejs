@@ -98,27 +98,51 @@
                                                     </div> -->
                                                 <div class="product-btns">
                                                     <% if(user){ %>
+                                                        <% let flag=false; if(wishList.products.length !=0 ){%>
+                                                            <%for(let pro of wishList.products){%>
 
-                                                        <button class="quick-view" type=""><a
-                                                                href="/addToWishList/<%= Product._id %>"><i
-                                                                    class="fa fa-heart-o"></i><span class="tooltipp">add
-                                                                    to
-                                                                    wishlist</span></a></button>
-                                                        <%}else{%>
-                                                            <button class="add-to-wishlist" type=""><a href="/login"><i
-                                                                        class="fa fa-heart-o"></i><span
-                                                                        class="tooltipp">add
-                                                                        to
-                                                                        wishlist</span></a></button>
-                                                            <%}%>
-                                                                <!-- <button class="add-to-compare"><i
+                                                                <% if(pro.toString()==Product._id.toString()){
+                                                                    flag=true;%>
+
+                                                                    <%}}%>
+                                                                        <%if(flag==true){%>
+                                                                            <button class="quick-view" type=""><a
+                                                                                    href="/addToWishList/<%= Product._id %>"><i
+                                                                                        class="fa-solid fa-heart"
+                                                                                        style="color: red;"></i><span
+                                                                                        class="tooltipp">add
+                                                                                        to
+                                                                                        wishlist</span></a></button>
+                                                                            <%}else{%>
+                                                                                <button class="quick-view" type=""><a
+                                                                                        href="/addToWishList/<%= Product._id %>"><i
+                                                                                            class="fa fa-heart-o"></i><span
+                                                                                            class="tooltipp">add
+                                                                                            to
+                                                                                            wishlist</span></a></button>
+                                                                                <%}%>
+
+                                                                                    <%}}else{%>
+                                                                                        <button class="add-to-wishlist"
+                                                                                            type=""><a href="/login"><i
+                                                                                                    class="fa fa-heart-o"></i><span
+                                                                                                    class="tooltipp">add
+                                                                                                    to
+                                                                                                    wishlist</span></a></button>
+                                                                                        <%}%>
+
+
+
+                                                                                            <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->
-                                                                <button class="quick-view" type=""><a
-                                                                        href="/product/<%= Product._id %>"><i
-                                                                            class="fa fa-eye"></i>
-                                                                        <span class="tooltipp">quick
-                                                                            view</span></a></button>
+                                                                                            <button class="quick-view"
+                                                                                                type=""><a
+                                                                                                    href="/product/<%= Product._id %>"><i
+                                                                                                        class="fa fa-eye"></i>
+                                                                                                    <span
+                                                                                                        class="tooltipp">quick
+                                                                                                        view</span></a></button>
                                                 </div>
                                             </div>
                                             <% if (Product.stock==0){%>
@@ -232,21 +256,38 @@
                                                     </div> -->
                                                         <div class="product-btns">
                                                             <% if(user){ %>
-
-                                                                <button class="quick-view" type=""><a
-                                                                        href="/addToWishList/<%= Product._id %>"><i
-                                                                            class="fa fa-heart-o"></i><span
-                                                                            class="tooltipp">add
-                                                                            to
-                                                                            wishlist</span></a></button>
-                                                                <%}else{%>
-                                                                    <button class="add-to-wishlist" type=""><a
-                                                                            href="/login"><i
-                                                                                class="fa fa-heart-o"></i><span
-                                                                                class="tooltipp">add
-                                                                                to
-                                                                                wishlist</span></a></button>
-                                                                    <%}%>
+                                                                <% let flag=false; if(wishList.products.length !=0 ){%>
+                                                                    <%for(let pro of wishList.products){%>
+        
+                                                                        <% if(pro.toString()==Product._id.toString()){
+                                                                            flag=true;%>
+        
+                                                                            <%}}%>
+                                                                                <%if(flag==true){%>
+                                                                                    <button class="quick-view" type=""><a
+                                                                                            href="/addToWishList/<%= Product._id %>"><i
+                                                                                                class="fa-solid fa-heart"
+                                                                                                style="color: red;"></i><span
+                                                                                                class="tooltipp">add
+                                                                                                to
+                                                                                                wishlist</span></a></button>
+                                                                                    <%}else{%>
+                                                                                        <button class="quick-view" type=""><a
+                                                                                                href="/addToWishList/<%= Product._id %>"><i
+                                                                                                    class="fa fa-heart-o"></i><span
+                                                                                                    class="tooltipp">add
+                                                                                                    to
+                                                                                                    wishlist</span></a></button>
+                                                                                        <%}%>
+        
+                                                                                            <%}}else{%>
+                                                                                                <button class="add-to-wishlist"
+                                                                                                    type=""><a href="/login"><i
+                                                                                                            class="fa fa-heart-o"></i><span
+                                                                                                            class="tooltipp">add
+                                                                                                            to
+                                                                                                            wishlist</span></a></button>
+                                                                                                <%}%>
                                                                         <!-- <button class="add-to-compare"><i
                                                                 class="fa fa-exchange"></i><span class="tooltipp">add to
                                                                 compare</span></button> -->

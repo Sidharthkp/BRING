@@ -160,7 +160,7 @@ const loginAdminUser = async (req, res) => {
                         res.render("404")
                     })
             }
-            res.render("dashboard", { products, categories, count, counts, banners, user: users });
+            res.render("dashboard", { products, categories, wishList, count, counts, banners, user: users });
         }
     } catch {
         res.render("404")
