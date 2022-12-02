@@ -98,7 +98,7 @@
                                                     </div> -->
                                                 <div class="product-btns">
                                                     <% if(user){ %>
-                                                        <% let flag=false; if(wishList.products.length !=0 ){%>
+                                                        <% let flag=false; if(wishList.products){%>
                                                             <%for(let pro of wishList.products){%>
 
                                                                 <% if(pro.toString()==Product._id.toString()){
@@ -256,7 +256,7 @@
                                                     </div> -->
                                                         <div class="product-btns">
                                                             <% if(user){ %>
-                                                                <% let flag=false; if(wishList.products.length !=0 ){%>
+                                                                <% let flag=false; if(wishList.products){%>
                                                                     <%for(let pro of wishList.products){%>
         
                                                                         <% if(pro.toString()==Product._id.toString()){

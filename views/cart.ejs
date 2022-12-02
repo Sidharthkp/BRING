@@ -60,9 +60,39 @@
                                                     <i class="fa fa-star"></i>
                                                 </div> -->
                                                 <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to
-                                                            wishlist</span></button>
+                                                    <% if(user){ %>
+                                                        <% let flag=false; if(wishList.products){%>
+                                                            <%for(let pro of wishList.products){%>
+
+                                                                <% if(pro.toString()==data.productId._id.toString()){
+                                                                    flag=true;%>
+
+                                                                    <%}}%>
+                                                                        <%if(flag==true){%>
+                                                                            <button class="quick-view" type=""><a
+                                                                                    href="/addToWishList/<%= data.productId._id %>"><i
+                                                                                        class="fa-solid fa-heart"
+                                                                                        style="color: red;"></i><span
+                                                                                        class="tooltipp">add
+                                                                                        to
+                                                                                        wishlist</span></a></button>
+                                                                            <%}else{%>
+                                                                                <button class="quick-view" type=""><a
+                                                                                        href="/addToWishList/<%= data.productId._id %>"><i
+                                                                                            class="fa fa-heart-o"></i><span
+                                                                                            class="tooltipp">add
+                                                                                            to
+                                                                                            wishlist</span></a></button>
+                                                                                <%}%>
+
+                                                                                    <%}}else{%>
+                                                                                        <button class="add-to-wishlist"
+                                                                                            type=""><a href="/login"><i
+                                                                                                    class="fa fa-heart-o"></i><span
+                                                                                                    class="tooltipp">add
+                                                                                                    to
+                                                                                                    wishlist</span></a></button>
+                                                                                        <%}%>
                                                     <button class="add-to-compare"><a
                                                             href="/deleteCart/<%= data.productId._id %>"><i
                                                                 class="fa-solid fa-trash-can"></i><span

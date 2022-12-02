@@ -215,6 +215,7 @@ const cart = async (req, res) => {
             viewcart,
             count,
             counts,
+            wishList
         });
     } catch {
         res.render("404")
