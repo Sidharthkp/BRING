@@ -437,22 +437,42 @@ const addToWishList = async (req, res) => {
                     res.render("404")
                 })
         }
-        const newWishList = await wishListModel.findOneAndUpdate({
-            user: req.user.id
-        },
-            {
-                $push: {
-                    products: productId,
+        let check = wishList.products.some(item => item._id.toString() === productId.toString());
+        if(check){
+            const newWishList = await wishListModel.findOneAndUpdate({
+                user: req.user.id
+            },
+                {
+                    $pull: {
+                        products: productId,
+                    }
                 }
-            }
-        );
-        await newWishList.save()
+            );
+            await newWishList.save()
             .then(() => {
                 res.redirect("back");
             })
             .catch(() => {
                 res.render("404")
             })
+        }else{
+            const newWishList = await wishListModel.findOneAndUpdate({
+                user: req.user.id
+            },
+                {
+                    $push: {
+                        products: productId,
+                    }
+                }
+            );
+            await newWishList.save()
+            .then(() => {
+                res.redirect("back");
+            })
+            .catch(() => {
+                res.render("404")
+            })
+        }
     } catch {
         res.render("404")
     }
