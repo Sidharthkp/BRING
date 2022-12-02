@@ -125,10 +125,8 @@ const loginAdminUser = async (req, res) => {
             let todaysRevenue = 0;
             let totalRevenue = 0;
             const currDate = dateTime.toISOString().slice(0, 10);
-            console.log(orders);
             for (let i = 0; i < orderCount; i++) {
                 let date = orders[i].date.toISOString().slice(0, 10);
-                console.log(date);
                 totalRevenue += orders[i].total;
                 if (date == currDate) {
                     ++todayOrderCount;
