@@ -122,13 +122,17 @@ const loginAdminUser = async (req, res) => {
             const orders = await orderModel.find();
             const orderCount = orders.length
             let todayOrderCount = 0;
+            let todaysRevenue = 0;
+            let totalRevenue = 0;
             const currDate = dateTime.toISOString().slice(0, 10);
             console.log(orders);
             for (let i = 0; i < orderCount; i++) {
                 let date = orders[i].date.toISOString().slice(0, 10);
                 console.log(date);
+                totalRevenue += orders[i].total;
                 if (date == currDate) {
                     ++todayOrderCount;
+                    todaysRevenue += orders[i].total
                 }
             }
 
@@ -136,7 +140,7 @@ const loginAdminUser = async (req, res) => {
             if (PRODUCT.length != 0) {
                 Product = 1;
             }
-            res.render("admin/index", { user: user, Product, products, users, orders, orderCount, todayOrderCount })
+            res.render("admin/index", { user: user, Product, products, users, orders, orderCount, todayOrderCount, totalRevenue, todaysRevenue })
         }
         else {
             let count = 0;
