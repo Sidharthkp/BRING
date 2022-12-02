@@ -132,8 +132,28 @@ const addAddress = async (req, res) => {
                 res.redirect('/profile');
             })
             .catch((err) => {
-                console.log(err)
-                console.log("Error while saving data to the user collection");
+                res.render("404")
+            })
+    } catch {
+        res.render("404")
+    }
+}
+
+const newAddress = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { first_name, last_name, email, address, city, district, state, country, zip, tel } = req.body;
+        const addAddress = new addressModel({
+            user: userId,
+            first_name, last_name, email, address, city, district, state, country, zip, tel
+        });
+        await userModel.findOneAndUpdate({ _id: userId }, { $push: { address: addAddress } })
+        await addAddress.save()
+            .then(async () => {
+                res.redirect('/profile');
+            })
+            .catch((err) => {
+                res.render("404")
             })
     } catch {
         res.render("404")
@@ -723,8 +743,7 @@ const orderSuccessCOD = async (req, res) => {
                         await cartModel.deleteOne({ user: userId })
                         res.redirect("/thankyou")
                     }).catch(() => {
-                        console.log("Errors");
-                        res.redirect("back");
+                        res.render("404")
                     })
                 } else {
                     console.log("Please remove this item " + PRO + " or reduce the quantity, since it is out of stock")
@@ -894,4 +913,5 @@ module.exports = {
     addAddress,
     orderSuccess,
     addToCartFromWishlist,
+    newAddress
 }
