@@ -96,8 +96,34 @@
                         </div>
 
                         <ul class="product-btns">
-                            <li><a href="/addToWishList/<%= Product._id %>"><i class="fa fa-heart-o"></i> add to
-                                    wishlist</a></li>
+                            <% if(user){ %>
+                                <% let flag=false; if(wishList.products){%>
+                                    <%for(let pro of wishList.products){%>
+
+                                        <% if(pro.toString()==Product._id.toString()){
+                                            flag=true;%>
+
+                                            <%}}%>
+                                                <%if(flag==true){%>
+                                                    <button class="quick-view" type="" style="border: none; background-color: white;"><a
+                                                            href="/addToWishList/<%= Product._id %>"><i
+                                                                class="fa-solid fa-heart"
+                                                                style="color: red;"></i></a></button>
+                                                    <%}else{%>
+                                                        <button class="quick-view" type="" style="border: none; background-color: white;"><a
+                                                                href="/addToWishList/<%= Product._id %>"><i
+                                                                    class="fa fa-heart-o"></i><span
+                                                                    class="tooltipp"></a></button>
+                                                        <%}%>
+
+                                                            <%}}else{%>
+                                                                <button class="add-to-wishlist"
+                                                                    type=""><a href="/login"><i
+                                                                            class="fa fa-heart-o"></i><span
+                                                                            class="tooltipp">add
+                                                                            to
+                                                                            wishlist</span></a></button>
+                                                                <%}%>
                             <!-- <li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li> -->
                         </ul>
 
