@@ -8,7 +8,10 @@ const cartModel = require("../models/Cart");
 const bannerModel = require("../models/Banner");
 const wishListModel = require("../models/WishList");
 const categoryModel = require("../models/Category");
+const orderModel = require("../models/Order")
 var otp = Math.random();
+
+const dateTime = new Date()
 
 var Email;
 var newUser;
@@ -114,11 +117,26 @@ const loginAdminUser = async (req, res) => {
         const user = await userModel.findById(userId)
         if (req.user.isAdmin === true) {
             const PRODUCT = await productModel.find({ stock: 0 });
+            const products = await productModel.find();
+            const users = await userModel.find();
+            const orders = await orderModel.find();
+            const orderCount = orders.length
+            let todayOrderCount = 0;
+            const currDate = dateTime.toISOString().slice(0, 10);
+            console.log(orders);
+            for (let i = 0; i < orderCount; i++) {
+                let date = orders[i].date.toISOString().slice(0, 10);
+                console.log(date);
+                if (date == currDate) {
+                    ++todayOrderCount;
+                }
+            }
+
             let Product = 0
             if (PRODUCT.length != 0) {
                 Product = 1;
             }
-            res.render("admin/index", { user: user, Product })
+            res.render("admin/index", { user: user, Product, products, users, orders, orderCount, todayOrderCount })
         }
         else {
             let count = 0;
