@@ -1,25 +1,25 @@
 <%- include('header-layout.ejs') %>
 
     <!-- SECTION -->
-    <div class="section">
+    <div class="section" style="min-height: 100vh;">
         <% if(data !=null) {%>
             <!-- container -->
             <div class="container">
                 <!-- row -->
                 <div class="row">
 
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <div>
                             <%for (let wishList of data.products){%>
 
                                 <div class="product">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="product-img" style="width: 200px;">
-                                                <img src="/public/img/product_img/<%= wishList.imgUrl[0] %>" alt="">
+                                        <div class="col-md-12 text-center">
+                                            <div>
+                                                <img width="300rem" src="/public/img/product_img/<%= wishList.imgUrl[0] %>" alt="">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="product-body">
                                                 <p class="product-category">
                                                     <%= wishList.category %>

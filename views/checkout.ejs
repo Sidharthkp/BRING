@@ -1,7 +1,7 @@
 <%- include('header-layout.ejs') %>
 
     <!-- SECTION -->
-    <div class="section">
+    <div class="section" style="min-height: 100vh;">
         <!-- container -->
         <div class="container">
             <!-- row -->
@@ -13,19 +13,19 @@
                         <div class="section-title text-center">
                             <h3 class="title">Shiping address</h3>
                         </div>
-                        <div class="container" style="width: 50rem;">
+                        <div class="container" style="width: 35rem;">
                             <form>
                                 <div class="caption">
                                     <div class="form-group">
                                         <input class="input" type="text" name="first_name"
-                                            value="<%= address[0].first_name %>">
+                                            placeholder="<%= address[0].first_name %>">
                                     </div>
                                     <div class="form-group">
                                         <input class="input" type="text" name="last_name"
-                                            value="<%= address[0].last_name %>">
+                                            placeholder="<%= address[0].last_name %>">
                                     </div>
                                     <div class="form-group">
-                                        <input class="input" type="email" name="email" value="<%= address[0].email %>">
+                                        <input class="input" type="email" name="email" placeholder="<%= address[0].email %>">
                                         <small id="emailHelp" class="form-text text-muted">We'll never share your email
                                             with
                                             anyone
@@ -33,27 +33,27 @@
                                     </div>
                                     <div class="form-group">
                                         <input class="input" type="text" name="address"
-                                            value="<%= address[0].address %>">
+                                            placeholder="<%= address[0].address %>">
                                     </div>
                                     <div class="form-group">
-                                        <input class="input" type="text" name="city" value="<%= address[0].city %>">
+                                        <input class="input" type="text" name="city" placeholder="<%= address[0].city %>">
                                     </div>
                                     <div class="form-group">
                                         <input class="input" type="text" name="district"
-                                            value="<%= address[0].district %>">
+                                            placeholder="<%= address[0].district %>">
                                     </div>
                                     <div class="form-group">
-                                        <input class="input" type="text" name="state" value="<%= address[0].state %>">
+                                        <input class="input" type="text" name="state" placeholder="<%= address[0].state %>">
                                     </div>
                                     <div class="form-group">
                                         <input class="input" type="text" name="country"
-                                            value="<%= address[0].country %>">
+                                            placeholder="<%= address[0].country %>">
                                     </div>
                                     <div class="form-group">
-                                        <input class="input" type="text" name="zip" value="<%= address[0].zip %>">
+                                        <input class="input" type="text" name="zip" placeholder="<%= address[0].zip %>">
                                     </div>
                                     <div class="form-group">
-                                        <input class="input" type="tel" name="tel" value="<%= address[0].tel %>">
+                                        <input class="input" type="tel" name="tel" placeholder="<%= address[0].tel %>">
                                     </div>
                                 </div>
                             </form>
