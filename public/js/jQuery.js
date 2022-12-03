@@ -1,11 +1,3 @@
-$(document).ready(function (){
-    $(".myNavLink").each(function(){
-        if(this.href == window.location.href){
-            $(this).addClass("active");
-        }
-    })
-})
-
 $("#couponCode").submit((e) => {
     e.preventDefault();
     $.ajax({
