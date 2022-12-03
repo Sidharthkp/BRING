@@ -9,9 +9,9 @@ $("#couponCode").submit((e) => {
             if (response.token) {
                 window.location.href = `/validCoupon/${coupon}`;
             } else {
-                if(response.user){
+                if (response.user) {
                     alert("Coupen already taken")
-                }else{
+                } else {
                     alert('Coupon is invalid');
                 }
             }
@@ -94,22 +94,27 @@ function razorpayPayment(order) {
 
 $("#registering").submit((e) => {
     e.preventDefault();
-    alert("hello")
     $.ajax({
         url: "/signup",
         method: "post",
         data: $("#registering").serialize(),
         success: (response) => {
-            if (response.empty) {
+            if (response.empty == true) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Please fill all the fields!',
-                    footer: '<a href="">Why do I have this issue?</a>'
-                  })
-            } else {
-                alert("reached here")
+                })
+            } else if (response.match == true) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Passwords must match!',
+                })
             }
-        },
+            else if (response.users == true) {
+                Swal.fire('User already exists with same email')
+            }
+        }
     });
 });

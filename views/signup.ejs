@@ -32,8 +32,7 @@
                 <div class="form">
                     <form class="forms_form" id="registering">
                         <label for="email">Name</label>
-                        <input type="text" placeholder="Enter your name" id="name" name="name"
-                            pattern="^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$">
+                        <input type="text" placeholder="Enter your name" id="name" name="name">
                         <label for="email">Email</label>
                         <input type="email" placeholder="Enter your email" id="email" name="email"
                             pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$">
@@ -66,10 +65,16 @@
     <script>
         function myFunction() {
             var x = document.getElementById("password");
+            var y = document.getElementById("confirm");
             if (x.type === "password") {
                 x.type = "text";
             } else {
                 x.type = "password";
+            }
+            if (y.type === "password") {
+                y.type = "text";
+            } else {
+                y.type = "password";
             }
         }
     </script>

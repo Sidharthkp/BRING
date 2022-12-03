@@ -51,18 +51,12 @@ const signupUser = (req, res) => {
         } else {
             //Confirm Passwords
             if (password !== confirm) {
-                console.log("Passwords must match");
+                res.json({ match: true })
             } else {
                 //Validation
                 User.findOne({ email: email, verified: true }).then((user) => {
                     if (user) {
-                        console.log("email exists");
-                        res.render("login", {
-                            name,
-                            email,
-                            password,
-                            confirm,
-                        });
+                        res.json({users: true});
                     } else {
                         //Validation
                         newUser = new User({
@@ -74,11 +68,7 @@ const signupUser = (req, res) => {
                         //Password Hashing
                         bcrypt.genSalt(10, (err, salt) =>
                             bcrypt.hash(newUser.password, salt, (err, hash) => {
-                                // const email = req.body.email;
-                                console.log(email);
                                 if (err) throw err;
-                                // let User = userModel.findOne({ _id: userId });
-                                console.log(User);
                                 newUser.password = hash;
                                 var mailOptions = {
                                     to: newUser.email,
