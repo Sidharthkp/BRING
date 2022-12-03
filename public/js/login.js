@@ -1,27 +1,51 @@
-const signupButton = document.getElementById("signup-button"),
-  loginButton = document.getElementById("login-button"),
-  userForms = document.getElementById("user_options-forms");
 
-/**
- * Add event listener to the "Sign Up" button
- */
-signupButton.addEventListener(
-  "click",
-  ()=>{
-    userForms.classList.remove("bounceRight");
-    userForms.classList.add("bounceLeft");
-  },
-  false
-);
+var current = null;
 
-/**
- * Add event listener to the "Login" button
- */
-loginButton.addEventListener(
-  "click",
-  () => {
-    userForms.classList.remove("bounceLeft");
-    userForms.classList.add("bounceRight");
-  },
-  false
-);
+document.querySelector('#email').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: 0,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '240 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+document.querySelector('#password').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: -336,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '240 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+document.querySelector('#submit').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: -730,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '530 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
