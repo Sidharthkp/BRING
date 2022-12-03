@@ -47,61 +47,63 @@ const signupUser = (req, res) => {
         const { name, email, password, confirm } = req.body;
         if (!name || !email || !password || !confirm) {
             console.log("Fill empty fields");
-        }
-        //Confirm Passwords
-        if (password !== confirm) {
-            console.log("Passwords must match");
+            res.json({ empty: true })
         } else {
-            //Validation
-            User.findOne({ email: email, verified: true }).then((user) => {
-                if (user) {
-                    console.log("email exists");
-                    res.render("login", {
-                        name,
-                        email,
-                        password,
-                        confirm,
-                    });
-                } else {
-                    //Validation
-                    newUser = new User({
-                        name,
-                        email,
-                        password,
-                    });
-                    Email = email;
-                    //Password Hashing
-                    bcrypt.genSalt(10, (err, salt) =>
-                        bcrypt.hash(newUser.password, salt, (err, hash) => {
-                            // const email = req.body.email;
-                            console.log(email);
-                            if (err) throw err;
-                            // let User = userModel.findOne({ _id: userId });
-                            console.log(User);
-                            newUser.password = hash;
-                            var mailOptions = {
-                                to: newUser.email,
-                                subject: "Otp for registration is: ",
-                                html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
-                            };
+            //Confirm Passwords
+            if (password !== confirm) {
+                console.log("Passwords must match");
+            } else {
+                //Validation
+                User.findOne({ email: email, verified: true }).then((user) => {
+                    if (user) {
+                        console.log("email exists");
+                        res.render("login", {
+                            name,
+                            email,
+                            password,
+                            confirm,
+                        });
+                    } else {
+                        //Validation
+                        newUser = new User({
+                            name,
+                            email,
+                            password,
+                        });
+                        Email = email;
+                        //Password Hashing
+                        bcrypt.genSalt(10, (err, salt) =>
+                            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                                // const email = req.body.email;
+                                console.log(email);
+                                if (err) throw err;
+                                // let User = userModel.findOne({ _id: userId });
+                                console.log(User);
+                                newUser.password = hash;
+                                var mailOptions = {
+                                    to: newUser.email,
+                                    subject: "Otp for registration is: ",
+                                    html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
+                                };
 
-                            transporter.sendMail(mailOptions, (error, info) => {
-                                if (error) {
-                                    return console.log(error);
-                                }
-                                console.log('Message sent: %s', info.messageId);
-                                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                            });
-                            newUser
-                                .save()
-                                .then(
-                                    res.render('otp', { newUser, msg: "Otp has been sent", colour: "green" })
-                                )
-                                .catch((err) => res.render("404"))
-                        })
-                    );
-                }
-            });
+                                transporter.sendMail(mailOptions, (error, info) => {
+                                    if (error) {
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: %s', info.messageId);
+                                    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                                });
+                                newUser
+                                    .save()
+                                    .then(
+                                        res.render('otp', { newUser, msg: "Otp has been sent", colour: "green" })
+                                    )
+                                    .catch((err) => res.render("404"))
+                            })
+                        );
+                    }
+                });
+            }
         }
     } catch {
         res.render("404")

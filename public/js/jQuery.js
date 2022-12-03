@@ -88,3 +88,28 @@ function razorpayPayment(order) {
     var rzp1 = new Razorpay(options);
     rzp1.open();
 }
+
+
+//signup
+
+$("#registering").submit((e) => {
+    e.preventDefault();
+    alert("hello")
+    $.ajax({
+        url: "/signup",
+        method: "post",
+        data: $("#registering").serialize(),
+        success: (response) => {
+            if (response.empty) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill all the fields!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                  })
+            } else {
+                alert("reached here")
+            }
+        },
+    });
+});
