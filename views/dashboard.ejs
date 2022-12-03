@@ -261,8 +261,8 @@
                                                     </div> -->
                                                             <div class="product-btns">
                                                                 <% if(user){ %>
-                                                                    <% let flag=false; if(wishList.products){%>
-                                                                        <%for(let pro of wishList.products){%>
+                                                                    <% let flag=false; if(wishList?.products){%>
+                                                                        <%for(let pro of wishList?.products){%>
 
                                                                             <% if(pro.toString()==Product._id.toString()){
                                                                                 flag=true;%>

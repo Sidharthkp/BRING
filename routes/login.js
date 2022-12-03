@@ -1,12 +1,14 @@
 const express = require('express');
 
-const { loginView, signupUser, logout, verifyOtp, resendOtp, loginUser, loginAdminUser } = require('../controllers/loginController');
+const { loginView, signupUser, logout, verifyOtp, resendOtp, loginUser, loginAdminUser, signupView } = require('../controllers/loginController');
 
 const { allowIf, protectRoute, isActive, isVerified } = require("../auth/protect");
 
 const router = express.Router();
 
 router.get('/login', allowIf, loginView);
+
+router.get('/signupPage', allowIf, signupView);
 
 router.get('/logout', logout);
 
