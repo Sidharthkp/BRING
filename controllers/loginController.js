@@ -46,22 +46,16 @@ const signupUser = (req, res) => {
     try {
         const { name, email, password, confirm } = req.body;
         if (!name || !email || !password || !confirm) {
-            console.log("Fill empty fields");
+            res.json({ empty: true });
         }
         //Confirm Passwords
         if (password !== confirm) {
-            console.log("Passwords must match");
+            res.json({ match: true });
         } else {
             //Validation
             User.findOne({ email: email, verified: true }).then((user) => {
                 if (user) {
-                    console.log("email exists");
-                    res.render("login", {
-                        name,
-                        email,
-                        password,
-                        confirm,
-                    });
+                    res.json({ users: true });
                 } else {
                     //Validation
                     newUser = new User({

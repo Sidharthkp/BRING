@@ -15,7 +15,7 @@
 
 <body>
     <div class="bringDiv" style="position: absolute; z-index: 2;">
-        
+
     </div>
 
 
@@ -25,10 +25,9 @@
     <div class="page">
         <div class="container">
             <div class="left">
-                <div class="login"><a href="/"
-                    class="bring">
-                    BRING
-                </a></div>
+                <div class="login"><a href="/" class="bring">
+                        BRING
+                    </a></div>
                 <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read
                 </div>
             </div>
@@ -45,13 +44,12 @@
                         d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
                 </svg> -->
                 <div class="form">
-                    <form class="forms_form" action="/signup" method="post">
+                    <form class="forms_form" id="registering">
                         <label for="email">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name goes here"
-                            required>
+                        <input type="text" id="name" name="name" placeholder="Your name goes here">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="Your email goes here"
-                            pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$" required>
+                            pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$">
                         <label for="password">Password</label>
                         <input type="password" id="password" placeholder="Your password goes here"
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
@@ -69,7 +67,8 @@
 
                     </form>
                     <div class="eula">
-                        Already have an account? <a href="/login" style="text-decoration: none; color: #ff0000;">Login</a>
+                        Already have an account? <a href="/login"
+                            style="text-decoration: none; color: #ff0000;">Login</a>
                     </div>
                 </div>
             </div>
@@ -88,8 +87,14 @@
         }
     </script>
     <script src="/public/js/login.js"></script>
-    <script src="/public/js/anime.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="/public/js/jQuery.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

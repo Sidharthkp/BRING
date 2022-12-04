@@ -114,8 +114,6 @@ $("#registering").submit((e) => {
             }
             else if (response.users == true) {
                 Swal.fire('User already exists with same email')
-            } else {
-                windows.location.href = "/"
             }
         }
     });
