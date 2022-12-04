@@ -134,25 +134,3 @@ $("#registering").submit((e) => {
         }
     });
 });
-
-
-function verification(newUser) {
-    alert(newUser)
-    const OTP = document.getElementsByName("otp");
-    console.log(OTP);
-    $.ajax({
-        url: "/verify/" + newUser + "/" + OTP,
-        method: "post",
-        success: (response) => {
-            if (response.incorrect == true) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Incorrect otp entered!',
-                })
-            } else if (response.login == true) {
-                window.location.href = "/login"
-            }
-        }
-    });
-}
