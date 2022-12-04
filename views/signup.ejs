@@ -25,11 +25,14 @@
     <div class="page">
         <div class="container">
             <div class="left">
-                <div class="login">Signup</div>
+                <div class="login"><a href="/"
+                    class="bring">
+                    BRING
+                </a></div>
                 <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read
                 </div>
             </div>
-            <div class="right">
+            <div class="right" style="min-height: 500px;">
                 <!-- <svg viewBox="0 0 320 300">
                     <defs>
                         <linearGradient inkscape:collect="always" id="linearGradient" x1="13" y1="193.49992" x2="307"
@@ -44,17 +47,17 @@
                 <div class="form">
                     <form class="forms_form" action="/signup" method="post">
                         <label for="email">Name</label>
-                        <input type="text" id="name" name="name"
+                        <input type="text" id="name" name="name" placeholder="Your name goes here"
                             required>
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email"
+                        <input type="email" id="email" name="email" placeholder="Your email goes here"
                             pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$" required>
                         <label for="password">Password</label>
-                        <input type="password" id="password"
+                        <input type="password" id="password" placeholder="Your password goes here"
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
                             name="password">
                         <label for="password">Re-enter Password</label>
-                        <input type="password" id="confirm" name="confirm"
+                        <input type="password" id="confirm" name="confirm" placeholder="Confirm your password"
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$">
                         <div style="position: absolute; margin-top: 12px;">
                             <input type="checkbox" onclick="myFunction()" style="width: 16px;">
