@@ -15,10 +15,7 @@
 
 <body>
     <div class="bringDiv" style="position: absolute; z-index: 2;">
-        <a href="/"
-            class="bring">
-            BRING
-        </a>
+        
     </div>
 
 
@@ -28,7 +25,10 @@
     <div class="page">
         <div class="container">
             <div class="left">
-                <div class="login">OTP</div>
+                <div class="login"><a href="/"
+                    class="bring">
+                    BRING
+                </a></div>
                 <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read
                 </div>
             </div>
@@ -55,6 +55,8 @@
                     <input type="submit" id="submit" value="Submit">
                     
                     </form>
+                    <form class="forms_form" action="/resend" method="post"><input type="submit" id="submit" value="Resend"></form>
+
                 </div>
             </div>
         </div>

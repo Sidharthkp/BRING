@@ -160,12 +160,6 @@ const loginAdminUser = async (req, res) => {
                     user: req.user.id
                 });
                 await newCart.save()
-                    .then(() => {
-
-                    })
-                    .catch(() => {
-                        res.render("404")
-                    })
             }
             const wish = await wishListModel.findOne({ user: userId });
             if (!wish) {
@@ -173,14 +167,8 @@ const loginAdminUser = async (req, res) => {
                     user: req.user.id
                 });
                 await newWishList.save()
-                    .then(() => {
-
-                    })
-                    .catch(() => {
-                        res.render("404")
-                    })
             }
-            res.render("dashboard", { products, categories, wishList, count, counts, banners, user: users });
+            res.render("dashboard", { products, categories, wish, count, counts, banners, user: users });
         }
     } catch {
         res.render("404")
