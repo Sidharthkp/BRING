@@ -68,10 +68,8 @@ const signupUser = (req, res) => {
                     bcrypt.genSalt(10, (err, salt) =>
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             // const email = req.body.email;
-                            console.log(email);
                             if (err) throw err;
                             // let User = userModel.findOne({ _id: userId });
-                            console.log(User);
                             newUser.password = hash;
                             var mailOptions = {
                                 to: newUser.email,
@@ -81,16 +79,17 @@ const signupUser = (req, res) => {
 
                             transporter.sendMail(mailOptions, (error, info) => {
                                 if (error) {
-                                    return console.log(error);
+                                    res.json({ wrong: true });
                                 }
                                 console.log('Message sent: %s', info.messageId);
                                 console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                             });
                             newUser
                                 .save()
-                                .then(
-                                    res.render('otp', { newUser, msg: "Otp has been sent", colour: "green" })
-                                )
+                                .then(() => {
+                                    const users = newUser.id;
+                                    res.json({ keys: true, users })
+                                })
                                 .catch((err) => res.render("404"))
                         })
                     );
@@ -101,6 +100,15 @@ const signupUser = (req, res) => {
         res.render("404")
     }
 };
+
+const otpView = (req, res) => {
+    try {
+        const newUser = req.params.id;
+        res.render("otp", { newUser })
+    } catch {
+        res.render("404")
+    }
+}
 
 const loginAdminUser = async (req, res) => {
     try {
@@ -181,7 +189,7 @@ const verifyOtp = async (req, res) => {
             res.redirect('/login');
         }
         else {
-            res.render('otp', { newUser, msg: "Incorrect otp entered", colour: "red" });
+            console.log("OTp incorrect");
         }
     } catch {
         res.render("404")
@@ -247,4 +255,5 @@ module.exports = {
     verifyOtp,
     resendOtp,
     loginAdminUser,
+    otpView
 };

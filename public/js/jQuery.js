@@ -99,6 +99,7 @@ $("#registering").submit((e) => {
         method: "post",
         data: $("#registering").serialize(),
         success: (response) => {
+            const newUser = response.users;
             if (response.empty == true) {
                 Swal.fire({
                     icon: 'error',
@@ -111,10 +112,47 @@ $("#registering").submit((e) => {
                     title: 'Oops...',
                     text: 'Passwords must match!',
                 })
-            }
-            else if (response.users == true) {
+            } else if (response.users == true) {
                 Swal.fire('User already exists with same email')
+            } else if (response.wrong == true) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            } else if (response.keys == true) {
+                window.location.href = `/otp/${newUser}`;
+            } else if (response.incorrect == true) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Incorrect otp entered!',
+                })
+            } else if (response.login == true) {
+                window.location.href = "/login"
             }
         }
     });
 });
+
+
+function verification(newUser) {
+    alert(newUser)
+    const OTP = document.getElementsByName("otp");
+    console.log(OTP);
+    $.ajax({
+        url: "/verify/" + newUser + "/" + OTP,
+        method: "post",
+        success: (response) => {
+            if (response.incorrect == true) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Incorrect otp entered!',
+                })
+            } else if (response.login == true) {
+                window.location.href = "/login"
+            }
+        }
+    });
+}

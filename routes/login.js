@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { loginView, signupUser, logout, verifyOtp, resendOtp, loginUser, loginAdminUser, signupView } = require('../controllers/loginController');
+const { loginView, signupUser, logout, verifyOtp, resendOtp, loginUser, loginAdminUser, signupView, otpView } = require('../controllers/loginController');
 
 const { allowIf, protectRoute, isActive, isVerified } = require("../auth/protect");
 
@@ -11,6 +11,8 @@ router.get('/login', allowIf, loginView);
 router.get('/signupPage', allowIf, signupView);
 
 router.get('/logout', logout);
+
+router.get('/otp/:id', otpView);
 
 router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
 
