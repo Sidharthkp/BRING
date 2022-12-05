@@ -67,8 +67,9 @@
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                 </div> -->
-                                                                                <% if(prod.status!="Canceled" ){%>
+                                                                                <% if(prod.status!="Canceled"){%>
                                                                                     <div class="product-btns">
+                                                                                        <%if(prod.status!="Delivered"){%>
                                                                                         <button
                                                                                             class="add-to-wishlist"><a
                                                                                                 href="/canceled/<%= prod.productId._id %>/<%= history._id %>"><i
@@ -76,6 +77,7 @@
                                                                                                     class="tooltipp">cancel
                                                                                                     the
                                                                                                     order</span></a></button>
+                                                                                                    <%}%>
                                                                                         <button
                                                                                             class="add-to-wishlist"><a
                                                                                                 href="/invoice/<%= history._id %>"><i

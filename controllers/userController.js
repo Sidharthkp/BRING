@@ -440,7 +440,7 @@ const addToWishList = async (req, res) => {
                 })
         }
         let check = wishList.products.some(item => item._id.toString() === productId.toString());
-        if(check){
+        if (check) {
             const newWishList = await wishListModel.findOneAndUpdate({
                 user: req.user.id
             },
@@ -451,13 +451,13 @@ const addToWishList = async (req, res) => {
                 }
             );
             await newWishList.save()
-            .then(() => {
-                res.redirect("back");
-            })
-            .catch(() => {
-                res.render("404")
-            })
-        }else{
+                .then(() => {
+                    res.redirect("back");
+                })
+                .catch(() => {
+                    res.render("404")
+                })
+        } else {
             const newWishList = await wishListModel.findOneAndUpdate({
                 user: req.user.id
             },
@@ -468,12 +468,12 @@ const addToWishList = async (req, res) => {
                 }
             );
             await newWishList.save()
-            .then(() => {
-                res.redirect("back");
-            })
-            .catch(() => {
-                res.render("404")
-            })
+                .then(() => {
+                    res.redirect("back");
+                })
+                .catch(() => {
+                    res.render("404")
+                })
         }
     } catch {
         res.render("404")
@@ -842,6 +842,9 @@ const cancelOrder = async (req, res) => {
         const aw = await orderModel.findOneAndUpdate(
             { "products.productId": params, user: userId, _id: req.params.orderId },
             { $set: { 'products.$.status': "Canceled" } })
+        const product = await productModel.findOne({ _id: params });
+        let stock = product.stock + 1
+        await productModel.findOneAndUpdate({ _id: params }, { $set: { stock } })
         aw.save()
         res.redirect('back')
     } catch (err) {
