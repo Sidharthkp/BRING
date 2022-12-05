@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { home, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess, thankyou, orderSuccessCOD, addToCartFromWishlist, invoice, checkCode, validCoupon, removeCoupon, newAddress } = require('../controllers/userController');
+const { home, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess, thankyou, orderSuccessCOD, addToCartFromWishlist, invoice, checkCode, validCoupon, removeCoupon, newAddress, addToWishListFromCart } = require('../controllers/userController');
 
 const { protectRoute, allowIf } = require("../auth/protect");
 
@@ -29,6 +29,8 @@ router.get("/addToCart/:id/:quantity/:price", protectRoute, addToCart);
 router.get("/addToCartFromWishlist/:id/:quantity/:price", protectRoute, addToCartFromWishlist);
 
 router.get("/addToWishList/:id", protectRoute, addToWishList);
+
+router.get("/addToWishListFromCart/:id", protectRoute, addToWishListFromCart);
 
 router.get("/deleteCart/:id", protectRoute, deleteCart);
 

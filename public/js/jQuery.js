@@ -126,3 +126,23 @@ $("#registering").submit((e) => {
         }
     });
 });
+
+
+function deleteCart(prodId){
+    Swal.fire({
+        title: 'Are you sure ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Add to wishlist',
+        denyButtonText: `Delete`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire('Moved to wishlist!', '', 'success')
+          window.location.href = `/addToWishListFromCart/${prodId}`;
+        } else if (result.isDenied) {
+          Swal.fire('Deleted', '', 'info')
+          window.location.href = `/deleteCart/${prodId}`;
+        }
+      })
+}

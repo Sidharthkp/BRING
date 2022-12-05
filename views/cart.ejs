@@ -95,10 +95,9 @@
                                                                                         <%}%>
                                                                                             <button
                                                                                                 class="add-to-compare"><a
-                                                                                                    href="/deleteCart/<%= data.productId._id %>"><i
+                                                                                                onclick="deleteCart('<%= data.productId._id %>')"><i
                                                                                                         class="fa-solid fa-trash-can"></i><span
-                                                                                                        class="tooltipp">add
-                                                                                                        to
+                                                                                                        class="tooltipp">
                                                                                                         delete</span></a></button>
                                                                                             <button class="quick-view"
                                                                                                 type=""><a
@@ -170,6 +169,6 @@
                 <%}%>
     </div>
     <!-- /SECTION -->
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <%- include('footer-layout.ejs') %>

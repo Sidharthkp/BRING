@@ -481,6 +481,66 @@ const addToWishList = async (req, res) => {
 
 }
 
+
+const addToWishListFromCart = async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const userId = req.user.id;
+        const wishList = await wishListModel.findOne({ user: userId });
+        if (!wishList) {
+            const newWishList = new wishListModel({
+                user: req.user.id
+            });
+            await newWishList.save()
+                .then(() => {
+                    res.redirect(`/deleteCart/${productId}`);
+                })
+                .catch(() => {
+                    res.render("404")
+                })
+        }
+        let check = wishList.products.some(item => item._id.toString() === productId.toString());
+        if (check) {
+            const newWishList = await wishListModel.findOneAndUpdate({
+                user: req.user.id
+            },
+                {
+                    $pull: {
+                        products: productId,
+                    }
+                }
+            );
+            await newWishList.save()
+                .then(() => {
+                    res.redirect(`/deleteCart/${productId}`);
+                })
+                .catch(() => {
+                    res.render("404")
+                })
+        } else {
+            const newWishList = await wishListModel.findOneAndUpdate({
+                user: req.user.id
+            },
+                {
+                    $push: {
+                        products: productId,
+                    }
+                }
+            );
+            await newWishList.save()
+                .then(() => {
+                    res.redirect(`/deleteCart/${productId}`);
+                })
+                .catch(() => {
+                    res.render("404")
+                })
+        }
+    } catch {
+        res.render("404")
+    }
+
+}
+
 const addToCartFromWishlist = async (req, res) => {
     try {
         const productId = req.params.id;
@@ -955,5 +1015,6 @@ module.exports = {
     addAddress,
     orderSuccess,
     addToCartFromWishlist,
-    newAddress
+    newAddress,
+    addToWishListFromCart,
 }
