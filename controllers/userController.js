@@ -690,35 +690,53 @@ const orderSuccess = async (req, res) => {
         const Address = await addressModel.findOne({ user: userId })
         const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
         const products = viewcart.products
-        const newOrderList = new orderModel({
-            user: userId,
-            products: products,
-            address: Address.id,
-            total: viewcart.total,
-            payment_method: "Razorpay",
-            payment_status: "Paid",
-            grandTotal: viewcart.grandTotal
-        });
+        let PRO
+        let flag = 1;
         for (let product of products) {
             let id = product.productId
-            let stock = product.quantity * -1
-            await productModel.updateOne({ _id: id }, { $inc: { stock } })
+            const pro = await productModel.findOne({ _id: id });
+            PRO = pro.name;
+            if (product.quantity > pro.stock) {
+                flag = 0
+                console.log("NO STOCK");
+                break;
+            }
         }
-        await newOrderList.save()
-            .then(async () => {
-                const cart = await cartModel.findOne({ user: userId })
-                cart.total = cart.grandTotal
-                cart.save().then(async () => {
-                    await cartModel.deleteOne({ user: userId })
-                    res.redirect("/thankyou")
-                }).catch(() => {
-                    console.log("Errors");
-                    res.redirect("back");
+        if (flag == 1) {
+            const newOrderList = new orderModel({
+                user: userId,
+                products: products,
+                address: Address.id,
+                total: viewcart.total,
+                payment_method: "Razorpay",
+                payment_status: "Paid",
+                grandTotal: viewcart.grandTotal
+            });
+            for (let product of products) {
+                let id = product.productId
+                let stock = product.quantity * -1
+                await productModel.updateOne({ _id: id }, { $inc: { stock } })
+            }
+            await newOrderList.save()
+                .then(async () => {
+                    const cart = await cartModel.findOne({ user: userId })
+                    cart.total = cart.grandTotal
+                    cart.save().then(async () => {
+                        await cartModel.deleteOne({ user: userId })
+                        res.redirect("/thankyou")
+                    }).catch(() => {
+                        console.log("Errors");
+                        res.redirect("back");
+                    })
                 })
-            })
-            .catch(() => {
-                res.render("404")
-            })
+                .catch(() => {
+                    res.render("404")
+                })
+        }
+        else {
+            console.log("Please remove this item " + PRO + " or reduce the quantity, since it is out of stock")
+            res.redirect("/cart");
+        }
     } catch {
         res.render("404")
     }
