@@ -122,14 +122,6 @@ $("#registering").submit((e) => {
                 })
             } else if (response.keys == true) {
                 window.location.href = `/otp/${newUser}`;
-            } else if (response.incorrect == true) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Incorrect otp entered!',
-                })
-            } else if (response.login == true) {
-                window.location.href = "/login"
             }
         }
     });
