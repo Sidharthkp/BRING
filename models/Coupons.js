@@ -20,7 +20,8 @@ const CouponSchema = new mongoose.Schema({
         require: true
     },
     status: {
-        type: String
+        type: String,
+        default: "Unblocked"
     },
     userId: [ObjectId]
 });
