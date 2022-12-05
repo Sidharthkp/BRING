@@ -7,13 +7,38 @@ $("#couponCode").submit((e) => {
         success: (response) => {
             const coupon = response.coupon
             if (response.token) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Coupon added',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 window.location.href = `/validCoupon/${coupon}`;
+            } else if (response.user) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Coupon already taken!',
+                })
+            } else if (response.min) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Add more products to apply coupon!',
+                })
+            } else if (response.max) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Coupon limit exceeded!',
+                })
             } else {
-                if (response.user) {
-                    alert("Coupen already taken")
-                } else {
-                    alert('Coupon is invalid');
-                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Coupon!',
+                })
             }
         },
     });
@@ -128,21 +153,21 @@ $("#registering").submit((e) => {
 });
 
 
-function deleteCart(prodId){
+function deleteCart(prodId) {
     Swal.fire({
         title: 'Are you sure ?',
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Add to wishlist',
         denyButtonText: `Delete`,
-      }).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire('Moved to wishlist!', '', 'success')
-          window.location.href = `/addToWishListFromCart/${prodId}`;
+            Swal.fire('Moved to wishlist!', '', 'success')
+            window.location.href = `/addToWishListFromCart/${prodId}`;
         } else if (result.isDenied) {
-          Swal.fire('Deleted', '', 'info')
-          window.location.href = `/deleteCart/${prodId}`;
+            Swal.fire('Deleted', '', 'info')
+            window.location.href = `/deleteCart/${prodId}`;
         }
-      })
+    })
 }

@@ -23,6 +23,13 @@ const CouponSchema = new mongoose.Schema({
         type: String,
         default: "Unblocked"
     },
+    minLimit: {
+        type: Number
+    },
+    maxLimit: {
+        type: Number
+,
+    },
     userId: [ObjectId]
 });
 const Coupon = mongoose.model("Coupons", CouponSchema);

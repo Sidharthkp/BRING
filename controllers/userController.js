@@ -933,15 +933,26 @@ const checkCode = async (req, res) => {
         const userId = req.user.id
         const couponName = req.body.coupon;
         const couponData = await couponModel.findOne({ name: couponName });
+        const cartData = await cartModel.findOne({ user : userId });
+        const total = cartData.total;
         const coupon = couponData.id
+        console.log(couponData.minLimit+"++++++++++++++++++");
+        console.log(couponData.maxLimit+">>>>>>>>>>>>>>>>>");
+        console.log(total+"////////////////////");
         for (let user of couponData.userId) {
             if (user == userId) {
                 res.json({ user: true })
             }
         }
-        if (couponData && couponData.status == "Unblocked") {
+        
+        if (couponData && couponData.status == "Unblocked" && couponData.minLimit <= total && couponData.maxLimit >= total) {
             res.json({ token: true, coupon });
-        } else {
+        } else if (couponData.minLimit > total) {
+            res.json({ min: true })
+        } else if (couponData.maxLimit < total) {
+            res.json({ max: true })
+        }
+        else {
             res.json({ token: false });
         }
     } catch (err) {
