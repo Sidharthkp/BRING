@@ -16,11 +16,11 @@ router.get('/otp/:id', otpView);
 
 router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
 
+router.get('/verify/:id', verifyOtp);
+
 router.post('/signup', signupUser);
 
 router.post('/login', loginUser);
-
-router.get('/verify/:id', verifyOtp);
 
 router.post('/resend', resendOtp);
 
