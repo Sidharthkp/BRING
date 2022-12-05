@@ -20,7 +20,7 @@ router.post('/signup', signupUser);
 
 router.post('/login', loginUser);
 
-router.post('/verify/:id', verifyOtp);
+router.get('/verify/:id', verifyOtp);
 
 router.post('/resend', resendOtp);
 
