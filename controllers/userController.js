@@ -161,7 +161,7 @@ const addAddress2 = async (req, res) => {
         await userModel.findOneAndUpdate({ _id: userId }, { $push: { address: newAddress } })
         await newAddress.save()
             .then(async () => {
-                res.redirect('back');
+                res.redirect('/checkout');
             })
             .catch((err) => {
                 res.render("404")
