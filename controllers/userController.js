@@ -431,14 +431,11 @@ const selectAddress = async (req, res) => {
         const user = req.user.id;
         const addrs = req.body.category;
         const userAddress = await userModel.findOne({ _id: user }).populate("address");
-        console.log(addrs);
         const arr = userAddress.address;
         const fromIndex = parseInt(addrs);
         const toIndex = 0;
         const element = arr.splice(fromIndex, 1)[0];
-        console.log(element);
         arr.splice(toIndex, 0, element);
-        console.log(arr);
         await userAddress.save()
             .then(() => {
                 res.redirect("back")
