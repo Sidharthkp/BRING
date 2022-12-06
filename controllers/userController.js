@@ -398,7 +398,7 @@ const checkout = async (req, res) => {
             counts = wishList.products.length;
         }
         const addresses = await addressModel.findOne({ user: userId })
-        const user = await userModel.findById(userId)
+        const user = await userModel.findById(userId).populate("address")
         const userDetails = await userModel.findOne({ _id: userId }).populate("address")
         const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
         if (userDetails.address.length != 0) {

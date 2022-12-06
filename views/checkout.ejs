@@ -19,9 +19,9 @@
                                 <select name="category"
                                     class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
                                     <option selected>Select the address</option>
-                                    <% userDetails.address.forEach(function(Address) {%>
+                                    <% user.address.forEach(function(Address) {%>
                                         <option value="<%= address.indexOf('Address')%>">
-                                            Address-<%= userDetails.address.indexOf(Address)+1%>
+                                            Address-<%= user.address.indexOf(Address)+1%>
                                         </option>
                                         <%})%>
                                 </select>
