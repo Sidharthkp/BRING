@@ -139,6 +139,38 @@ const addAddress = async (req, res) => {
     }
 }
 
+const addAddress2 = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { first_name, last_name, email, address, city, district, state, country, zip, tel } = req.body;
+        const user = await userModel.findById(userId)
+        const newAddress = new addressModel({
+            user: user,
+            first_name,
+            last_name,
+            email,
+            address,
+            city,
+            district,
+            state,
+            country,
+            zip,
+            tel
+
+        });
+        await userModel.findOneAndUpdate({ _id: userId }, { $push: { address: newAddress } })
+        await newAddress.save()
+            .then(async () => {
+                res.redirect('back');
+            })
+            .catch((err) => {
+                res.render("404")
+            })
+    } catch {
+        res.render("404")
+    }
+}
+
 const newAddress = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -365,6 +397,7 @@ const checkout = async (req, res) => {
         if (wishList) {
             counts = wishList.products.length;
         }
+        const addresses = await addressModel.findOne({ user: userId })
         const user = await userModel.findById(userId)
         const userDetails = await userModel.findOne({ _id: userId }).populate("address")
         const viewcart = await cartModel.findOne({ user: userId }).populate("products.productId").exec()
@@ -379,7 +412,9 @@ const checkout = async (req, res) => {
                     count,
                     viewcart,
                     counts,
-                    address
+                    address,
+                    addresses,
+                    userDetails
                 });
             }
         } else {
@@ -933,18 +968,15 @@ const checkCode = async (req, res) => {
         const userId = req.user.id
         const couponName = req.body.coupon;
         const couponData = await couponModel.findOne({ name: couponName });
-        const cartData = await cartModel.findOne({ user : userId });
+        const cartData = await cartModel.findOne({ user: userId });
         const total = cartData.total;
         const coupon = couponData.id
-        console.log(couponData.minLimit+"++++++++++++++++++");
-        console.log(couponData.maxLimit+">>>>>>>>>>>>>>>>>");
-        console.log(total+"////////////////////");
         for (let user of couponData.userId) {
             if (user == userId) {
                 res.json({ user: true })
             }
         }
-        
+
         if (couponData && couponData.status == "Unblocked" && couponData.minLimit <= total && couponData.maxLimit >= total) {
             res.json({ token: true, coupon });
         } else if (couponData.minLimit > total) {
@@ -1028,4 +1060,5 @@ module.exports = {
     addToCartFromWishlist,
     newAddress,
     addToWishListFromCart,
+    addAddress2
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { home, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess, thankyou, orderSuccessCOD, addToCartFromWishlist, invoice, checkCode, validCoupon, removeCoupon, newAddress, addToWishListFromCart } = require('../controllers/userController');
+const { home, profile, editProfile, productLarge, cart, checkout, store, addToCart, deleteCart, wishList, addToWishList, deleteWishList, changePassword, addAddress, quantityIncrement, quantitydecrement, order, orderHistory, cancelOrder, verifyPayment, orderSuccess, thankyou, orderSuccessCOD, addToCartFromWishlist, invoice, checkCode, validCoupon, removeCoupon, newAddress, addToWishListFromCart, addAddress2 } = require('../controllers/userController');
 
 const { protectRoute, allowIf } = require("../auth/protect");
 
@@ -61,6 +61,8 @@ router.post("/verify-payment", protectRoute, verifyPayment);
 router.post("/checkCode", protectRoute, checkCode)
 
 router.post("/placeOrder", protectRoute, order);
+
+router.post("/addAddress2", protectRoute, addAddress2);
 
 router.post("/address/:id", protectRoute, addAddress);
 
