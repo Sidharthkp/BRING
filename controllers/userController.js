@@ -426,6 +426,39 @@ const checkout = async (req, res) => {
     }
 }
 
+const selectAddress = async (req, res) => {
+    try {
+        const user = req.user.id;
+        const addrs = req.body.category;
+        const userAddress = await userModel.findOne({ _id: user }).populate("address");
+        const moveEle = userAddress.address[Number(addrs)];
+        const moveToIndx = 0
+        while (moveEle < 0) {
+            moveEle += userAddress.address.length;
+        }
+        while (moveToIndx < 0) {
+            moveToIndx = moveToIndx + userAddress.address.length;
+        }
+        if (moveToIndx >= userAddress.address.length) {
+            var un = moveToIndx - userAddress.address.length + 1;
+            while (un--) {
+                userAddress.address.push(undefined);
+
+            }
+        }
+        userAddress.address.splice(moveToIndx, 0, userAddress.address.splice(moveEle, 1));
+        await userAddress.save()
+            .then(() => {
+                res.redirect("back")
+            })
+            .catch((err) => {
+                res.send(err);
+            })
+    } catch {
+        res.render("404");
+    }
+}
+
 const wishList = async (req, res) => {
     try {
         const sort = { date: -1 }
@@ -1060,5 +1093,6 @@ module.exports = {
     addToCartFromWishlist,
     newAddress,
     addToWishListFromCart,
-    addAddress2
+    addAddress2,
+    selectAddress
 }

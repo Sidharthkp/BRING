@@ -18,10 +18,9 @@
                                 <label for="lang">Address</label>
                                 <select name="category"
                                     class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
-                                    <option selected>Select the address</option>
                                     <% user.address.forEach(function(Address) {%>
-                                        <option value="<%= address.indexOf('Address')%>">
-                                            Address-<%= user.address.indexOf(Address)+1%>
+                                        <option>
+                                            <%= user.address.indexOf(Address)%>
                                         </option>
                                         <%})%>
                                 </select>
