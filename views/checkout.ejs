@@ -15,7 +15,7 @@
                         </div>
                         <div class="container" style="width: 40rem;">
                             <form action="/selectAddress" method="post">
-                                <label for="lang">Address</label>
+                                <label for="lang">Select address</label>
                                 <select name="category"
                                     class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
                                     <% user.address.forEach(function(Address) {%>
@@ -24,51 +24,57 @@
                                         </option>
                                         <%})%>
                                 </select>
-                                <input type="submit" value="Submit" />
+                                <input class="btn btn-danger" type="submit" value="Submit" />
                             </form>
                             <form>
                                 <div class="caption">
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="first_name"
+                                        <label for="">First name:</label>
+                                        <input readonly class="input" type="text" name="first_name"
                                             placeholder="<%= address[0].first_name %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="last_name"
+                                        <label for="">Last name:</label>
+                                        <input readonly class="input" type="text" name="last_name"
                                             placeholder="<%= address[0].last_name %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="email" name="email"
+                                        <label for="">Email:</label>
+                                        <input readonly class="input" type="email" name="email"
                                             placeholder="<%= address[0].email %>">
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email
-                                            with
-                                            anyone
-                                            else.</small>
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="address"
+                                        <label for="">House No:</label>
+                                        <input readonly class="input" type="text" name="address"
                                             placeholder="<%= address[0].address %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="city"
+                                        <label for="">City:</label>
+                                        <input readonly class="input" type="text" name="city"
                                             placeholder="<%= address[0].city %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="district"
+                                        <label for="">District:</label>
+                                        <input readonly class="input" type="text" name="district"
                                             placeholder="<%= address[0].district %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="state"
+                                        <label for="">State:</label>
+                                        <input readonly class="input" type="text" name="state"
                                             placeholder="<%= address[0].state %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="country"
+                                        <label for="">Country:</label>
+                                        <input readonly class="input" type="text" name="country"
                                             placeholder="<%= address[0].country %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="text" name="zip" placeholder="<%= address[0].zip %>">
+                                        <label for="">Pin Code:</label>
+                                        <input readonly class="input" type="text" name="zip" placeholder="<%= address[0].zip %>">
                                     </div>
                                     <div class="form-group">
-                                        <input readonly style="border: none;" class="input" type="tel" name="tel" placeholder="<%= address[0].tel %>">
+                                        <label for="">Phone number:</label>
+                                        <input readonly class="input" type="tel" name="tel" placeholder="<%= address[0].tel %>">
                                     </div>
                                 </div>
                             </form>
