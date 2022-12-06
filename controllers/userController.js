@@ -431,22 +431,14 @@ const selectAddress = async (req, res) => {
         const user = req.user.id;
         const addrs = req.body.category;
         const userAddress = await userModel.findOne({ _id: user }).populate("address");
-        const moveEle = userAddress.address[Number(addrs)];
-        const moveToIndx = 0
-        while (moveEle < 0) {
-            moveEle += userAddress.address.length;
-        }
-        while (moveToIndx < 0) {
-            moveToIndx = moveToIndx + userAddress.address.length;
-        }
-        if (moveToIndx >= userAddress.address.length) {
-            var un = moveToIndx - userAddress.address.length + 1;
-            while (un--) {
-                userAddress.address.push(undefined);
-
-            }
-        }
-        userAddress.address.splice(moveToIndx, 0, userAddress.address.splice(moveEle, 1));
+        console.log(addrs);
+        const arr = userAddress.address;
+        const fromIndex = parseInt(addrs);
+        const toIndex = 0;
+        const element = arr.splice(fromIndex, 1)[0];
+        console.log(element);
+        arr.splice(toIndex, 0, element);
+        console.log(arr);
         await userAddress.save()
             .then(() => {
                 res.redirect("back")
