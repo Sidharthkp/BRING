@@ -166,7 +166,8 @@ const addAddress2 = async (req, res) => {
             .catch((err) => {
                 res.render("404")
             })
-    } catch {
+    } catch (err) {
+        console.log(err);
         res.render("404")
     }
 }
