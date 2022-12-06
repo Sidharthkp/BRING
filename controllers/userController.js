@@ -438,7 +438,7 @@ const selectAddress = async (req, res) => {
         arr.splice(toIndex, 0, element);
         await userAddress.save()
             .then(() => {
-                res.redirect("back")
+                res.redirect("/checkout")
             })
             .catch((err) => {
                 res.send(err);
