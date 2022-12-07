@@ -33,8 +33,8 @@ let transporter = nodemailer.createTransport({
     service: "Gmail",
 
     auth: {
-        user: "bringecommercewebsite@gmail.com",
-        pass: "psqyyzhcfzmbakxu",
+        user: process.env.USER,
+        pass: process.env.PASS,
     }
 
 });
