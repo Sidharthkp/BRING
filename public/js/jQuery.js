@@ -71,7 +71,7 @@ function razorpayPayment(order) {
         currency: "INR",
         name: "BRING",
         description: "Test Transaction",
-        image: "https://i.pinimg.com/736x/e3/46/35/e34635d7e861c21b9b9c8513ea0780c1.jpg",
+        image: "/public/img/LOGO.png",
         order_id: order.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
         handler: function (response) {
