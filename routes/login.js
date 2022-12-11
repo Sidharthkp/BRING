@@ -16,7 +16,7 @@ router.get('/otp/:id', otpView);
 
 router.get("/dashboard", protectRoute, isActive, isVerified, loginAdminUser);
 
-router.get('/verify/:id', verifyOtp);
+router.post('/verify/:id', verifyOtp);
 
 router.post('/signup', signupUser);
 

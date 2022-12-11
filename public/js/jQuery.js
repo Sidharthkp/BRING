@@ -161,7 +161,7 @@ function deleteCart(prodId) {
         confirmButtonText: 'Add to wishlist',
         denyButtonText: `Delete`,
     }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
+        
         if (result.isConfirmed) {
             Swal.fire('Moved to wishlist!', '', 'success')
             window.location.href = `/addToWishListFromCart/${prodId}`;
