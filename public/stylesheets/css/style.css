@@ -700,6 +700,11 @@ textarea.input {
     display: inline-block;
   }
 
+  .resp {
+    display: flex;
+    justify-content: center;
+  }
+
   #responsive-nav {
     position: fixed;
     left: 0;
@@ -2202,11 +2207,12 @@ textarea.input {
 
 @media only screen and (max-width: 991px) {
   #top-header .header-links.pull-left {
-    float: none !important;
+    
   }
 
   #top-header .header-links.pull-right {
-    float: none !important;
+    /* float: none !important; */
+    margin-left: 20px;
     margin-top: 5px;
   }
 
